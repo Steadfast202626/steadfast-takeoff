@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steadfast takeoff</title>
+  <link rel="icon" type="image/png" href="assets/steadfast-logo-dark-on-light.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <img class="logo" src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
+    <button class="job-name" id="jobName" type="button" title="Job details"></button>
+    <span class="save-state" id="saveState"></span>
+    <div class="spacer"></div>
+    <div class="menu" id="fileMenu">
+      <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false">File</button>
+      <div class="menu-list" role="menu" hidden>
+        <button type="button" role="menuitem" data-action="new">New job</button>
+        <button type="button" role="menuitem" data-action="open">Open estimate</button>
+        <button type="button" role="menuitem" data-action="save">Save estimate</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="drawings">Add drawings</button>
+        <button type="button" role="menuitem" data-action="job">Job details</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="panel sheets-panel">
+      <div class="panel-head">
+        <h2>Sheets</h2>
+        <button type="button" class="small" data-action="drawings">Add drawings</button>
+      </div>
+      <div class="missing" id="missingFiles" hidden></div>
+      <ul class="sheet-list" id="sheetList"></ul>
+    </aside>
+
+    <section class="viewer">
+      <div class="toolbar">
+        <div class="sheet-title" id="sheetTitle"></div>
+        <div class="tool-group" role="group" aria-label="Tools">
+          <button type="button" data-tool="select" title="Select and edit (Esc)">Select</button>
+          <button type="button" data-tool="measure" title="Measure with the chosen condition">Measure</button>
+          <button type="button" id="deductBtn" class="toggle" aria-pressed="false" title="New markups subtract">Deduct</button>
+        </div>
+        <button type="button" id="scaleBtn">Scale</button>
+        <div class="tool-group" role="group" aria-label="Zoom">
+          <button type="button" id="zoomOut" title="Zoom out">−</button>
+          <button type="button" id="zoomFit" title="Fit sheet">Fit</button>
+          <button type="button" id="zoomIn" title="Zoom in">+</button>
+        </div>
+        <div class="tool-group" role="group" aria-label="History">
+          <button type="button" id="undoBtn" title="Undo (Ctrl+Z)">Undo</button>
+          <button type="button" id="redoBtn" title="Redo (Ctrl+Y)">Redo</button>
+        </div>
+        <button type="button" id="labelsBtn" class="toggle" aria-pressed="true">Labels</button>
+        <div class="status" id="status" role="status"></div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="canvas" data-tool="select"></canvas>
+        <div class="readout" id="readout" hidden></div>
+        <div class="empty" id="emptyState" hidden>
+          <p>No drawings yet</p>
+          <button type="button" class="primary" data-action="drawings">Add drawings</button>
+          <span>PDF sets or photos of plans</span>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel conditions-panel">
+      <div class="panel-head">
+        <h2>Conditions</h2>
+        <button type="button" class="small" id="newCondition">New</button>
+      </div>
+      <div class="cond-head" id="condHead" hidden><span></span><span>Sheet</span><span>Job</span><span></span></div>
+      <ul class="cond-list" id="condList"></ul>
+      <form class="editor" id="condEditor" hidden autocomplete="off"></form>
+      <section class="selection" id="selection" hidden></section>
+    </aside>
+  </main>
+
+  <dialog id="scaleDialog">
+    <form method="dialog">
+      <h3 id="scaleTitle">Scale</h3>
+      <p class="muted" id="scaleCurrent"></p>
+      <label class="field" id="presetField">Preset
+        <select id="scalePreset"></select>
+      </label>
+      <label class="check" id="scaleAllField"><input type="checkbox" id="scaleAll"> Every sheet this size</label>
+      <div class="buttons">
+        <button type="button" id="scaleFromDim">From a dimension</button>
+        <span class="spacer"></span>
+        <button value="cancel">Cancel</button>
+        <button value="preset" class="primary" id="scaleUsePreset">Use preset</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="calibrateDialog">
+    <form method="dialog">
+      <h3>Known dimension</h3>
+      <label class="field">Real length
+        <input id="calibLength" placeholder="20'-0&quot;" required>
+      </label>
+      <p class="muted" id="calibNote"></p>
+      <label class="check"><input type="checkbox" id="calibAll"> Every sheet this size</label>
+      <div class="buttons">
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate>Cancel</button>
+        <button value="ok" class="primary">Set scale</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="jobDialog">
+    <form method="dialog" id="jobForm" autocomplete="off">
+      <h3>Job details</h3>
+      <div class="grid2">
+        <label class="field wide">Job name <input name="name" required></label>
+        <label class="field">Client <input name="client"></label>
+        <label class="field">Contact <input name="contact"></label>
+        <label class="field wide">Address <input name="address"></label>
+        <label class="field">Job type
+          <select name="type"><option value="residential">Residential</option><option value="commercial">Commercial</option></select>
+        </label>
+        <label class="field">Estimate class
+          <select name="class"><option value="">Not set</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+        </label>
+        <label class="field">Bid due <input name="bidDue" type="date"></label>
+        <label class="field">Estimate date <input name="date" type="date"></label>
+        <label class="field">Prepared by <input name="preparedBy"></label>
+        <label class="field">Quote number <input name="quoteNo"></label>
+        <label class="field">Valid days <input name="validDays" type="number" min="0" step="1"></label>
+        <label class="field wide">Notes <textarea name="notes" rows="3"></textarea></label>
+      </div>
+      <div class="buttons">
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate>Cancel</button>
+        <button value="ok" class="primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="askDialog">
+    <form method="dialog">
+      <p id="askText"></p>
+      <input id="askInput" hidden>
+      <div class="buttons">
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate>Cancel</button>
+        <button value="ok" class="primary" id="askOk">OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <input type="file" id="drawingInput" accept=".pdf,application/pdf,image/*" multiple hidden>
+  <input type="file" id="estimateInput" accept=".json,application/json" hidden>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/drawings.js"></script>
+  <script src="js/viewer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
