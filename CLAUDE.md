@@ -10,7 +10,8 @@ This repository holds two things:
 ## Read first
 
 - `docs/estimate-file-format.md` is the contract between the app, the helper and the `steadfast-estimating` skill. Never change a field, unit or calculation without raising the version number and updating all four places in the same change.
-- `data/price-book-starter.csv` and `data/assemblies-starter.csv` are the starting company library. Costs are blank on purpose.
+- The master price book is the Monday.com Price book board. `data/price-book-starter.csv` is only the starting list before the first import. Costs are blank on purpose.
+- `data/assemblies-starter.csv` is the starting assemblies list.
 
 ## Layout
 
