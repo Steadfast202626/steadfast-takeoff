@@ -1,0 +1,55 @@
+assembly,measure,division,item_code,item,per,qty_per_unit,waste_pct,confirmed
+"Partition wall, 2x4 @ 16"", drywall both sides",wall,06,06-STD,2x4 stud,lf,0.75,10,no
+"Partition wall, 2x4 @ 16"", drywall both sides",wall,06,06-PLT,2x4 plate,lf,3,10,no
+"Partition wall, 2x4 @ 16"", drywall both sides",wall,06,09-GYP,"Drywall 1/2""",sf,2,12,no
+"Partition wall, 2x4 @ 16"", drywall both sides",wall,06,09-GFM,Drywall finishing materials,sf,2,0,no
+"Partition wall, 2x4 @ 16"", drywall both sides",wall,06,06-FRL,Framing labour,lf,0.15,0,no
+"Partition wall, 2x4 @ 16"", drywall both sides",wall,06,09-GSB,"Drywall hang, tape and finish",sf,2,0,no
+Partition wall with sound batt,wall,06,06-STD,2x4 stud,lf,0.75,10,no
+Partition wall with sound batt,wall,06,06-PLT,2x4 plate,lf,3,10,no
+Partition wall with sound batt,wall,06,07-SND,"Sound batt, partition",sf,1,5,no
+Partition wall with sound batt,wall,06,09-GYP,"Drywall 1/2""",sf,2,12,no
+Partition wall with sound batt,wall,06,09-GFM,Drywall finishing materials,sf,2,0,no
+Partition wall with sound batt,wall,06,06-FRL,Framing labour,lf,0.18,0,no
+Partition wall with sound batt,wall,06,09-GSB,"Drywall hang, tape and finish",sf,2,0,no
+"Basement exterior wall, 2x4, batt, poly, drywall one side",wall,06,06-STD,2x4 stud,lf,0.75,10,no
+"Basement exterior wall, 2x4, batt, poly, drywall one side",wall,06,06-PLT,2x4 plate,lf,3,10,no
+"Basement exterior wall, 2x4, batt, poly, drywall one side",wall,06,07-BAT,Batt insulation (R-value per code),sf,1,5,no
+"Basement exterior wall, 2x4, batt, poly, drywall one side",wall,06,07-POL,6 mil poly vapour barrier,sf,1.1,0,no
+"Basement exterior wall, 2x4, batt, poly, drywall one side",wall,06,09-GYP,"Drywall 1/2""",sf,1,12,no
+"Basement exterior wall, 2x4, batt, poly, drywall one side",wall,06,09-GFM,Drywall finishing materials,sf,1,0,no
+"Basement exterior wall, 2x4, batt, poly, drywall one side",wall,06,06-FRL,Framing labour,lf,0.12,0,no
+"Basement exterior wall, 2x4, batt, poly, drywall one side",wall,06,09-GSB,"Drywall hang, tape and finish",sf,1,0,no
+Drywall ceiling,area,09,09-GYP,"Drywall 1/2""",sf,1,12,no
+Drywall ceiling,area,09,09-GFM,Drywall finishing materials,sf,1,0,no
+Drywall ceiling,area,09,09-GSB,"Drywall hang, tape and finish",sf,1,0,no
+T-bar ceiling 2x4,area,09,09-TBR,"T-bar ceiling 2x4, supply and install",sf,1,5,no
+LVP flooring with underlay,area,09,09-LVP,Luxury vinyl plank,sf,1,10,no
+LVP flooring with underlay,area,09,09-UND,Flooring underlay,sf,1,5,no
+LVP flooring with underlay,area,09,09-FIL,Flooring install labour,sf,1,0,no
+Carpet,area,09,09-CPT,"Carpet and underpad, supply and install",sf,1,10,no
+Floor tile,area,09,09-TIL,Floor tile,sf,1,12,no
+Floor tile,area,09,09-TSB,Tile install,sf,1,0,no
+VCT or sheet vinyl,area,09,09-VCT,"VCT or sheet vinyl, supply and install",sf,1,8,no
+"Paint walls, 2 coats",wall,09,09-PNT,"Paint walls, 2 coats",sf,1,0,no
+Paint ceiling,area,09,09-PNC,Paint ceiling,sf,1,0,no
+"Baseboard, MDF, painted",length,06,06-BSM,"Baseboard, MDF 3-1/2""",lf,1,10,no
+"Baseboard, MDF, painted",length,06,06-TRL,Finish carpentry labour,lf,0.03,0,no
+"Rubber base 4""",length,09,09-RBB,"Rubber base 4""",lf,1,5,no
+"Rubber base 4""",length,09,09-RBL,Rubber base install,lf,1,0,no
+"Interior door, prehung, cased both sides",count,08,08-DPH,"Interior door, prehung",ea,1,0,no
+"Interior door, prehung, cased both sides",count,08,06-CAS,"Door casing, MDF",ea,34,10,no
+"Interior door, prehung, cased both sides",count,08,08-HDW,Door hardware set,ea,1,0,no
+"Interior door, prehung, cased both sides",count,08,08-DIL,Door install labour,ea,2,0,no
+"Commercial door, frame and hardware",count,08,08-DCM,"Commercial door, frame and hardware",ea,1,0,no
+Electrical device,count,26,26-DEV,Electrical device (receptacle or switch),ea,1,0,no
+Pot light,count,26,26-POT,Pot light,ea,1,0,no
+Plumbing fixture,count,22,22-FIX,"Plumbing fixture, rough-in and set",ea,1,0,no
+Remove flooring,area,02,02-DFL,Remove flooring,sf,1,0,no
+Remove partition wall,length,02,02-DWL,Remove partition wall,lf,1,0,no
+Remove cabinets,length,02,02-DCB,Remove cabinets,lf,1,0,no
+"Kitchen cabinets, base and upper, with countertop",length,12,12-CBL,Base cabinets,lf,1,0,no
+"Kitchen cabinets, base and upper, with countertop",length,12,12-CBU,Upper cabinets,lf,1,0,no
+"Kitchen cabinets, base and upper, with countertop",length,12,12-CIL,Cabinet install labour,lf,2,0,no
+"Kitchen cabinets, base and upper, with countertop",length,12,12-CTP,Countertop,lf,2.1,10,no
+Floor protection,area,01,01-PRO,Floor and site protection,sf,1,5,no
