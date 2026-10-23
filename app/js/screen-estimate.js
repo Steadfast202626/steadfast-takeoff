@@ -94,7 +94,7 @@
       costCell = el('td', { className: 'num' + (l.missing ? ' warn-text' : ''), textContent: l.unitCost === null ? 'No cost' : money(l.unitCost) });
     }
 
-    const fromText = { condition: 'Takeoff', room: 'Room', line: l.allowance ? 'Allowance' : 'Line', bid: 'Bid' }[l.source];
+    const fromText = { condition: 'Measured', room: 'Room', line: l.allowance ? 'Allowance' : 'Line', bid: 'Bid' }[l.source];
     const tr = el('tr', { className: l.status === 'check' ? 'check-row' : '' });
     if (manual) {
       tr.append(
@@ -205,17 +205,17 @@
   }
 
   function checklistCard(app, checks) {
-    const card = el('section', { className: 'card', id: 'checklist' }, el('h2', { textContent: 'Release checklist' }));
+    const card = el('section', { className: 'card', id: 'checklist' }, el('h2', { textContent: 'Before you send', title: 'Release checklist' }));
     const ul = el('ul', { className: 'checklist' });
     for (const c of checks) {
       ul.append(el('li', { className: c.status },
         el('span', { className: 'badge', textContent: STATUS_TEXT[c.status] }),
-        el('span', { textContent: c.label }),
+        el('span', { textContent: window.SteadfastGuide.PLAIN_CHECKS[c.n] || c.label, title: c.label }),
         c.detail ? el('span', { className: 'muted', textContent: ' ' + c.detail }) : null));
     }
     card.append(ul);
     const open = calc.openCheckCount(checks);
-    card.append(el('p', { className: 'note' + (open ? ' warn' : ''), textContent: open ? open + ' open. The quote is not ready to release.' : 'Ready to release once an owner approves the price.' }));
+    card.append(el('p', { className: 'note' + (open ? ' warn' : ''), textContent: open ? open + ' to fix.' : 'Ready. An owner approves the price before it goes out.' }));
     return card;
   }
 
@@ -239,7 +239,7 @@
       el('td', {}, button('Delete', 'Delete this risk', () => app.change(e => { e.risks.splice(i, 1); }), 'small danger')))));
     table.append(tbody);
     return el('section', { className: 'card' }, el('h2', { textContent: 'Risks' }),
-      el('p', { className: 'note', textContent: 'Top five risks to cost or schedule. Owners only.' }), table,
+      el('p', { className: 'note', textContent: 'Top five. Owners only.', title: 'Top five risks to cost or schedule, with the likely cost and how much is in the price' }), table,
       button('Add risk', 'Add a risk with its likely cost', () => app.change(e => { e.risks.push({ id: calc.nextId(e.risks, 'k'), risk: '', likelyCost: 0, inPrice: 0 }); })));
   }
 
@@ -268,7 +268,7 @@
       button('Add alternate', 'Price some work separately from the base bid', () => app.change(e => {
         e.alternates.push({ id: calc.nextId(e.alternates, 'alt'), name: 'Alternate ' + (e.alternates.length + 1), description: '', sign: 'add' });
       }))));
-    if (!est.alternates.length) wrap.append(el('p', { className: 'note', textContent: 'None. Use alternates to keep cosmetic work apart from necessary work.' }));
+    if (!est.alternates.length) wrap.append(el('p', { className: 'note', textContent: 'None yet.', title: 'Use alternates to keep cosmetic work apart from necessary work' }));
     for (const p of m.alternates) {
       const a = p.alternate;
       const lines = m.lines.filter(l => l.alternateId === a.id);
@@ -288,7 +288,7 @@
               e.alternates = e.alternates.filter(x => x.id !== a.id);
             });
           }, 'small danger')),
-        lines.length ? linesTable(app, lines) : el('p', { className: 'note', textContent: 'No items yet. Set a condition, room or line to this alternate.' }),
+        lines.length ? linesTable(app, lines) : el('p', { className: 'note', textContent: 'Nothing in it yet.', title: 'Set a measured item, room or line to this alternate' }),
         el('p', { className: 'alt-sum' },
           'Cost ' + money(p.cost) + ' · Price ' + money(p.price) + ' · Margin ' + calc.fmtPct(p.margin) + ' · Markup ' + calc.fmtPct(p.markup) +
           ' · GST ' + money(p.gst) + ' · Total ' + money(p.total) + (p.missing ? ' · ' + p.missing + ' with no cost' : ''))));
@@ -321,7 +321,7 @@
       button('Add allowance', 'Add an amount for something not yet selected', () => addLine(app, true))));
 
     main.append(el('h2', { className: 'section-title', textContent: 'Base bid' }));
-    main.append(base.length ? linesTable(app, base) : el('p', { className: 'note', textContent: 'No lines yet. Measure on the drawings, add rooms, or add a line.' }));
+    main.append(base.length ? linesTable(app, base) : el('p', { className: 'note', textContent: 'Nothing yet. Measure, add rooms or add a line.' }));
     main.append(alternatesSection(app, m));
 
     main.append(el('section', { className: 'card' }, el('h2', { textContent: 'Quote wording' }),

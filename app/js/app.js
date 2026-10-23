@@ -62,7 +62,7 @@
     },
 
     needCondition() {
-      setStatus('Choose or add a condition first', true);
+      setStatus('Pick what you\'re measuring first', true);
     },
 
     onToolChange(tool) {
@@ -138,14 +138,14 @@
     const c = app.activeCondition();
     if (!s) return setStatus('');
     if (!calc.hasScale(s)) return setStatus('Set the scale first', true);
-    if (!c) return setStatus('Choose a condition', true);
+    if (!c) return setStatus('Pick what you\'re measuring', true);
     const tips = {
       area: 'Click the corners. Click the first point to close.',
       length: 'Click along the line. Double-click to finish.',
       wall: 'Click along the wall. Double-click to finish.',
       count: 'Click each item. Enter to finish.'
     };
-    setStatus((app.deduct ? 'Deduct: ' : '') + c.name + '. ' + tips[c.measure]);
+    setStatus((app.deduct ? 'Cut out: ' : '') + c.name + '. ' + tips[c.measure]);
   }
 
   // ---------- Dialog helpers ----------
@@ -445,7 +445,7 @@
       const li = document.createElement('li');
       li.className = 'cond-empty';
       li.style.display = 'block';
-      li.textContent = 'No conditions yet';
+      li.textContent = 'Nothing yet. Click New.';
       list.appendChild(li);
       return;
     }
@@ -500,7 +500,7 @@
       const id = Model.nextId(est.conditions, 'c');
       const measure = last ? last.measure : 'area';
       est.conditions.push({
-        id, name: 'Condition ' + id.slice(1), measure, color: nextColour(),
+        id, name: 'Item ' + id.slice(1), measure, color: nextColour(),
         heightFt: measure === 'wall' ? est.settings.defaultHeightFt : null,
         assemblyId: null, unitCost: null, type: 'S',
         division: last ? last.division : '', location: last ? last.location : '',
@@ -553,7 +553,7 @@
     if (!c) return;
     const hasMarks = app.est.measurements.some(m => m.conditionId === c.id);
 
-    form.appendChild(el('h2', { textContent: 'Condition' }));
+    form.appendChild(el('h2', { textContent: 'What you\'re measuring', title: 'Condition' }));
 
     const name = el('input', { name: 'name', value: c.name, required: true });
     name.addEventListener('change', () => { if (name.value.trim()) editCondition(c, x => { x.name = name.value.trim(); }); });
@@ -640,7 +640,7 @@
     if (job.flagged) form.appendChild(el('p', { className: 'note warn', textContent: job.flagged + ' stated differs from traced by over 10%' }));
 
     const row = el('div', { className: 'row-buttons' });
-    const del = el('button', { type: 'button', className: 'danger small', textContent: 'Delete condition', title: 'Delete this condition and its markups' });
+    const del = el('button', { type: 'button', className: 'danger small', textContent: 'Delete', title: 'Delete this condition and its markups' });
     del.addEventListener('click', async () => {
       const n = app.est.measurements.filter(m => m.conditionId === c.id).length;
       const ok = await ask('Delete ' + c.name + (n ? ' and its ' + n + (n === 1 ? ' markup' : ' markups') : '') + '?', 'Delete');
@@ -713,7 +713,8 @@
     const ded = el('label', { className: 'check' });
     const cb = el('input', { type: 'checkbox', checked: !!m.deduct });
     cb.addEventListener('change', () => app.change(() => { m.deduct = cb.checked; }));
-    ded.append(cb, 'Deduct');
+    ded.title = 'Deduct: this markup subtracts';
+    ded.append(cb, 'Cut out');
     box.appendChild(ded);
 
     const row = el('div', { className: 'row-buttons' });
@@ -846,11 +847,11 @@
     const checks = calc.releaseChecks(app.est);
     const open = calc.openCheckCount(checks);
     const badge = $('checksBadge');
-    badge.textContent = open ? open + (open === 1 ? ' check open' : ' checks open') : 'Ready to release';
+    badge.textContent = open ? open + ' to fix' : 'Ready to send';
     badge.classList.toggle('warn', !!open);
-    badge.title = open ? 'Release checklist: ' + checks.filter(c => c.status === 'fail').map(c => c.label).join('; ') : 'Every release check passes';
+    badge.title = open ? 'Checks: ' + checks.filter(c => c.status === 'fail').map(c => c.label).join('; ') : 'Every release check passes';
     const tab = document.querySelector('#tabs [data-screen="checks"]');
-    tab.textContent = open ? 'Checks (' + open + ')' : 'Checks';
+    tab.textContent = open ? 'Before you send (' + open + ')' : 'Before you send';
     tab.classList.toggle('has-open', !!open);
     document.querySelector('#tabs [data-screen="cash"]').hidden = app.est.job.type !== 'commercial' && app.screen !== 'cash';
     $('sampleBand').hidden = !window.SteadfastOutputs.isSample(app.est);
@@ -871,6 +872,7 @@
       const screen = Screens[app.screen];
       if (screen) screen.render(root, app);
       root.scrollTop = scroll;
+      afterRender();
       if (key) {
         const again = root.querySelector('[data-key="' + CSS.escape(key) + '"]');
         if (again) {
@@ -912,6 +914,7 @@
     }
   }
 
+  const outputHooks = [];
   function openOutput(kind, id) {
     const Outputs = window.SteadfastOutputs;
     const opts = { logoUrl: logoUrl(), showQty: !!app.showQuoteQty };
@@ -919,9 +922,28 @@
       : kind === 'scope' ? Outputs.scopeLetterHtml(app.est, id, opts)
         : Outputs.internalHtml(app.est, opts);
     const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    for (const fn of outputHooks) fn(kind);
     const w = window.open(url, '_blank');
     if (!w) setStatus('The browser blocked the new tab. Allow pop-ups for this site.', true, 8000);
     setTimeout(() => URL.revokeObjectURL(url), 60000);
+  }
+
+  const renderHooks = [];
+  function afterRender() { for (const fn of renderHooks) fn(app); }
+
+  // Show a field on the current screen once it has drawn: scroll to it, focus it and flash it.
+  function focusKey(selector) {
+    let tries = 0;
+    const find = () => {
+      const target = typeof selector === 'function' ? selector() : document.querySelector(selector);
+      if (!target) { if (++tries < 20) requestAnimationFrame(find); return; }
+      target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      if (typeof target.focus === 'function') target.focus({ preventScroll: true });
+      target.classList.remove('flash');
+      void target.offsetWidth;
+      target.classList.add('flash');
+    };
+    requestAnimationFrame(find);
   }
 
   function renderAll(opts) {
@@ -936,6 +958,7 @@
     if (!opts.keepSelection) renderSelection();
     if (viewer.state.tool === 'measure') measureStatus();
     viewer.draw();
+    afterRender();
   }
 
   // ---------- Wiring ----------
@@ -944,7 +967,8 @@
 
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-action]');
-    if (!e.target.closest('#fileMenu .menu-button')) closeMenu();
+    const ownButton = e.target.closest('.menu-button');
+    closeMenu(ownButton ? ownButton.parentElement : null);
     if (!t) return;
     const action = t.dataset.action;
     if (action === 'drawings') $('drawingInput').click();
@@ -960,17 +984,20 @@
   document.querySelectorAll('#tabs [data-screen]').forEach(b => b.addEventListener('click', () => goto(b.dataset.screen)));
   $('checksBadge').addEventListener('click', () => goto('checks'));
 
-  function closeMenu() {
-    const list = document.querySelector('#fileMenu .menu-list');
-    list.hidden = true;
-    document.querySelector('#fileMenu .menu-button').setAttribute('aria-expanded', 'false');
+  // Close every menu except the one given.
+  function closeMenu(keep) {
+    document.querySelectorAll('.menu').forEach(m => {
+      if (m === keep) return;
+      m.querySelector('.menu-list').hidden = true;
+      m.querySelector('.menu-button').setAttribute('aria-expanded', 'false');
+    });
   }
 
-  document.querySelector('#fileMenu .menu-button').addEventListener('click', e => {
-    const list = document.querySelector('#fileMenu .menu-list');
+  document.querySelectorAll('.menu .menu-button').forEach(btn => btn.addEventListener('click', e => {
+    const list = btn.parentElement.querySelector('.menu-list');
     list.hidden = !list.hidden;
     e.currentTarget.setAttribute('aria-expanded', String(!list.hidden));
-  });
+  }));
 
   $('drawingInput').addEventListener('change', e => {
     addDrawingFiles(e.target.files);
@@ -1064,7 +1091,11 @@
   attachStoredDrawings();
   if (!window.pdfjsLib) setStatus('The PDF reader did not load. Photos still work.', true);
 
-  Object.assign(app, { setStatus, renderAll, renderScreen, goto, showCondition, openOutput, openJobDialog, autosave, loadEstimate, currentSheet, hasWork, showQuoteQty: true });
+  Object.assign(app, {
+    setStatus, renderAll, renderScreen, goto, showCondition, openOutput, openJobDialog, autosave, loadEstimate, currentSheet, hasWork,
+    openScaleDialog, newCondition, showSheet, newJob, focusKey, closeMenu, showQuoteQty: true,
+    onRender: fn => renderHooks.push(fn), onOutput: fn => outputHooks.push(fn)
+  });
   app.viewer = viewer;
   window.SteadfastApp = app;   // for checking in the browser console
 })();

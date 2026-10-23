@@ -63,10 +63,10 @@
     if (!est.bids.some(b => b.id === view.id)) view.id = est.bids[0] ? est.bids[0].id : null;
 
     root.append(el('div', { className: 'screen-head' },
-      el('h1', { textContent: 'Bids' }),
+      el('h1', { textContent: 'Trade quotes', title: 'Bids' }),
       el('div', { className: 'spacer' }),
-      button('Add trade', 'Start levelling quotes for a trade', () => app.change(e => { const b = newBid(e); e.bids.push(b); view.id = b.id; }))));
-    root.append(el('p', { className: 'note', textContent: 'Plugs price what a bidder left out. The chosen bidder becomes one subcontract line at the levelled price. No trade gets a date without a signed agreement and a current WCB clearance letter.' }));
+      button('Add trade', 'Start a bid sheet: compare quotes for one trade', () => app.change(e => { const b = newBid(e); e.bids.push(b); view.id = b.id; }))));
+    root.append(el('p', { className: 'note', textContent: 'Compare quotes item by item. Choose one.', title: 'Bid levelling. Plugs price what a bidder left out. The chosen bidder becomes one subcontract line at the levelled price. No trade gets a date without a signed agreement and a current WCB clearance letter.' }));
 
     const layout = el('div', { className: 'split' });
     const list = el('ul', { className: 'pick-list' });
@@ -104,7 +104,7 @@
     const ranked = b.bidders.map(bd => ({ bd, total: calc.levelledPrice(b, bd) })).filter(r => r.bd.amount > 0).sort((x, y) => x.total - y.total);
     const rank = new Map(ranked.map((r, i) => [r.bd.id, i + 1]));
     const table = el('table', { className: 'grid levelling' });
-    const head = el('tr', {}, el('th', { textContent: 'Scope item' }), el('th', { textContent: 'Plug', title: 'Our price for this item when a bidder leaves it out' }));
+    const head = el('tr', {}, el('th', { textContent: 'Scope item' }), el('th', { textContent: 'Our fill-in price', title: 'Plug: our price for this item when a quote leaves it out' }));
     b.bidders.forEach((bd, j) => head.append(el('th', { className: 'bidder' },
       textInput(bd.name, v => edit(x => { x.bidders[j].name = v; }), { placeholder: 'Bidder ' + (j + 1), dataset: { key: k + 'bdname' + bd.id } }))));
     head.append(el('th'));
@@ -138,8 +138,8 @@
     };
     tbody.append(footRow('Quoted amount', b.bidders.map((bd, j) => el('td', { className: 'cell-input' },
       numInput(bd.amount, v => edit(x => { x.bidders[j].amount = v || 0; }), { className: 'num', min: 0, dataset: { key: k + 'amt' + bd.id } }))), 'foot'));
-    tbody.append(footRow('Plugs added', b.bidders.map(bd => el('td', { className: 'num', textContent: calc.fmtMoney(calc.levelledPrice(b, bd) - (bd.amount || 0)) })), 'foot'));
-    tbody.append(footRow('Levelled total', b.bidders.map(bd => el('td', { className: 'num strong', textContent: bd.amount > 0 ? calc.fmtMoney(calc.levelledPrice(b, bd)) : '—' })), 'foot'));
+    tbody.append(footRow('Fill-ins added', b.bidders.map(bd => el('td', { className: 'num', textContent: calc.fmtMoney(calc.levelledPrice(b, bd) - (bd.amount || 0)) })), 'foot'));
+    tbody.append(footRow('Total to compare', b.bidders.map(bd => el('td', { className: 'num strong', textContent: bd.amount > 0 ? calc.fmtMoney(calc.levelledPrice(b, bd)) : '—' })), 'foot'));
     tbody.append(footRow('Rank', b.bidders.map(bd => el('td', { className: 'num', textContent: rank.has(bd.id) ? String(rank.get(bd.id)) : '—' })), 'foot'));
     tbody.append(footRow('WCB clearance letter', b.bidders.map((bd, j) => el('td', { className: 'center' },
       checkbox(bd.wcbClearance, v => edit(x => { x.bidders[j].wcbClearance = v; }), { title: 'Current WCB Alberta clearance letter on file', dataset: { key: k + 'wcb' + bd.id } }))), 'foot'));
@@ -174,11 +174,11 @@
 
     out.push(el('div', { className: 'row-buttons' },
       button('Add scope item', 'Add a line every bidder should price', () => edit(x => { x.scopeItems.push({ text: '', plug: 0 }); })),
-      button('Fill scope from takeoff', 'Add this trade\'s conditions, rooms and lines with quantities', () => {
+      button('Fill from measurements', 'Fill scope from takeoff: add this trade\'s conditions, rooms and lines with quantities', () => {
         const items = scopeFromTakeoff(est, b);
         if (!items.length) return app.setStatus(b.division ? 'Nothing new in division ' + b.division + ' for this bid' : 'Set the CSI division first', true, 5000);
         edit(x => { for (const t of items) x.scopeItems.push({ text: t, plug: 0 }); });
-        app.setStatus(items.length + ' scope items added from the takeoff', false, 4000);
+        app.setStatus(items.length + ' items added from your measurements', false, 4000);
       }),
       button('Add bidder', 'Add a column for another quote', () => edit(x => {
         x.bidders.push({ id: nextBidderId(x), name: '', amount: 0, includes: x.scopeItems.map(() => ''), wcbClearance: false, insurance: false, notes: '' });
@@ -192,6 +192,6 @@
     return out;
   }
 
-  screens.bids = { label: 'Bids', title: 'Level trade quotes and choose a bidder', render: renderBids };
-  window.SteadfastBids = { scopeFromTakeoff };
+  screens.bids = { label: 'Trade quotes', title: 'Bids: level trade quotes and choose a bidder', render: renderBids };
+  window.SteadfastBids = { scopeFromTakeoff, show: id => { view.id = id; } };
 })();

@@ -27,9 +27,10 @@
       el('h1', { textContent: 'Rooms' }),
       el('div', { className: 'spacer' }),
       button('Add room', 'Add a room to the finish schedule', () => app.change(e => { e.rooms.push(newRoom(e)); }))));
-    root.append(el('p', { className: 'note', textContent: 'Doors take ' + est.settings.doorAreaSf + ' sf off walls and ' +
-      est.settings.doorWidthFt + ' ft off base; windows take ' + est.settings.windowAreaSf + ' sf off walls. Blank height uses ' +
-      est.settings.defaultHeightFt + ' ft. To take a room from the drawing, select a traced area and use "Make room".' }));
+    root.append(el('p', { className: 'note', textContent: 'Floors, walls, ceilings and base by room.',
+      title: 'Doors take ' + est.settings.doorAreaSf + ' sf off walls and ' + est.settings.doorWidthFt + ' ft off base; windows take ' +
+        est.settings.windowAreaSf + ' sf off walls. Blank height uses ' + est.settings.defaultHeightFt +
+        ' ft. To take a room from the drawing, select a traced area and use "Make room".' }));
 
     if (!est.rooms.length) {
       root.append(el('p', { className: 'note', textContent: 'No rooms yet.' }));
@@ -55,7 +56,7 @@
         const opts = asmOptions(finish);
         if (r[field] && !opts.some(o => o[0] === r[field])) {
           const a = est.assemblies.find(x => x.id === r[field]);
-          opts.push([r[field], a ? a.name : 'Missing assembly']);
+          opts.push([r[field], a ? a.name : 'Missing build-up']);
         }
         return select(opts, r[field] || '', v => edit(x => { x[field] = v || null; }), { dataset: { key: k + field } });
       };

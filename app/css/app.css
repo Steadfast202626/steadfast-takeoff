@@ -466,6 +466,100 @@ label.check.big { font-size: 15px; margin: 14px 0; }
 .checklist.big .label { font-weight: 500; }
 .checklist.big button { margin-left: auto; }
 
+/* Help for someone new: next step bar, welcome, tour */
+.next-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e3d8cb;
+  border-radius: 0;
+  background: var(--accent-weak);
+  padding: 7px 16px;
+  text-align: left;
+  font-size: 15px;
+}
+.next-bar:hover { background: #e9e0d5; border-color: #e3d8cb; }
+.next-bar .next-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+.next-bar .next-text { font-weight: 600; flex: 1; }
+.next-bar .next-go { background: var(--accent); color: #fff; border-radius: 4px; padding: 3px 12px; font-size: 13px; font-weight: 600; }
+.next-bar.done { background: #e6f4ea; border-bottom-color: #c9e6d1; }
+.next-bar.done .next-label { color: #1e6b34; }
+.next-bar.done .next-go { background: #1e6b34; }
+
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(244, 244, 242, 0.97);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.welcome-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--accent);
+  border-radius: 10px;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
+  padding: 36px 40px 28px;
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.welcome-card img { height: 110px; }
+.welcome-card h1 { font-size: 28px; margin: 0; }
+.welcome-buttons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+button.big { font-size: 17px; padding: 12px 22px; border-radius: 6px; }
+button.link { border: none; background: none; color: var(--accent); text-decoration: underline; padding: 2px 4px; font-size: 14px; }
+
+.tour-ring {
+  position: fixed;
+  z-index: 40;
+  pointer-events: none;
+  border: 3px solid #e8590c;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px rgba(232, 89, 12, 0.25);
+  animation: tour-pulse 1.6s ease-in-out infinite;
+  transition: left 0.15s, top 0.15s, width 0.15s, height 0.15s;
+}
+@keyframes tour-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(232, 89, 12, 0.25); }
+  50% { box-shadow: 0 0 0 10px rgba(232, 89, 12, 0.08); }
+}
+.tour-card {
+  position: fixed;
+  z-index: 41;
+  width: 300px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tour-count { font-size: 12px; color: #f0c9a8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.tour-text { font-size: 17px; font-weight: 600; }
+.tour-hint { font-size: 13px; color: #ddd; }
+.tour-buttons { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
+.tour-buttons button { background: transparent; color: #fff; border-color: #777; }
+.tour-buttons button.primary { background: #e8590c; border-color: #e8590c; }
+
+.flash { animation: flash 1.4s ease-out 1; }
+@keyframes flash {
+  0% { box-shadow: 0 0 0 4px rgba(232, 89, 12, 0.6); }
+  100% { box-shadow: 0 0 0 4px rgba(232, 89, 12, 0); }
+}
+
 /* Tablets */
 @media (max-width: 1100px) {
   .workspace { grid-template-columns: 180px 1fr 270px; }

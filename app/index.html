@@ -16,17 +16,25 @@
     <button class="job-name" id="jobName" type="button" title="Job name, client, type and class"></button>
     <span class="save-state" id="saveState"></span>
     <nav class="tabs" id="tabs" role="tablist">
-      <button type="button" role="tab" data-screen="takeoff" title="Drawings, scale and measuring">Takeoff</button>
+      <button type="button" role="tab" data-screen="takeoff" title="Takeoff: drawings, scale and measuring">Measure</button>
       <button type="button" role="tab" data-screen="rooms" title="Finish schedule: floors, walls, ceilings and base by room">Rooms</button>
-      <button type="button" role="tab" data-screen="bids" title="Level trade quotes and choose a bidder">Bids</button>
+      <button type="button" role="tab" data-screen="bids" title="Bids: level trade quotes and choose a bidder">Trade quotes</button>
       <button type="button" role="tab" data-screen="estimate" title="Lines, price, margin and markup">Estimate</button>
       <button type="button" role="tab" data-screen="cash" title="Monthly billing, holdback and the bank balance for commercial jobs">Cash flow</button>
-      <button type="button" role="tab" data-screen="checks" title="Release checklist">Checks</button>
-      <button type="button" role="tab" data-screen="assemblies" title="Price book items per lf, sf or each, with waste">Assemblies</button>
+      <button type="button" role="tab" data-screen="checks" title="Checks: the release checklist">Before you send</button>
+      <button type="button" role="tab" data-screen="assemblies" title="Assemblies: price book items per lf, sf or each, with waste">Build-ups</button>
       <button type="button" role="tab" data-screen="pricebook" title="Costs from the Monday.com Price book board">Price book</button>
     </nav>
     <div class="spacer"></div>
-    <button type="button" class="checks-badge" id="checksBadge" title="Release checklist"></button>
+    <button type="button" class="checks-badge" id="checksBadge" title="Checks: the release checklist"></button>
+    <div class="menu" id="helpMenu">
+      <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false" title="Tour, sample job and welcome">Help</button>
+      <div class="menu-list" role="menu" hidden>
+        <button type="button" role="menuitem" data-action="tour" title="Open the sample job and walk through it step by step">Replay tour</button>
+        <button type="button" role="menuitem" data-action="sample" title="Open a practice job with a made-up floor plan and made-up prices">Sample job</button>
+        <button type="button" role="menuitem" data-action="welcome" title="Show the first screen again">Welcome screen</button>
+      </div>
+    </div>
     <div class="menu" id="fileMenu">
       <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false" title="Open, save, import and print">File</button>
       <div class="menu-list" role="menu" hidden>
@@ -51,6 +59,7 @@
     </div>
   </header>
   <div class="sample-band" id="sampleBand" hidden>Sample job with made-up prices. Not for quoting.</div>
+  <button type="button" class="next-bar" id="nextBar" hidden title="Click to go there"><span class="next-label">Next step</span><span class="next-text" id="nextText"></span><span class="next-go" aria-hidden="true">Go</span></button>
 
   <div class="view" id="takeoffView">
   <main class="workspace">
@@ -69,7 +78,7 @@
         <div class="tool-group" role="group" aria-label="Tools">
           <button type="button" data-tool="select" title="Select and edit (Esc)">Select</button>
           <button type="button" data-tool="measure" title="Measure with the chosen condition">Measure</button>
-          <button type="button" id="deductBtn" class="toggle" aria-pressed="false" title="New markups subtract">Deduct</button>
+          <button type="button" id="deductBtn" class="toggle" aria-pressed="false" title="Deduct: new markups subtract, for openings and areas left out">Cut out</button>
         </div>
         <button type="button" id="scaleBtn" title="Set the scale for this sheet">Scale</button>
         <div class="tool-group" role="group" aria-label="Zoom">
@@ -97,8 +106,8 @@
 
     <aside class="panel conditions-panel">
       <div class="panel-head">
-        <h2>Conditions</h2>
-        <button type="button" class="small" id="newCondition" title="Add a condition to measure with">New</button>
+        <h2 title="Conditions">What you're measuring</h2>
+        <button type="button" class="small" id="newCondition" title="Add a condition: a thing to measure, like flooring or doors">New</button>
       </div>
       <div class="cond-head" id="condHead" hidden><span></span><span>Sheet</span><span>Job</span><span></span></div>
       <ul class="cond-list" id="condList"></ul>
@@ -189,6 +198,28 @@
     <div class="buttons" id="infoButtons"></div>
   </dialog>
 
+  <div class="welcome" id="welcome" hidden>
+    <div class="welcome-card" role="dialog" aria-labelledby="welcomeTitle">
+      <img src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
+      <h1 id="welcomeTitle">Measure plans and build a price.</h1>
+      <div class="welcome-buttons">
+        <button type="button" class="primary big" id="welcomePractice" title="Open the sample job and walk through it step by step">Practice on a sample</button>
+        <button type="button" class="big" id="welcomeReal" title="Start your own job">Start a real job</button>
+      </div>
+      <button type="button" class="link" data-action="sample" id="welcomeSample" title="Open the sample job without the tour">Sample job, no tour</button>
+    </div>
+  </div>
+  <div class="tour-ring" id="tourRing" hidden></div>
+  <div class="tour-card" id="tourCard" hidden role="dialog" aria-live="polite">
+    <div class="tour-count" id="tourCount"></div>
+    <div class="tour-text" id="tourText"></div>
+    <div class="tour-hint" id="tourHint"></div>
+    <div class="tour-buttons">
+      <button type="button" class="small" id="tourSkip" title="Stop the tour. Replay it from Help.">Skip tour</button>
+      <button type="button" class="small primary" id="tourDone" hidden title="Close the tour">Close</button>
+    </div>
+  </div>
+
   <input type="file" id="drawingInput" accept=".pdf,application/pdf,image/*" multiple hidden>
   <input type="file" id="estimateInput" accept=".json,application/json" hidden>
 
@@ -197,6 +228,7 @@
   <script src="js/starter-library.js"></script>
   <script src="js/xlsx.js"></script>
   <script src="js/outputs.js"></script>
+  <script src="js/guide.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/library.js"></script>
@@ -212,5 +244,6 @@
   <script src="js/sample.js"></script>
   <script src="js/exchange.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/tour.js"></script>
 </body>
 </html>

@@ -15,9 +15,11 @@
     return bytes.buffer;
   }
 
-  async function open(app) {
+  // opts.forTour: start with no scale, so the tour's first step is real. Resolves true once open.
+  async function open(app, opts) {
     const s = window.SteadfastSample;
-    if (app.hasWork() && !await ask('Open the sample job? It replaces the job in this browser. Save the current estimate first if you need it.', 'Open sample')) return;
+    const onSample = window.SteadfastOutputs.isSample(app.est);
+    if (app.hasWork() && !onSample && !await ask('Open the sample job? It replaces the job in this browser. Save the current estimate first if you need it.', 'Open sample')) return false;
     const data = base64ToBuffer(s.pdfBase64);
     try {
       await window.SteadfastDrawings.open(s.fileName, 'application/pdf', data);
@@ -27,8 +29,11 @@
     }
     const est = calc.clone(s.estimate);
     est.job.date = calc.today();
+    if (opts && opts.forTour) for (const sh of est.sheets) { sh.ftPerUnit = null; sh.scaleLabel = ''; sh.scaleSource = ''; }
+    app.goto('takeoff');
     app.loadEstimate(est);
     app.setStatus('Sample job opened. Made-up prices, not for quoting.', false, 6000);
+    return true;
   }
 
   window.SteadfastSampleJob = { open };

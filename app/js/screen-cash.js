@@ -75,7 +75,7 @@
     root.append(el('div', { className: 'screen-head' }, el('h1', { textContent: 'Cash flow' }),
       el('span', { className: 'muted', textContent: 'Base bid, before GST' })));
     if (est.job.type !== 'commercial') root.append(el('p', { className: 'note warn', textContent: 'Cash flow is for commercial jobs. This job is set to residential in Job details.' }));
-    root.append(el('p', { className: 'note', textContent: 'The defaults follow Alberta\'s prompt payment rules as Steadfast reads them. Every one of them: check the contract.' }));
+    root.append(el('p', { className: 'note', textContent: 'Every default: check the contract.', title: 'The defaults follow Alberta\'s prompt payment rules as Steadfast reads them.' }));
 
     const f = (label, key, attrs, tip) => el('label', { className: 'field', title: tip || '' }, label,
       numInput(c[key], v => set(key, v), Object.assign({ dataset: { key: 'cash-' + key } }, attrs || {})),

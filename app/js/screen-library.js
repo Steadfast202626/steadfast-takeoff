@@ -51,7 +51,7 @@
     const usedMissing = [...new Set(app.est.assemblies.flatMap(a => a.items.map(i => i.code)))].filter(c => !codes.has(c));
     const body = el('div', {},
       el('p', { textContent: result.items.length + ' items read from ' + file.name + ', ' + withCost + ' with a cost.' }),
-      usedMissing.length ? el('p', { className: 'warn-text', textContent: 'Assemblies use codes that are not in this export: ' + usedMissing.join(', ') }) : null,
+      usedMissing.length ? el('p', { className: 'warn-text', textContent: 'Build-ups use codes that are not in this export: ' + usedMissing.join(', ') }) : null,
       result.problems.length ? el('details', {}, el('summary', { textContent: result.problems.length + ' rows to look at' }),
         el('ul', {}, result.problems.map(p => el('li', { textContent: p })))) : null);
     const choice = await showDialog('Price book import', body, [
@@ -171,15 +171,15 @@
     if (!est.assemblies.some(a => a.id === asmView.id)) asmView.id = est.assemblies[0] ? est.assemblies[0].id : null;
 
     root.append(el('div', { className: 'screen-head' },
-      el('h1', { textContent: 'Assemblies' }),
+      el('h1', { textContent: 'Build-ups', title: 'Assemblies' }),
       el('div', { className: 'spacer' }),
-      button('New assembly', 'Add an assembly to this job', () => newAssembly(app)),
+      button('New build-up', 'Add an assembly to this job', () => newAssembly(app)),
       button('Save for new jobs', 'Keep these assemblies as the starting list for new jobs', async () => {
-        if (!await ask('Use this job\'s ' + est.assemblies.length + ' assemblies as the starting list for new jobs?', 'Save for new jobs')) return;
+        if (!await ask('Use this job\'s ' + est.assemblies.length + ' build-ups for new jobs?', 'Save for new jobs')) return;
         Library.setAssemblies(calc.clone(est.assemblies));
-        app.setStatus('Assemblies saved for new jobs', false, 5000);
+        app.setStatus('Build-ups saved for new jobs', false, 5000);
       })));
-    root.append(el('p', { className: 'note', textContent: 'Starter factors are starting points only. Tick "Confirmed by Kamal" once checked.' }));
+    root.append(el('p', { className: 'note', textContent: 'What goes into one sf, lf or each.', title: 'Assemblies. Starter factors are starting points only. Tick "Confirmed by Kamal" once checked.' }));
 
     const layout = el('div', { className: 'split' });
     const list = el('ul', { className: 'pick-list' });
@@ -239,19 +239,19 @@
           asmView.id = id;
         })),
         button('Delete', use.any ? 'In use, so it cannot be deleted' : 'Delete this assembly', async () => {
-          if (use.any) return app.setStatus('Used by ' + use.conds + ' conditions and ' + use.rooms + ' rooms. Change those first.', true, 6000);
-          if (!await ask('Delete the assembly "' + a.name + '"?', 'Delete')) return;
+          if (use.any) return app.setStatus('In use: ' + use.conds + ' measured items and ' + use.rooms + ' rooms. Change those first.', true, 6000);
+          if (!await ask('Delete the build-up "' + a.name + '"?', 'Delete')) return;
           app.change(est2 => { est2.assemblies = est2.assemblies.filter(x => x.id !== a.id); });
         }, 'danger')));
-      if (use.any) editor.append(el('p', { className: 'note', textContent: 'Used by ' + use.conds + ' conditions and ' + use.rooms + ' rooms.' }));
+      if (use.any) editor.append(el('p', { className: 'note', textContent: 'In use: ' + use.conds + ' measured items, ' + use.rooms + ' rooms.' }));
     } else {
-      editor.append(el('p', { className: 'note', textContent: 'No assemblies yet.' }));
+      editor.append(el('p', { className: 'note', textContent: 'No build-ups yet.' }));
     }
     layout.append(editor);
     root.append(layout);
   }
 
-  screens.assemblies = { label: 'Assemblies', title: 'Price book items per lf, sf or each, with waste', render: renderAssemblies };
+  screens.assemblies = { label: 'Build-ups', title: 'Price book items per lf, sf or each, with waste', render: renderAssemblies };
 
   window.SteadfastPriceBook = { needsMondayUpdate, setPriceBookCost, divisionOptions, importMonday };
 })();
