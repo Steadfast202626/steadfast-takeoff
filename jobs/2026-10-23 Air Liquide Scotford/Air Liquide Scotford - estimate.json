@@ -1,0 +1,2908 @@
+{
+  "format": "steadfast-estimate",
+  "version": 1,
+  "job": {
+    "name": "Air Liquide Scotford admin building",
+    "client": "Air Liquide",
+    "contact": "",
+    "address": "Air Liquide Scotford site, Strathcona County, Alberta",
+    "type": "commercial",
+    "class": "",
+    "bidDue": "",
+    "date": "2026-10-23",
+    "preparedBy": "Kamal",
+    "quoteNo": "",
+    "validDays": 30,
+    "notes": "First estimator pass from Kamal's site photos, video and room drawings, 22 October 2026."
+  },
+  "settings": {
+    "marginFloor": 30,
+    "marginTarget": 35,
+    "commercialFloor": null,
+    "contingencyPct": null,
+    "travelPct": 0,
+    "gstPct": 5,
+    "gstNumber": "",
+    "roundTo": 10,
+    "priceOverride": null,
+    "defaultHeightFt": 8,
+    "doorWidthFt": 3,
+    "doorAreaSf": 21,
+    "windowAreaSf": 12,
+    "stages": [
+      {
+        "label": "Signed contract",
+        "pct": 25
+      },
+      {
+        "label": "Materials ordered and confirmed by supplier",
+        "pct": 35
+      },
+      {
+        "label": "Installation starts on site",
+        "pct": 30
+      },
+      {
+        "label": "Completion and signed deficiency list",
+        "pct": 10
+      }
+    ],
+    "cash": {
+      "startBalance": 0,
+      "months": 3,
+      "startDate": "",
+      "curve": "even",
+      "ownerPayDays": 28,
+      "subPayDays": 7,
+      "holdbackPct": 10,
+      "lienDays": 60,
+      "releaseDays": 10,
+      "reviewed": false
+    }
+  },
+  "priceBook": [
+    {
+      "code": "01-SUP",
+      "item": "Site supervision",
+      "unit": "hr",
+      "type": "L",
+      "unitCost": null,
+      "division": "01",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "01-BIN",
+      "item": "Disposal bin (20 yd)",
+      "unit": "ea",
+      "type": "E",
+      "unitCost": null,
+      "division": "01",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "01-PRO",
+      "item": "Floor and site protection",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "01",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "01-CLN",
+      "item": "Final clean",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "01",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "01-PMT",
+      "item": "Building permit",
+      "unit": "ea",
+      "type": "S",
+      "unitCost": null,
+      "division": "01",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "02-DFL",
+      "item": "Remove flooring",
+      "unit": "sf",
+      "type": "L",
+      "unitCost": null,
+      "division": "02",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "02-DWL",
+      "item": "Remove partition wall",
+      "unit": "lf",
+      "type": "L",
+      "unitCost": null,
+      "division": "02",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "02-DCB",
+      "item": "Remove cabinets",
+      "unit": "lf",
+      "type": "L",
+      "unitCost": null,
+      "division": "02",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "02-DCL",
+      "item": "Remove ceiling",
+      "unit": "sf",
+      "type": "L",
+      "unitCost": null,
+      "division": "02",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "06-STD",
+      "item": "2x4 stud",
+      "unit": "ea",
+      "type": "M",
+      "unitCost": null,
+      "division": "06",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "06-PLT",
+      "item": "2x4 plate",
+      "unit": "lf",
+      "type": "M",
+      "unitCost": null,
+      "division": "06",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "06-FRL",
+      "item": "Framing labour",
+      "unit": "hr",
+      "type": "L",
+      "unitCost": null,
+      "division": "06",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "06-BLK",
+      "item": "Blocking and backing",
+      "unit": "lf",
+      "type": "M",
+      "unitCost": null,
+      "division": "06",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "06-BSM",
+      "item": "Baseboard, MDF 3-1/2\"",
+      "unit": "lf",
+      "type": "M",
+      "unitCost": null,
+      "division": "06",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "06-CAS",
+      "item": "Door casing, MDF",
+      "unit": "lf",
+      "type": "M",
+      "unitCost": null,
+      "division": "06",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "06-TRL",
+      "item": "Finish carpentry labour",
+      "unit": "hr",
+      "type": "L",
+      "unitCost": null,
+      "division": "06",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "07-BAT",
+      "item": "Batt insulation (R-value per code)",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "07",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "07-POL",
+      "item": "6 mil poly vapour barrier",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "07",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "07-SND",
+      "item": "Sound batt, partition",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "07",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "08-DPH",
+      "item": "Interior door, prehung",
+      "unit": "ea",
+      "type": "M",
+      "unitCost": null,
+      "division": "08",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "08-HDW",
+      "item": "Door hardware set",
+      "unit": "ea",
+      "type": "M",
+      "unitCost": null,
+      "division": "08",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "08-DIL",
+      "item": "Door install labour",
+      "unit": "hr",
+      "type": "L",
+      "unitCost": null,
+      "division": "08",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "08-DCM",
+      "item": "Commercial door, frame and hardware",
+      "unit": "ea",
+      "type": "S",
+      "unitCost": null,
+      "division": "08",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-GYP",
+      "item": "Drywall 1/2\"",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-GYX",
+      "item": "Drywall 5/8\" Type X",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-GFM",
+      "item": "Drywall finishing materials",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-GSB",
+      "item": "Drywall hang, tape and finish",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-LVP",
+      "item": "Luxury vinyl plank",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-UND",
+      "item": "Flooring underlay",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-FIL",
+      "item": "Flooring install labour",
+      "unit": "sf",
+      "type": "L",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-CPT",
+      "item": "Carpet and underpad, supply and install",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-TIL",
+      "item": "Floor tile",
+      "unit": "sf",
+      "type": "M",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-TSB",
+      "item": "Tile install",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-VCT",
+      "item": "VCT or sheet vinyl, supply and install",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-RBB",
+      "item": "Rubber base 4\"",
+      "unit": "lf",
+      "type": "M",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-RBL",
+      "item": "Rubber base install",
+      "unit": "lf",
+      "type": "L",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-PNT",
+      "item": "Paint walls, 2 coats",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-PNC",
+      "item": "Paint ceiling",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "09-TBR",
+      "item": "T-bar ceiling 2x4, supply and install",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "09",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "12-CBL",
+      "item": "Base cabinets",
+      "unit": "lf",
+      "type": "M",
+      "unitCost": null,
+      "division": "12",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "12-CBU",
+      "item": "Upper cabinets",
+      "unit": "lf",
+      "type": "M",
+      "unitCost": null,
+      "division": "12",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "12-CTP",
+      "item": "Countertop",
+      "unit": "sf",
+      "type": "S",
+      "unitCost": null,
+      "division": "12",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "12-CIL",
+      "item": "Cabinet install labour",
+      "unit": "lf",
+      "type": "L",
+      "unitCost": null,
+      "division": "12",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "22-FIX",
+      "item": "Plumbing fixture, rough-in and set",
+      "unit": "ea",
+      "type": "S",
+      "unitCost": null,
+      "division": "22",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "23-RUN",
+      "item": "HVAC supply or return run",
+      "unit": "ea",
+      "type": "S",
+      "unitCost": null,
+      "division": "23",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "26-DEV",
+      "item": "Electrical device (receptacle or switch)",
+      "unit": "ea",
+      "type": "S",
+      "unitCost": null,
+      "division": "26",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "26-POT",
+      "item": "Pot light",
+      "unit": "ea",
+      "type": "S",
+      "unitCost": null,
+      "division": "26",
+      "source": "",
+      "updated": ""
+    },
+    {
+      "code": "26-PNL",
+      "item": "Panel or sub-panel",
+      "unit": "ea",
+      "type": "S",
+      "unitCost": null,
+      "division": "26",
+      "source": "",
+      "updated": ""
+    }
+  ],
+  "assemblies": [
+    {
+      "id": "a1",
+      "name": "Partition wall, 2x4 @ 16\", drywall both sides",
+      "measure": "wall",
+      "division": "06",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "06-STD",
+          "per": "lf",
+          "qtyPerUnit": 0.75,
+          "wastePct": 10
+        },
+        {
+          "code": "06-PLT",
+          "per": "lf",
+          "qtyPerUnit": 3,
+          "wastePct": 10
+        },
+        {
+          "code": "09-GYP",
+          "per": "sf",
+          "qtyPerUnit": 2,
+          "wastePct": 12
+        },
+        {
+          "code": "09-GFM",
+          "per": "sf",
+          "qtyPerUnit": 2,
+          "wastePct": 0
+        },
+        {
+          "code": "06-FRL",
+          "per": "lf",
+          "qtyPerUnit": 0.15,
+          "wastePct": 0
+        },
+        {
+          "code": "09-GSB",
+          "per": "sf",
+          "qtyPerUnit": 2,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a2",
+      "name": "Partition wall with sound batt",
+      "measure": "wall",
+      "division": "06",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "06-STD",
+          "per": "lf",
+          "qtyPerUnit": 0.75,
+          "wastePct": 10
+        },
+        {
+          "code": "06-PLT",
+          "per": "lf",
+          "qtyPerUnit": 3,
+          "wastePct": 10
+        },
+        {
+          "code": "07-SND",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 5
+        },
+        {
+          "code": "09-GYP",
+          "per": "sf",
+          "qtyPerUnit": 2,
+          "wastePct": 12
+        },
+        {
+          "code": "09-GFM",
+          "per": "sf",
+          "qtyPerUnit": 2,
+          "wastePct": 0
+        },
+        {
+          "code": "06-FRL",
+          "per": "lf",
+          "qtyPerUnit": 0.18,
+          "wastePct": 0
+        },
+        {
+          "code": "09-GSB",
+          "per": "sf",
+          "qtyPerUnit": 2,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a3",
+      "name": "Basement exterior wall, 2x4, batt, poly, drywall one side",
+      "measure": "wall",
+      "division": "06",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "06-STD",
+          "per": "lf",
+          "qtyPerUnit": 0.75,
+          "wastePct": 10
+        },
+        {
+          "code": "06-PLT",
+          "per": "lf",
+          "qtyPerUnit": 3,
+          "wastePct": 10
+        },
+        {
+          "code": "07-BAT",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 5
+        },
+        {
+          "code": "07-POL",
+          "per": "sf",
+          "qtyPerUnit": 1.1,
+          "wastePct": 0
+        },
+        {
+          "code": "09-GYP",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 12
+        },
+        {
+          "code": "09-GFM",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        },
+        {
+          "code": "06-FRL",
+          "per": "lf",
+          "qtyPerUnit": 0.12,
+          "wastePct": 0
+        },
+        {
+          "code": "09-GSB",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a4",
+      "name": "Drywall ceiling",
+      "measure": "area",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-GYP",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 12
+        },
+        {
+          "code": "09-GFM",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        },
+        {
+          "code": "09-GSB",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a5",
+      "name": "T-bar ceiling 2x4",
+      "measure": "area",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-TBR",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 5
+        }
+      ]
+    },
+    {
+      "id": "a6",
+      "name": "LVP flooring with underlay",
+      "measure": "area",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-LVP",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 10
+        },
+        {
+          "code": "09-UND",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 5
+        },
+        {
+          "code": "09-FIL",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a7",
+      "name": "Carpet",
+      "measure": "area",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-CPT",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 10
+        }
+      ]
+    },
+    {
+      "id": "a8",
+      "name": "Floor tile",
+      "measure": "area",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-TIL",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 12
+        },
+        {
+          "code": "09-TSB",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a9",
+      "name": "VCT or sheet vinyl",
+      "measure": "area",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-VCT",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 8
+        }
+      ]
+    },
+    {
+      "id": "a10",
+      "name": "Paint walls, 2 coats",
+      "measure": "wall",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-PNT",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a11",
+      "name": "Paint ceiling",
+      "measure": "area",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-PNC",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a12",
+      "name": "Baseboard, MDF, painted",
+      "measure": "length",
+      "division": "06",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "06-BSM",
+          "per": "lf",
+          "qtyPerUnit": 1,
+          "wastePct": 10
+        },
+        {
+          "code": "06-TRL",
+          "per": "lf",
+          "qtyPerUnit": 0.03,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a13",
+      "name": "Rubber base 4\"",
+      "measure": "length",
+      "division": "09",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "09-RBB",
+          "per": "lf",
+          "qtyPerUnit": 1,
+          "wastePct": 5
+        },
+        {
+          "code": "09-RBL",
+          "per": "lf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a14",
+      "name": "Interior door, prehung, cased both sides",
+      "measure": "count",
+      "division": "08",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "08-DPH",
+          "per": "ea",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        },
+        {
+          "code": "06-CAS",
+          "per": "ea",
+          "qtyPerUnit": 34,
+          "wastePct": 10
+        },
+        {
+          "code": "08-HDW",
+          "per": "ea",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        },
+        {
+          "code": "08-DIL",
+          "per": "ea",
+          "qtyPerUnit": 2,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a15",
+      "name": "Commercial door, frame and hardware",
+      "measure": "count",
+      "division": "08",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "08-DCM",
+          "per": "ea",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a16",
+      "name": "Electrical device",
+      "measure": "count",
+      "division": "26",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "26-DEV",
+          "per": "ea",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a17",
+      "name": "Pot light",
+      "measure": "count",
+      "division": "26",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "26-POT",
+          "per": "ea",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a18",
+      "name": "Plumbing fixture",
+      "measure": "count",
+      "division": "22",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "22-FIX",
+          "per": "ea",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a19",
+      "name": "Remove flooring",
+      "measure": "area",
+      "division": "02",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "02-DFL",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a20",
+      "name": "Remove partition wall",
+      "measure": "length",
+      "division": "02",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "02-DWL",
+          "per": "lf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a21",
+      "name": "Remove cabinets",
+      "measure": "length",
+      "division": "02",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "02-DCB",
+          "per": "lf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        }
+      ]
+    },
+    {
+      "id": "a22",
+      "name": "Kitchen cabinets, base and upper, with countertop",
+      "measure": "length",
+      "division": "12",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "12-CBL",
+          "per": "lf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        },
+        {
+          "code": "12-CBU",
+          "per": "lf",
+          "qtyPerUnit": 1,
+          "wastePct": 0
+        },
+        {
+          "code": "12-CIL",
+          "per": "lf",
+          "qtyPerUnit": 2,
+          "wastePct": 0
+        },
+        {
+          "code": "12-CTP",
+          "per": "lf",
+          "qtyPerUnit": 2.1,
+          "wastePct": 10
+        }
+      ]
+    },
+    {
+      "id": "a23",
+      "name": "Floor protection",
+      "measure": "area",
+      "division": "01",
+      "confirmed": false,
+      "items": [
+        {
+          "code": "01-PRO",
+          "per": "sf",
+          "qtyPerUnit": 1,
+          "wastePct": 5
+        }
+      ]
+    }
+  ],
+  "sheets": [
+    {
+      "id": "s1",
+      "name": "Kitchen 1",
+      "file": "kitchen 1.pdf",
+      "page": 1,
+      "kind": "pdf",
+      "widthPt": 1190.55,
+      "heightPt": 841.89,
+      "ftPerUnit": 0.046296296296296294,
+      "scaleLabel": "1:40",
+      "scaleSource": "estimator"
+    },
+    {
+      "id": "s2",
+      "name": "Kitchen 2",
+      "file": "Kitchen 2.pdf",
+      "page": 1,
+      "kind": "pdf",
+      "widthPt": 1190.55,
+      "heightPt": 841.89,
+      "ftPerUnit": 0.046296296296296294,
+      "scaleLabel": "1:40",
+      "scaleSource": "estimator"
+    },
+    {
+      "id": "s3",
+      "name": "Washroom 1",
+      "file": "washroom 1.pdf",
+      "page": 1,
+      "kind": "pdf",
+      "widthPt": 1190.55,
+      "heightPt": 841.89,
+      "ftPerUnit": 0.046296296296296294,
+      "scaleLabel": "1:40",
+      "scaleSource": "estimator"
+    },
+    {
+      "id": "s4",
+      "name": "Washroom 2",
+      "file": "Washroom 2.pdf",
+      "page": 1,
+      "kind": "pdf",
+      "widthPt": 1190.55,
+      "heightPt": 841.89,
+      "ftPerUnit": 0.046296296296296294,
+      "scaleLabel": "1:40",
+      "scaleSource": "estimator"
+    },
+    {
+      "id": "s5",
+      "name": "Marked-up plan (photo)",
+      "file": "Marked-up plan photo.jpeg",
+      "page": 1,
+      "kind": "image",
+      "widthPt": 1200,
+      "heightPt": 1600,
+      "ftPerUnit": null,
+      "scaleLabel": "",
+      "scaleSource": "preset"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "c1",
+      "name": "Kitchen cabinets and countertop, new",
+      "measure": "length",
+      "color": "#1971c2",
+      "heightFt": null,
+      "assemblyId": "a22",
+      "unitCost": null,
+      "type": "S",
+      "division": "12",
+      "location": "Kitchens",
+      "alternateId": null,
+      "hidden": false
+    },
+    {
+      "id": "c2",
+      "name": "Remove kitchen cabinets",
+      "measure": "length",
+      "color": "#e8590c",
+      "heightFt": null,
+      "assemblyId": "a21",
+      "unitCost": null,
+      "type": "S",
+      "division": "02",
+      "location": "Kitchens",
+      "alternateId": null,
+      "hidden": false
+    },
+    {
+      "id": "c3",
+      "name": "Plumbing fixtures, washrooms and kitchens",
+      "measure": "count",
+      "color": "#2f9e44",
+      "heightFt": null,
+      "assemblyId": "a18",
+      "unitCost": null,
+      "type": "S",
+      "division": "22",
+      "location": "Priority 1 rooms",
+      "alternateId": null,
+      "hidden": false
+    },
+    {
+      "id": "c4",
+      "name": "Wall tile wainscot 4 ft, washrooms",
+      "measure": "wall",
+      "color": "#c2255c",
+      "heightFt": 4,
+      "assemblyId": "a8",
+      "unitCost": null,
+      "type": "S",
+      "division": "09",
+      "location": "Washrooms",
+      "alternateId": null,
+      "hidden": false
+    },
+    {
+      "id": "c5",
+      "name": "Paint walls above tile, washrooms",
+      "measure": "wall",
+      "color": "#6741d9",
+      "heightFt": 5,
+      "assemblyId": "a10",
+      "unitCost": null,
+      "type": "S",
+      "division": "09",
+      "location": "Washrooms",
+      "alternateId": null,
+      "hidden": false
+    },
+    {
+      "id": "c6",
+      "name": "Remove flooring, Priority 1 rooms",
+      "measure": "area",
+      "color": "#0c8599",
+      "heightFt": null,
+      "assemblyId": "a19",
+      "unitCost": null,
+      "type": "S",
+      "division": "02",
+      "location": "Priority 1 rooms",
+      "alternateId": null,
+      "hidden": false
+    }
+  ],
+  "measurements": [
+    {
+      "id": "m1",
+      "conditionId": "c1",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.294,
+          0.245
+        ],
+        [
+          0.573,
+          0.245
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 15.42,
+      "note": "Back wall run",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Traced at 1:40 (checked against the dimension strings). Upper cabinets assumed the same length as base",
+      "confidence": "medium"
+    },
+    {
+      "id": "m2",
+      "conditionId": "c2",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.294,
+          0.245
+        ],
+        [
+          0.573,
+          0.245
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 15.42,
+      "note": "Back wall run",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Traced at 1:40 (checked against the dimension strings)",
+      "confidence": "medium"
+    },
+    {
+      "id": "m3",
+      "conditionId": "c1",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.313,
+          0.411
+        ],
+        [
+          0.313,
+          0.815
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 15.74,
+      "note": "Left wall run (oak cabinets and tall pantry in photos)",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Traced at 1:40 (checked against the dimension strings). Upper cabinets assumed the same length as base",
+      "confidence": "medium"
+    },
+    {
+      "id": "m4",
+      "conditionId": "c2",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.313,
+          0.411
+        ],
+        [
+          0.313,
+          0.815
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 15.74,
+      "note": "Left wall run (oak cabinets and tall pantry in photos)",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Traced at 1:40 (checked against the dimension strings)",
+      "confidence": "medium"
+    },
+    {
+      "id": "m5",
+      "conditionId": "c1",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.477,
+          0.436
+        ],
+        [
+          0.573,
+          0.436
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 5.32,
+      "note": "Peninsula beside range",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Traced at 1:40 (checked against the dimension strings). Upper cabinets assumed the same length as base",
+      "confidence": "medium"
+    },
+    {
+      "id": "m6",
+      "conditionId": "c2",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.477,
+          0.436
+        ],
+        [
+          0.573,
+          0.436
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 5.32,
+      "note": "Peninsula beside range",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Traced at 1:40 (checked against the dimension strings)",
+      "confidence": "medium"
+    },
+    {
+      "id": "m7",
+      "conditionId": "c1",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.458,
+          0.465
+        ],
+        [
+          0.458,
+          0.601
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 5.3,
+      "note": "Peninsula return",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Traced at 1:40 (checked against the dimension strings). Upper cabinets assumed the same length as base",
+      "confidence": "medium"
+    },
+    {
+      "id": "m8",
+      "conditionId": "c2",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.458,
+          0.465
+        ],
+        [
+          0.458,
+          0.601
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 5.3,
+      "note": "Peninsula return",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Traced at 1:40 (checked against the dimension strings)",
+      "confidence": "medium"
+    },
+    {
+      "id": "m9",
+      "conditionId": "c1",
+      "sheetId": "s2",
+      "points": [
+        [
+          0.371,
+          0.66
+        ],
+        [
+          0.561,
+          0.66
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 10.45,
+      "note": "Bottom wall run",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimension 10'-5 7/16\" on Kitchen 2. Uppers assumed same length (photos show uppers on both walls)",
+      "confidence": "high"
+    },
+    {
+      "id": "m10",
+      "conditionId": "c1",
+      "sheetId": "s2",
+      "points": [
+        [
+          0.579,
+          0.441
+        ],
+        [
+          0.579,
+          0.686
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 9.46,
+      "note": "Right wall run with sink",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimension 9'-5 1/2\" on Kitchen 2",
+      "confidence": "high"
+    },
+    {
+      "id": "m11",
+      "conditionId": "c2",
+      "sheetId": "s2",
+      "points": [
+        [
+          0.371,
+          0.66
+        ],
+        [
+          0.561,
+          0.66
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 10.45,
+      "note": "Bottom wall run",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimension 10'-5 7/16\" on Kitchen 2",
+      "confidence": "high"
+    },
+    {
+      "id": "m12",
+      "conditionId": "c2",
+      "sheetId": "s2",
+      "points": [
+        [
+          0.579,
+          0.441
+        ],
+        [
+          0.579,
+          0.686
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 9.46,
+      "note": "Right wall run with sink",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimension 9'-5 1/2\" on Kitchen 2",
+      "confidence": "high"
+    },
+    {
+      "id": "m13",
+      "conditionId": "c3",
+      "sheetId": "s3",
+      "points": [
+        [
+          0.461,
+          0.494
+        ],
+        [
+          0.518,
+          0.494
+        ],
+        [
+          0.612,
+          0.499
+        ],
+        [
+          0.612,
+          0.54
+        ],
+        [
+          0.601,
+          0.618
+        ],
+        [
+          0.601,
+          0.702
+        ],
+        [
+          0.588,
+          0.786
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 7,
+      "note": "2 lavatories, 2 urinals, 2 toilets, 1 shower",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Counted on Washroom 1 and in the video",
+      "confidence": "high"
+    },
+    {
+      "id": "m14",
+      "conditionId": "c3",
+      "sheetId": "s4",
+      "points": [
+        [
+          0.366,
+          0.534
+        ],
+        [
+          0.416,
+          0.534
+        ],
+        [
+          0.558,
+          0.43
+        ],
+        [
+          0.548,
+          0.513
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 4,
+      "note": "2 lavatories, 2 water closets or 1 urinal and 1 toilet (see RFI)",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Counted on Washroom 2; photo shows a urinal",
+      "confidence": "medium"
+    },
+    {
+      "id": "m15",
+      "conditionId": "c3",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.597,
+          0.289
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 1,
+      "note": "Kitchen sink, reset in new countertop",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Sink in photos 13 to 15; not drawn on Kitchen 1",
+      "confidence": "low"
+    },
+    {
+      "id": "m16",
+      "conditionId": "c3",
+      "sheetId": "s2",
+      "points": [
+        [
+          0.578,
+          0.511
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 1,
+      "note": "Kitchen sink, reset in new countertop",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Sink drawn on Kitchen 2",
+      "confidence": "high"
+    },
+    {
+      "id": "m17",
+      "conditionId": "c4",
+      "sheetId": "s3",
+      "points": [
+        [
+          0.367,
+          0.137
+        ],
+        [
+          0.367,
+          0.836
+        ],
+        [
+          0.623,
+          0.836
+        ],
+        [
+          0.623,
+          0.474
+        ],
+        [
+          0.44,
+          0.474
+        ],
+        [
+          0.44,
+          0.137
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 79,
+      "note": "Main room and entry passage, less door",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimensions 14'-2\", 14'-1 1/8\", 27'-1\", 3'-6 7/8\" on Washroom 1. Tile height 4 ft read from photos",
+      "confidence": "medium"
+    },
+    {
+      "id": "m18",
+      "conditionId": "c4",
+      "sheetId": "s4",
+      "points": [
+        [
+          0.342,
+          0.275
+        ],
+        [
+          0.342,
+          0.557
+        ],
+        [
+          0.569,
+          0.557
+        ],
+        [
+          0.569,
+          0.275
+        ],
+        [
+          0.342,
+          0.275
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 44,
+      "note": "Room perimeter less door",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimensions 12'-6\" x 11'-0\" on Washroom 2. Tile height 4 ft read from photos",
+      "confidence": "medium"
+    },
+    {
+      "id": "m19",
+      "conditionId": "c5",
+      "sheetId": "s3",
+      "points": [
+        [
+          0.367,
+          0.137
+        ],
+        [
+          0.367,
+          0.836
+        ],
+        [
+          0.623,
+          0.836
+        ],
+        [
+          0.623,
+          0.474
+        ],
+        [
+          0.44,
+          0.474
+        ],
+        [
+          0.44,
+          0.137
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 79,
+      "note": "Main room and entry passage, less door",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimensions 14'-2\", 14'-1 1/8\", 27'-1\", 3'-6 7/8\" on Washroom 1. Tile height 4 ft read from photos",
+      "confidence": "medium"
+    },
+    {
+      "id": "m20",
+      "conditionId": "c5",
+      "sheetId": "s4",
+      "points": [
+        [
+          0.342,
+          0.275
+        ],
+        [
+          0.342,
+          0.557
+        ],
+        [
+          0.569,
+          0.557
+        ],
+        [
+          0.569,
+          0.275
+        ],
+        [
+          0.342,
+          0.275
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 44,
+      "note": "Room perimeter less door",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimensions 12'-6\" x 11'-0\" on Washroom 2. Tile height 4 ft read from photos",
+      "confidence": "medium"
+    },
+    {
+      "id": "m21",
+      "conditionId": "c6",
+      "sheetId": "s1",
+      "points": [
+        [
+          0.294,
+          0.216
+        ],
+        [
+          0.616,
+          0.216
+        ],
+        [
+          0.616,
+          0.815
+        ],
+        [
+          0.294,
+          0.815
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 414,
+      "note": "Kitchen 108",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimensions 17'-9\" x 23'-4\"",
+      "confidence": "high"
+    },
+    {
+      "id": "m22",
+      "conditionId": "c6",
+      "sheetId": "s2",
+      "points": [
+        [
+          0.371,
+          0.252
+        ],
+        [
+          0.597,
+          0.252
+        ],
+        [
+          0.597,
+          0.686
+        ],
+        [
+          0.371,
+          0.686
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 211,
+      "note": "Kitchen 201",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimensions 12'-5 13/16\" x 16'-11\"",
+      "confidence": "high"
+    },
+    {
+      "id": "m23",
+      "conditionId": "c6",
+      "sheetId": "s3",
+      "points": [
+        [
+          0.367,
+          0.137
+        ],
+        [
+          0.44,
+          0.137
+        ],
+        [
+          0.44,
+          0.474
+        ],
+        [
+          0.623,
+          0.474
+        ],
+        [
+          0.623,
+          0.836
+        ],
+        [
+          0.367,
+          0.836
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 246,
+      "note": "Men's washroom 102 and entry passage",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimensions on Washroom 1",
+      "confidence": "high"
+    },
+    {
+      "id": "m24",
+      "conditionId": "c6",
+      "sheetId": "s4",
+      "points": [
+        [
+          0.342,
+          0.275
+        ],
+        [
+          0.569,
+          0.275
+        ],
+        [
+          0.569,
+          0.557
+        ],
+        [
+          0.342,
+          0.557
+        ]
+      ],
+      "deduct": false,
+      "statedQty": 138,
+      "note": "Men's washroom 203",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Dimensions 12'-6\" x 11'-0\"",
+      "confidence": "high"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "r1",
+      "name": "Kitchen 108 (shop lunchroom)",
+      "location": "Ground floor",
+      "lengthFt": 23.33,
+      "widthFt": 17.75,
+      "heightFt": 10,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 2,
+      "windows": 0,
+      "floorAssemblyId": "a9",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": null,
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Kitchen 1 dimensions. Height 10 ft assumed (open ceiling, see RFI). Floor type assumed"
+    },
+    {
+      "id": "r2",
+      "name": "Kitchen 201",
+      "location": "Second floor",
+      "lengthFt": 16.92,
+      "widthFt": 12.48,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 1,
+      "floorAssemblyId": "a9",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": null,
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Kitchen 2 dimensions. Height 9 ft assumed (T-bar ceiling). Floor type assumed"
+    },
+    {
+      "id": "r3",
+      "name": "Men's washroom 102",
+      "location": "Ground floor",
+      "lengthFt": null,
+      "widthFt": null,
+      "heightFt": 9,
+      "areaSf": 246,
+      "perimeterLf": 82,
+      "doors": 1,
+      "windows": 0,
+      "floorAssemblyId": "a8",
+      "wallAssemblyId": null,
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": null,
+      "alternateId": null,
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Washroom 1: main room 14'-2\" x 14'-1 1/8\" plus entry passage 3'-6 7/8\" x 13'-0\""
+    },
+    {
+      "id": "r4",
+      "name": "Men's washroom 203",
+      "location": "Second floor",
+      "lengthFt": 12.5,
+      "widthFt": 11,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 0,
+      "floorAssemblyId": "a8",
+      "wallAssemblyId": null,
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": null,
+      "alternateId": null,
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Washroom 2 dimensions 12'-6\" x 11'-0\""
+    },
+    {
+      "id": "r5",
+      "name": "Main entrance 101",
+      "location": "Ground floor",
+      "lengthFt": 16,
+      "widthFt": 15.3,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 2,
+      "windows": 0,
+      "floorAssemblyId": "a8",
+      "wallAssemblyId": null,
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": null,
+      "alternateId": "alt1",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Stair footprint left out"
+    },
+    {
+      "id": "r6",
+      "name": "Corridor outside washroom 102 and lab 103",
+      "location": "Ground floor",
+      "lengthFt": 24.3,
+      "widthFt": 4.9,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 3,
+      "windows": 0,
+      "floorAssemblyId": "a8",
+      "wallAssemblyId": null,
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": null,
+      "alternateId": "alt1",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed."
+    },
+    {
+      "id": "r7",
+      "name": "Corridor 104",
+      "location": "Ground floor",
+      "lengthFt": 20,
+      "widthFt": 4.3,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 2,
+      "windows": 0,
+      "floorAssemblyId": "a8",
+      "wallAssemblyId": null,
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": null,
+      "alternateId": "alt1",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed."
+    },
+    {
+      "id": "r8",
+      "name": "Corridor by electrical room 107 to shop 108",
+      "location": "Ground floor",
+      "lengthFt": 42.3,
+      "widthFt": 4.3,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 3,
+      "windows": 0,
+      "floorAssemblyId": "a8",
+      "wallAssemblyId": null,
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": null,
+      "alternateId": "alt1",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed."
+    },
+    {
+      "id": "r9",
+      "name": "Control room 105",
+      "location": "Ground floor",
+      "lengthFt": 24.9,
+      "widthFt": 19.4,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 2,
+      "windows": 1,
+      "floorAssemblyId": "a8",
+      "wallAssemblyId": null,
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": null,
+      "alternateId": "alt1",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Orange mark is on the room name only; confirm it is in scope"
+    },
+    {
+      "id": "r10",
+      "name": "Corridor 216",
+      "location": "Second floor",
+      "lengthFt": 28.5,
+      "widthFt": 5.25,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 4,
+      "windows": 0,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r11",
+      "name": "Corridor 218",
+      "location": "Second floor",
+      "lengthFt": 41.7,
+      "widthFt": 5.25,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 6,
+      "windows": 0,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r12",
+      "name": "Corridor south, outside offices 209 to 211",
+      "location": "Second floor",
+      "lengthFt": 29.2,
+      "widthFt": 5.25,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 5,
+      "windows": 0,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r13",
+      "name": "Conference room 205",
+      "location": "Second floor",
+      "lengthFt": 20,
+      "widthFt": 18,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 2,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r14",
+      "name": "Office 206",
+      "location": "Second floor",
+      "lengthFt": 17.4,
+      "widthFt": 11.8,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 1,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r15",
+      "name": "Office 207",
+      "location": "Second floor",
+      "lengthFt": 17.4,
+      "widthFt": 10.5,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 1,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r16",
+      "name": "Office 208",
+      "location": "Second floor",
+      "lengthFt": 17.4,
+      "widthFt": 11.8,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 1,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r17",
+      "name": "Office 209",
+      "location": "Second floor",
+      "lengthFt": 16.7,
+      "widthFt": 9.8,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 1,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r18",
+      "name": "Office 210",
+      "location": "Second floor",
+      "lengthFt": 16.7,
+      "widthFt": 8.2,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 1,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    },
+    {
+      "id": "r19",
+      "name": "Office 211",
+      "location": "Second floor",
+      "lengthFt": 16.7,
+      "widthFt": 13.8,
+      "heightFt": 9,
+      "areaSf": null,
+      "perimeterLf": null,
+      "doors": 1,
+      "windows": 1,
+      "floorAssemblyId": "a6",
+      "wallAssemblyId": "a10",
+      "ceilingAssemblyId": null,
+      "baseAssemblyId": "a13",
+      "alternateId": "alt2",
+      "measurementId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+    }
+  ],
+  "lines": [
+    {
+      "id": "l1",
+      "division": "02",
+      "description": "Remove wall tile, washrooms",
+      "scope": "",
+      "location": "",
+      "qty": 492,
+      "unit": "sf",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "123 lf of wainscot x 4 ft (Washroom 1 and 2). Kamal in video: \"all the tiles come out\""
+    },
+    {
+      "id": "l2",
+      "division": "02",
+      "description": "Remove plumbing fixtures (lavatories, urinals, toilets, shower)",
+      "scope": "",
+      "location": "",
+      "qty": 11,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Fixture counts on Washroom 1 and 2. Video: sinks, urinals and toilets come out"
+    },
+    {
+      "id": "l3",
+      "division": "02",
+      "description": "Remove washroom vanity counters",
+      "scope": "",
+      "location": "",
+      "qty": 2,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "One vanity in each men's washroom (photos 5, 19)"
+    },
+    {
+      "id": "l4",
+      "division": "02",
+      "description": "Remove toilet partitions",
+      "scope": "",
+      "location": "",
+      "qty": 3,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Two compartments in washroom 102, one in 203. Video: partitions \"yet to be decided but we have to quote these in\""
+    },
+    {
+      "id": "l5",
+      "division": "10",
+      "description": "Toilet partitions, new, supply and install",
+      "scope": "",
+      "location": "",
+      "qty": 3,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Same count as removed. Material to be confirmed (RFI)"
+    },
+    {
+      "id": "l6",
+      "division": "10",
+      "description": "Urinal privacy screens, supply and install",
+      "scope": "",
+      "location": "",
+      "qty": 2,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Screens beside urinals in photos 6 and 19. Confirm"
+    },
+    {
+      "id": "l7",
+      "division": "22",
+      "description": "Shower stall, replace",
+      "scope": "",
+      "location": "",
+      "qty": 1,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Fibreglass shower in washroom 102 (photos 23, 24, video)"
+    },
+    {
+      "id": "l8",
+      "division": "12",
+      "description": "Washroom vanity countertop with two lavatories",
+      "scope": "",
+      "location": "",
+      "qty": 12,
+      "unit": "lf",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Washroom 1 about 6'-6\", Washroom 2 about 5'-6\", traced at 1:40"
+    },
+    {
+      "id": "l9",
+      "division": "10",
+      "description": "Washroom accessories (mirrors, dispensers, grab bar), remove and reinstall",
+      "scope": "",
+      "location": "",
+      "qty": 2,
+      "unit": "lot",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Existing accessories in photos. New supply not assumed (RFI)"
+    },
+    {
+      "id": "l10",
+      "division": "09",
+      "description": "Tile base, washrooms",
+      "scope": "",
+      "location": "",
+      "qty": 123,
+      "unit": "lf",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Washroom perimeters 79 + 44 lf"
+    },
+    {
+      "id": "l11",
+      "division": "09",
+      "description": "Floor levelling and prep under new flooring",
+      "scope": "",
+      "location": "",
+      "qty": 1009,
+      "unit": "sf",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Priority 1 floor area. Allowance for old VCT adhesive; confirm on site"
+    },
+    {
+      "id": "l12",
+      "division": "02",
+      "description": "Remove existing floor tile, Priority 2 areas",
+      "scope": "",
+      "location": "",
+      "qty": 1115,
+      "unit": "sf",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": "alt1",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Sum of Priority 2 room areas. Low: from photo of plan"
+    },
+    {
+      "id": "l13",
+      "division": "09",
+      "description": "Stair treads and risers, rubber, supply and install",
+      "scope": "",
+      "location": "",
+      "qty": 28,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": "alt1",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Floor-to-floor 5.32 m (EL 101.000 to 106.320 on the plan) gives about 30 risers, 28 treads in a U-stair. Existing steel treads (photos 8 to 12)"
+    },
+    {
+      "id": "l14",
+      "division": "09",
+      "description": "Stair landing flooring",
+      "scope": "",
+      "location": "",
+      "qty": 34,
+      "unit": "sf",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": "alt1",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Mid landing about 1.2 m x 2.6 m from photos. Low"
+    },
+    {
+      "id": "l15",
+      "division": "02",
+      "description": "Remove existing flooring, Priority 3 areas",
+      "scope": "",
+      "location": "",
+      "qty": 2006,
+      "unit": "sf",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": "alt2",
+      "source": "estimator",
+      "status": "check",
+      "basis": "Sum of Priority 3 room areas. Low: from photo of plan"
+    },
+    {
+      "id": "l16",
+      "division": "01",
+      "description": "Disposal bin (20 yd)",
+      "scope": "",
+      "location": "",
+      "qty": 3,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "E",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Two for washroom and kitchen demolition, one at finish. Priorities 2 and 3 may need more"
+    },
+    {
+      "id": "l17",
+      "division": "01",
+      "description": "Floor and site protection",
+      "scope": "",
+      "location": "",
+      "qty": 1009,
+      "unit": "sf",
+      "unitCost": null,
+      "type": "M",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Priority 1 floor area plus routes; occupied building"
+    },
+    {
+      "id": "l18",
+      "division": "01",
+      "description": "Final clean",
+      "scope": "",
+      "location": "",
+      "qty": 1009,
+      "unit": "sf",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Priority 1 floor area"
+    },
+    {
+      "id": "l19",
+      "division": "01",
+      "description": "Building permit",
+      "scope": "",
+      "location": "",
+      "qty": 1,
+      "unit": "ea",
+      "unitCost": null,
+      "type": "S",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Strathcona County. Confirm whether needed and who pulls it (RFI)"
+    },
+    {
+      "id": "l20",
+      "division": "01",
+      "description": "Site safety orientation and contractor prequalification",
+      "scope": "",
+      "location": "",
+      "qty": 1,
+      "unit": "lot",
+      "unitCost": null,
+      "type": "L",
+      "allowance": false,
+      "alternateId": null,
+      "source": "estimator",
+      "status": "check",
+      "basis": "Industrial site (Air Liquide Scotford). Orientation hours for every worker"
+    }
+  ],
+  "alternates": [
+    {
+      "id": "alt1",
+      "name": "Priority 2: tile",
+      "description": "Orange on the marked-up plan: new floor tile in the ground floor main entrance 101, corridors 104 and by electrical room 107, control room 105, and the main stair.",
+      "sign": "add"
+    },
+    {
+      "id": "alt2",
+      "name": "Priority 3: floors and paint",
+      "description": "Blue on the marked-up plan: new flooring and wall paint in second floor corridors, conference room 205 and offices 206 to 211.",
+      "sign": "add"
+    }
+  ],
+  "bids": [
+    {
+      "id": "b1",
+      "trade": "Plumbing",
+      "division": "22",
+      "alternateId": null,
+      "scopeItems": [
+        {
+          "text": "Disconnect and remove 2 urinals, 2 to 3 toilets, 4 lavatories, 1 shower",
+          "plug": 0
+        },
+        {
+          "text": "Supply and install new fixtures per final selection",
+          "plug": 0
+        },
+        {
+          "text": "Replace shower stall in washroom 102",
+          "plug": 0
+        },
+        {
+          "text": "Reset two kitchen sinks in new countertops",
+          "plug": 0
+        },
+        {
+          "text": "Cap and protect during tile work",
+          "plug": 0
+        }
+      ],
+      "bidders": [],
+      "selectedBidderId": null,
+      "source": "estimator",
+      "status": "check"
+    },
+    {
+      "id": "b2",
+      "trade": "Tile",
+      "division": "09",
+      "alternateId": null,
+      "scopeItems": [
+        {
+          "text": "Remove floor and wall tile in men's washrooms 102 and 203",
+          "plug": 0
+        },
+        {
+          "text": "New floor tile 384 sf and 4 ft wall tile wainscot about 492 sf",
+          "plug": 0
+        },
+        {
+          "text": "Tile base 123 lf",
+          "plug": 0
+        },
+        {
+          "text": "Priority 2: floor tile in ground floor entrance, corridors and control room (site measure)",
+          "plug": 0
+        }
+      ],
+      "bidders": [],
+      "selectedBidderId": null,
+      "source": "estimator",
+      "status": "check"
+    },
+    {
+      "id": "b3",
+      "trade": "Painting",
+      "division": "09",
+      "alternateId": null,
+      "scopeItems": [
+        {
+          "text": "Washrooms above tile",
+          "plug": 0
+        },
+        {
+          "text": "Kitchens 108 and 201",
+          "plug": 0
+        },
+        {
+          "text": "Priority 3: second floor corridors, conference room 205, offices 206 to 211",
+          "plug": 0
+        }
+      ],
+      "bidders": [],
+      "selectedBidderId": null,
+      "source": "estimator",
+      "status": "check"
+    },
+    {
+      "id": "b4",
+      "trade": "Toilet partitions",
+      "division": "10",
+      "alternateId": null,
+      "scopeItems": [
+        {
+          "text": "Remove and replace 3 compartments and 2 urinal screens, material to be confirmed",
+          "plug": 0
+        }
+      ],
+      "bidders": [],
+      "selectedBidderId": null,
+      "source": "estimator",
+      "status": "check"
+    },
+    {
+      "id": "b5",
+      "trade": "Cabinets and countertops",
+      "division": "12",
+      "alternateId": null,
+      "scopeItems": [
+        {
+          "text": "Kitchen 108: about 42 lf base and upper, with countertop",
+          "plug": 0
+        },
+        {
+          "text": "Kitchen 201: about 20 lf base and upper, with countertop",
+          "plug": 0
+        },
+        {
+          "text": "Washroom vanity tops, about 12 lf with two lavatories each",
+          "plug": 0
+        }
+      ],
+      "bidders": [],
+      "selectedBidderId": null,
+      "source": "estimator",
+      "status": "check"
+    },
+    {
+      "id": "b6",
+      "trade": "Flooring",
+      "division": "09",
+      "alternateId": null,
+      "scopeItems": [
+        {
+          "text": "Kitchens 108 and 201, about 625 sf, product to be confirmed",
+          "plug": 0
+        },
+        {
+          "text": "Priority 3: second floor corridors and offices, about 2,010 sf",
+          "plug": 0
+        }
+      ],
+      "bidders": [],
+      "selectedBidderId": null,
+      "source": "estimator",
+      "status": "check"
+    }
+  ],
+  "risks": [
+    {
+      "id": "k1",
+      "risk": "Damaged wall board or old pipes behind washroom tile once it comes off",
+      "likelyCost": 0,
+      "inPrice": 0
+    },
+    {
+      "id": "k2",
+      "risk": "Hazardous materials found during demolition (no report seen yet)",
+      "likelyCost": 0,
+      "inPrice": 0
+    },
+    {
+      "id": "k3",
+      "risk": "Industrial site access: orientation, permits to work and escorts slow the crew",
+      "likelyCost": 0,
+      "inPrice": 0
+    },
+    {
+      "id": "k4",
+      "risk": "Priority 2 and 3 quantities scaled from a phone photo; could be 15% off either way",
+      "likelyCost": 0,
+      "inPrice": 0
+    }
+  ],
+  "rfis": [
+    {
+      "id": "q1",
+      "question": "Please confirm the scope by priority as marked on the plan: green (kitchens 108 and 201, men's washrooms 102 and 203), orange (tile in entrance, corridors, control room 105, stair), blue (second floor corridors, conference 205, offices 206 to 211).",
+      "reference": "Marked-up plan photo",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q2",
+      "question": "The women's washroom 202 is not marked. Is it in scope?",
+      "reference": "Marked-up plan, second floor",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q3",
+      "question": "Floor finishes: what product for the kitchens and the Priority 3 offices and corridors (sheet vinyl, VCT, LVP or carpet tile)? Floor and wall tile selection and size?",
+      "reference": "All priorities",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q4",
+      "question": "Is the 4 ft wall tile wainscot replaced with new tile at the same height, or removed and the walls finished and painted?",
+      "reference": "Washrooms, video",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q5",
+      "question": "Toilet partitions: replace, and in what material (powder-coated steel, plastic laminate, solid plastic)?",
+      "reference": "Video: \"yet to be decided\"",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q6",
+      "question": "Washroom 2 drawing shows two toilets; the photo shows one urinal and one toilet. Which is right, and what fixtures are wanted?",
+      "reference": "Washroom 2",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q7",
+      "question": "Plumbing fixtures and washroom accessories: does Air Liquide supply them, or does Steadfast? Any models or standards to match?",
+      "reference": "Washrooms",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q8",
+      "question": "Kitchen 108: are the oak cabinets and tall pantry included, and do new cabinets need to match the white plastic laminate? Countertop material, backsplash, sink and faucet?",
+      "reference": "Kitchen 1, photos 13 to 17",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q9",
+      "question": "Ceiling heights in each room, and do the T-bar ceilings and lights stay as they are?",
+      "reference": "All rooms",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q10",
+      "question": "Stairs: what does \"tile\" mean on the steel stair, new rubber treads and risers, or the landings only?",
+      "reference": "Marked-up plan, orange on stair",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q11",
+      "question": "Is there a hazardous materials report for the building? One is needed before demolition.",
+      "reference": "General",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q12",
+      "question": "Site rules: safety orientation, contractor prequalification, working hours, and can one men's washroom stay open while the other is done?",
+      "reference": "General",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q13",
+      "question": "Bid due date, bid form, contract form, insurance and any bonding?",
+      "reference": "General",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q14",
+      "question": "Are any electrical or ventilation changes wanted (washroom lights, exhaust fans, kitchen outlets)? Currently excluded.",
+      "reference": "General",
+      "status": "open",
+      "answer": ""
+    },
+    {
+      "id": "q15",
+      "question": "Who pulls the building permit, and is one needed?",
+      "reference": "General",
+      "status": "open",
+      "answer": ""
+    }
+  ],
+  "exclusions": [
+    "Hazardous materials testing and abatement",
+    "Electrical, lighting and ventilation work unless listed",
+    "Ceiling replacement",
+    "Appliances and furniture moving",
+    "Work outside normal weekday hours"
+  ],
+  "assumptions": [
+    "Building stays occupied; one men's washroom kept open at a time",
+    "Wall tile wainscot 4 ft high, read from photos",
+    "Ceiling heights 9 ft (10 ft in kitchen 108) until confirmed",
+    "Upper kitchen cabinets the same length as the base cabinets",
+    "Priority 2 and 3 quantities are rough and will be measured on site before the final price"
+  ],
+  "clarifications": [
+    "Priority 2 and Priority 3 are priced as separate add-on prices so the client can choose"
+  ],
+  "manualChecks": {
+    "cashReviewed": false
+  }
+}

@@ -1,0 +1,1400 @@
+{
+ "format": "steadfast-estimator-import",
+ "version": 1,
+ "job": "Air Liquide Scotford admin building",
+ "preparedBy": "Claude estimator",
+ "date": "2026-10-23",
+ "summary": "First pass from Kamal's four room drawings, 26 site photos, the washroom video and the marked-up plan. Base bid = Priority 1 (green: two kitchens and two men's washrooms). Alternate 1 = Priority 2 (orange: tile, ground floor entrance, corridors, control room, stairs). Alternate 2 = Priority 3 (blue: floors and paint, second floor offices and corridors). No costs: the price book is still blank.",
+ "sheets": [
+  {
+   "sheet": "Kitchen 1",
+   "scaleLabel": "1:40",
+   "basis": "No title block. Wall faces measured against two dimension strings on the sheet; both agree with 1:40 on A3 within 1/4\""
+  },
+  {
+   "sheet": "Kitchen 2",
+   "scaleLabel": "1:40",
+   "basis": "No title block. Wall faces measured against two dimension strings on the sheet; both agree with 1:40 on A3 within 1/4\""
+  },
+  {
+   "sheet": "Washroom 1",
+   "scaleLabel": "1:40",
+   "basis": "No title block. Wall faces measured against two dimension strings on the sheet; both agree with 1:40 on A3 within 1/4\""
+  },
+  {
+   "sheet": "Washroom 2",
+   "scaleLabel": "1:40",
+   "basis": "No title block. Wall faces measured against two dimension strings on the sheet; both agree with 1:40 on A3 within 1/4\""
+  }
+ ],
+ "alternates": [
+  {
+   "name": "Priority 2: tile",
+   "description": "Orange on the marked-up plan: new floor tile in the ground floor main entrance 101, corridors 104 and by electrical room 107, control room 105, and the main stair.",
+   "sign": "add"
+  },
+  {
+   "name": "Priority 3: floors and paint",
+   "description": "Blue on the marked-up plan: new flooring and wall paint in second floor corridors, conference room 205 and offices 206 to 211.",
+   "sign": "add"
+  }
+ ],
+ "conditions": [
+  {
+   "name": "Kitchen cabinets and countertop, new",
+   "measure": "length",
+   "assembly": "Kitchen cabinets, base and upper, with countertop",
+   "division": "12",
+   "location": "Kitchens",
+   "heightFt": null,
+   "alternate": null
+  },
+  {
+   "name": "Remove kitchen cabinets",
+   "measure": "length",
+   "assembly": "Remove cabinets",
+   "division": "02",
+   "location": "Kitchens",
+   "heightFt": null,
+   "alternate": null
+  },
+  {
+   "name": "Plumbing fixtures, washrooms and kitchens",
+   "measure": "count",
+   "assembly": "Plumbing fixture",
+   "division": "22",
+   "location": "Priority 1 rooms",
+   "heightFt": null,
+   "alternate": null
+  },
+  {
+   "name": "Wall tile wainscot 4 ft, washrooms",
+   "measure": "wall",
+   "assembly": "Floor tile",
+   "division": "09",
+   "location": "Washrooms",
+   "heightFt": 4,
+   "alternate": null
+  },
+  {
+   "name": "Paint walls above tile, washrooms",
+   "measure": "wall",
+   "assembly": "Paint walls, 2 coats",
+   "division": "09",
+   "location": "Washrooms",
+   "heightFt": 5,
+   "alternate": null
+  },
+  {
+   "name": "Remove flooring, Priority 1 rooms",
+   "measure": "area",
+   "assembly": "Remove flooring",
+   "division": "02",
+   "location": "Priority 1 rooms",
+   "heightFt": null,
+   "alternate": null
+  }
+ ],
+ "measurements": [
+  {
+   "condition": "Kitchen cabinets and countertop, new",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.294,
+     0.245
+    ],
+    [
+     0.573,
+     0.245
+    ]
+   ],
+   "statedQty": 15.42,
+   "deduct": false,
+   "note": "Back wall run",
+   "basis": "Traced at 1:40 (checked against the dimension strings). Upper cabinets assumed the same length as base",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Remove kitchen cabinets",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.294,
+     0.245
+    ],
+    [
+     0.573,
+     0.245
+    ]
+   ],
+   "statedQty": 15.42,
+   "deduct": false,
+   "note": "Back wall run",
+   "basis": "Traced at 1:40 (checked against the dimension strings)",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Kitchen cabinets and countertop, new",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.313,
+     0.411
+    ],
+    [
+     0.313,
+     0.815
+    ]
+   ],
+   "statedQty": 15.74,
+   "deduct": false,
+   "note": "Left wall run (oak cabinets and tall pantry in photos)",
+   "basis": "Traced at 1:40 (checked against the dimension strings). Upper cabinets assumed the same length as base",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Remove kitchen cabinets",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.313,
+     0.411
+    ],
+    [
+     0.313,
+     0.815
+    ]
+   ],
+   "statedQty": 15.74,
+   "deduct": false,
+   "note": "Left wall run (oak cabinets and tall pantry in photos)",
+   "basis": "Traced at 1:40 (checked against the dimension strings)",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Kitchen cabinets and countertop, new",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.477,
+     0.436
+    ],
+    [
+     0.573,
+     0.436
+    ]
+   ],
+   "statedQty": 5.32,
+   "deduct": false,
+   "note": "Peninsula beside range",
+   "basis": "Traced at 1:40 (checked against the dimension strings). Upper cabinets assumed the same length as base",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Remove kitchen cabinets",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.477,
+     0.436
+    ],
+    [
+     0.573,
+     0.436
+    ]
+   ],
+   "statedQty": 5.32,
+   "deduct": false,
+   "note": "Peninsula beside range",
+   "basis": "Traced at 1:40 (checked against the dimension strings)",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Kitchen cabinets and countertop, new",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.458,
+     0.465
+    ],
+    [
+     0.458,
+     0.601
+    ]
+   ],
+   "statedQty": 5.3,
+   "deduct": false,
+   "note": "Peninsula return",
+   "basis": "Traced at 1:40 (checked against the dimension strings). Upper cabinets assumed the same length as base",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Remove kitchen cabinets",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.458,
+     0.465
+    ],
+    [
+     0.458,
+     0.601
+    ]
+   ],
+   "statedQty": 5.3,
+   "deduct": false,
+   "note": "Peninsula return",
+   "basis": "Traced at 1:40 (checked against the dimension strings)",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Kitchen cabinets and countertop, new",
+   "sheet": "Kitchen 2",
+   "points": [
+    [
+     0.371,
+     0.66
+    ],
+    [
+     0.561,
+     0.66
+    ]
+   ],
+   "statedQty": 10.45,
+   "deduct": false,
+   "note": "Bottom wall run",
+   "basis": "Dimension 10'-5 7/16\" on Kitchen 2. Uppers assumed same length (photos show uppers on both walls)",
+   "confidence": "high"
+  },
+  {
+   "condition": "Kitchen cabinets and countertop, new",
+   "sheet": "Kitchen 2",
+   "points": [
+    [
+     0.579,
+     0.441
+    ],
+    [
+     0.579,
+     0.686
+    ]
+   ],
+   "statedQty": 9.46,
+   "deduct": false,
+   "note": "Right wall run with sink",
+   "basis": "Dimension 9'-5 1/2\" on Kitchen 2",
+   "confidence": "high"
+  },
+  {
+   "condition": "Remove kitchen cabinets",
+   "sheet": "Kitchen 2",
+   "points": [
+    [
+     0.371,
+     0.66
+    ],
+    [
+     0.561,
+     0.66
+    ]
+   ],
+   "statedQty": 10.45,
+   "deduct": false,
+   "note": "Bottom wall run",
+   "basis": "Dimension 10'-5 7/16\" on Kitchen 2",
+   "confidence": "high"
+  },
+  {
+   "condition": "Remove kitchen cabinets",
+   "sheet": "Kitchen 2",
+   "points": [
+    [
+     0.579,
+     0.441
+    ],
+    [
+     0.579,
+     0.686
+    ]
+   ],
+   "statedQty": 9.46,
+   "deduct": false,
+   "note": "Right wall run with sink",
+   "basis": "Dimension 9'-5 1/2\" on Kitchen 2",
+   "confidence": "high"
+  },
+  {
+   "condition": "Plumbing fixtures, washrooms and kitchens",
+   "sheet": "Washroom 1",
+   "points": [
+    [
+     0.461,
+     0.494
+    ],
+    [
+     0.518,
+     0.494
+    ],
+    [
+     0.612,
+     0.499
+    ],
+    [
+     0.612,
+     0.54
+    ],
+    [
+     0.601,
+     0.618
+    ],
+    [
+     0.601,
+     0.702
+    ],
+    [
+     0.588,
+     0.786
+    ]
+   ],
+   "statedQty": 7,
+   "deduct": false,
+   "note": "2 lavatories, 2 urinals, 2 toilets, 1 shower",
+   "basis": "Counted on Washroom 1 and in the video",
+   "confidence": "high"
+  },
+  {
+   "condition": "Plumbing fixtures, washrooms and kitchens",
+   "sheet": "Washroom 2",
+   "points": [
+    [
+     0.366,
+     0.534
+    ],
+    [
+     0.416,
+     0.534
+    ],
+    [
+     0.558,
+     0.43
+    ],
+    [
+     0.548,
+     0.513
+    ]
+   ],
+   "statedQty": 4,
+   "deduct": false,
+   "note": "2 lavatories, 2 water closets or 1 urinal and 1 toilet (see RFI)",
+   "basis": "Counted on Washroom 2; photo shows a urinal",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Plumbing fixtures, washrooms and kitchens",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.597,
+     0.289
+    ]
+   ],
+   "statedQty": 1,
+   "deduct": false,
+   "note": "Kitchen sink, reset in new countertop",
+   "basis": "Sink in photos 13 to 15; not drawn on Kitchen 1",
+   "confidence": "low"
+  },
+  {
+   "condition": "Plumbing fixtures, washrooms and kitchens",
+   "sheet": "Kitchen 2",
+   "points": [
+    [
+     0.578,
+     0.511
+    ]
+   ],
+   "statedQty": 1,
+   "deduct": false,
+   "note": "Kitchen sink, reset in new countertop",
+   "basis": "Sink drawn on Kitchen 2",
+   "confidence": "high"
+  },
+  {
+   "condition": "Wall tile wainscot 4 ft, washrooms",
+   "sheet": "Washroom 1",
+   "points": [
+    [
+     0.367,
+     0.137
+    ],
+    [
+     0.367,
+     0.836
+    ],
+    [
+     0.623,
+     0.836
+    ],
+    [
+     0.623,
+     0.474
+    ],
+    [
+     0.44,
+     0.474
+    ],
+    [
+     0.44,
+     0.137
+    ]
+   ],
+   "statedQty": 79,
+   "deduct": false,
+   "note": "Main room and entry passage, less door",
+   "basis": "Dimensions 14'-2\", 14'-1 1/8\", 27'-1\", 3'-6 7/8\" on Washroom 1. Tile height 4 ft read from photos",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Wall tile wainscot 4 ft, washrooms",
+   "sheet": "Washroom 2",
+   "points": [
+    [
+     0.342,
+     0.275
+    ],
+    [
+     0.342,
+     0.557
+    ],
+    [
+     0.569,
+     0.557
+    ],
+    [
+     0.569,
+     0.275
+    ],
+    [
+     0.342,
+     0.275
+    ]
+   ],
+   "statedQty": 44,
+   "deduct": false,
+   "note": "Room perimeter less door",
+   "basis": "Dimensions 12'-6\" x 11'-0\" on Washroom 2. Tile height 4 ft read from photos",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Paint walls above tile, washrooms",
+   "sheet": "Washroom 1",
+   "points": [
+    [
+     0.367,
+     0.137
+    ],
+    [
+     0.367,
+     0.836
+    ],
+    [
+     0.623,
+     0.836
+    ],
+    [
+     0.623,
+     0.474
+    ],
+    [
+     0.44,
+     0.474
+    ],
+    [
+     0.44,
+     0.137
+    ]
+   ],
+   "statedQty": 79,
+   "deduct": false,
+   "note": "Main room and entry passage, less door",
+   "basis": "Dimensions 14'-2\", 14'-1 1/8\", 27'-1\", 3'-6 7/8\" on Washroom 1. Tile height 4 ft read from photos",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Paint walls above tile, washrooms",
+   "sheet": "Washroom 2",
+   "points": [
+    [
+     0.342,
+     0.275
+    ],
+    [
+     0.342,
+     0.557
+    ],
+    [
+     0.569,
+     0.557
+    ],
+    [
+     0.569,
+     0.275
+    ],
+    [
+     0.342,
+     0.275
+    ]
+   ],
+   "statedQty": 44,
+   "deduct": false,
+   "note": "Room perimeter less door",
+   "basis": "Dimensions 12'-6\" x 11'-0\" on Washroom 2. Tile height 4 ft read from photos",
+   "confidence": "medium"
+  },
+  {
+   "condition": "Remove flooring, Priority 1 rooms",
+   "sheet": "Kitchen 1",
+   "points": [
+    [
+     0.294,
+     0.216
+    ],
+    [
+     0.616,
+     0.216
+    ],
+    [
+     0.616,
+     0.815
+    ],
+    [
+     0.294,
+     0.815
+    ]
+   ],
+   "statedQty": 414,
+   "deduct": false,
+   "note": "Kitchen 108",
+   "basis": "Dimensions 17'-9\" x 23'-4\"",
+   "confidence": "high"
+  },
+  {
+   "condition": "Remove flooring, Priority 1 rooms",
+   "sheet": "Kitchen 2",
+   "points": [
+    [
+     0.371,
+     0.252
+    ],
+    [
+     0.597,
+     0.252
+    ],
+    [
+     0.597,
+     0.686
+    ],
+    [
+     0.371,
+     0.686
+    ]
+   ],
+   "statedQty": 211,
+   "deduct": false,
+   "note": "Kitchen 201",
+   "basis": "Dimensions 12'-5 13/16\" x 16'-11\"",
+   "confidence": "high"
+  },
+  {
+   "condition": "Remove flooring, Priority 1 rooms",
+   "sheet": "Washroom 1",
+   "points": [
+    [
+     0.367,
+     0.137
+    ],
+    [
+     0.44,
+     0.137
+    ],
+    [
+     0.44,
+     0.474
+    ],
+    [
+     0.623,
+     0.474
+    ],
+    [
+     0.623,
+     0.836
+    ],
+    [
+     0.367,
+     0.836
+    ]
+   ],
+   "statedQty": 246,
+   "deduct": false,
+   "note": "Men's washroom 102 and entry passage",
+   "basis": "Dimensions on Washroom 1",
+   "confidence": "high"
+  },
+  {
+   "condition": "Remove flooring, Priority 1 rooms",
+   "sheet": "Washroom 2",
+   "points": [
+    [
+     0.342,
+     0.275
+    ],
+    [
+     0.569,
+     0.275
+    ],
+    [
+     0.569,
+     0.557
+    ],
+    [
+     0.342,
+     0.557
+    ]
+   ],
+   "statedQty": 138,
+   "deduct": false,
+   "note": "Men's washroom 203",
+   "basis": "Dimensions 12'-6\" x 11'-0\"",
+   "confidence": "high"
+  }
+ ],
+ "rooms": [
+  {
+   "name": "Kitchen 108 (shop lunchroom)",
+   "location": "Ground floor",
+   "lengthFt": 23.33,
+   "widthFt": 17.75,
+   "heightFt": 10,
+   "doors": 2,
+   "windows": 0,
+   "floor": "VCT or sheet vinyl",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": null,
+   "basis": "Kitchen 1 dimensions. Height 10 ft assumed (open ceiling, see RFI). Floor type assumed"
+  },
+  {
+   "name": "Kitchen 201",
+   "location": "Second floor",
+   "lengthFt": 16.92,
+   "widthFt": 12.48,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 1,
+   "floor": "VCT or sheet vinyl",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": null,
+   "basis": "Kitchen 2 dimensions. Height 9 ft assumed (T-bar ceiling). Floor type assumed"
+  },
+  {
+   "name": "Men's washroom 102",
+   "location": "Ground floor",
+   "lengthFt": null,
+   "widthFt": null,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 0,
+   "floor": "Floor tile",
+   "walls": null,
+   "ceiling": null,
+   "base": null,
+   "alternate": null,
+   "basis": "Washroom 1: main room 14'-2\" x 14'-1 1/8\" plus entry passage 3'-6 7/8\" x 13'-0\"",
+   "areaSf": 246,
+   "perimeterLf": 82
+  },
+  {
+   "name": "Men's washroom 203",
+   "location": "Second floor",
+   "lengthFt": 12.5,
+   "widthFt": 11,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 0,
+   "floor": "Floor tile",
+   "walls": null,
+   "ceiling": null,
+   "base": null,
+   "alternate": null,
+   "basis": "Washroom 2 dimensions 12'-6\" x 11'-0\""
+  },
+  {
+   "name": "Main entrance 101",
+   "location": "Ground floor",
+   "lengthFt": 16,
+   "widthFt": 15.3,
+   "heightFt": 9,
+   "doors": 2,
+   "windows": 0,
+   "floor": "Floor tile",
+   "walls": null,
+   "ceiling": null,
+   "base": null,
+   "alternate": "Priority 2: tile",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Stair footprint left out"
+  },
+  {
+   "name": "Corridor outside washroom 102 and lab 103",
+   "location": "Ground floor",
+   "lengthFt": 24.3,
+   "widthFt": 4.9,
+   "heightFt": 9,
+   "doors": 3,
+   "windows": 0,
+   "floor": "Floor tile",
+   "walls": null,
+   "ceiling": null,
+   "base": null,
+   "alternate": "Priority 2: tile",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed."
+  },
+  {
+   "name": "Corridor 104",
+   "location": "Ground floor",
+   "lengthFt": 20,
+   "widthFt": 4.3,
+   "heightFt": 9,
+   "doors": 2,
+   "windows": 0,
+   "floor": "Floor tile",
+   "walls": null,
+   "ceiling": null,
+   "base": null,
+   "alternate": "Priority 2: tile",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed."
+  },
+  {
+   "name": "Corridor by electrical room 107 to shop 108",
+   "location": "Ground floor",
+   "lengthFt": 42.3,
+   "widthFt": 4.3,
+   "heightFt": 9,
+   "doors": 3,
+   "windows": 0,
+   "floor": "Floor tile",
+   "walls": null,
+   "ceiling": null,
+   "base": null,
+   "alternate": "Priority 2: tile",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed."
+  },
+  {
+   "name": "Control room 105",
+   "location": "Ground floor",
+   "lengthFt": 24.9,
+   "widthFt": 19.4,
+   "heightFt": 9,
+   "doors": 2,
+   "windows": 1,
+   "floor": "Floor tile",
+   "walls": null,
+   "ceiling": null,
+   "base": null,
+   "alternate": "Priority 2: tile",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Orange mark is on the room name only; confirm it is in scope"
+  },
+  {
+   "name": "Corridor 216",
+   "location": "Second floor",
+   "lengthFt": 28.5,
+   "widthFt": 5.25,
+   "heightFt": 9,
+   "doors": 4,
+   "windows": 0,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Corridor 218",
+   "location": "Second floor",
+   "lengthFt": 41.7,
+   "widthFt": 5.25,
+   "heightFt": 9,
+   "doors": 6,
+   "windows": 0,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Corridor south, outside offices 209 to 211",
+   "location": "Second floor",
+   "lengthFt": 29.2,
+   "widthFt": 5.25,
+   "heightFt": 9,
+   "doors": 5,
+   "windows": 0,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Conference room 205",
+   "location": "Second floor",
+   "lengthFt": 20,
+   "widthFt": 18,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 2,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Office 206",
+   "location": "Second floor",
+   "lengthFt": 17.4,
+   "widthFt": 11.8,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 1,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Office 207",
+   "location": "Second floor",
+   "lengthFt": 17.4,
+   "widthFt": 10.5,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 1,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Office 208",
+   "location": "Second floor",
+   "lengthFt": 17.4,
+   "widthFt": 11.8,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 1,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Office 209",
+   "location": "Second floor",
+   "lengthFt": 16.7,
+   "widthFt": 9.8,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 1,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Office 210",
+   "location": "Second floor",
+   "lengthFt": 16.7,
+   "widthFt": 8.2,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 1,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  },
+  {
+   "name": "Office 211",
+   "location": "Second floor",
+   "lengthFt": 16.7,
+   "widthFt": 13.8,
+   "heightFt": 9,
+   "doors": 1,
+   "windows": 1,
+   "floor": "LVP flooring with underlay",
+   "walls": "Paint walls, 2 coats",
+   "ceiling": null,
+   "base": "Rubber base 4\"",
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Scaled roughly from Kamal's phone photo of the 2000 electrical layout 7490-1651-163-D (grid 7111 mm x 6096 mm). Site measure needed. Height 9 ft assumed. Floor type assumed"
+  }
+ ],
+ "lines": [
+  {
+   "division": "02",
+   "description": "Remove wall tile, washrooms",
+   "qty": 492,
+   "unit": "sf",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": null,
+   "basis": "123 lf of wainscot x 4 ft (Washroom 1 and 2). Kamal in video: \"all the tiles come out\""
+  },
+  {
+   "division": "02",
+   "description": "Remove plumbing fixtures (lavatories, urinals, toilets, shower)",
+   "qty": 11,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Fixture counts on Washroom 1 and 2. Video: sinks, urinals and toilets come out"
+  },
+  {
+   "division": "02",
+   "description": "Remove washroom vanity counters",
+   "qty": 2,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": null,
+   "basis": "One vanity in each men's washroom (photos 5, 19)"
+  },
+  {
+   "division": "02",
+   "description": "Remove toilet partitions",
+   "qty": 3,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Two compartments in washroom 102, one in 203. Video: partitions \"yet to be decided but we have to quote these in\""
+  },
+  {
+   "division": "10",
+   "description": "Toilet partitions, new, supply and install",
+   "qty": 3,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Same count as removed. Material to be confirmed (RFI)"
+  },
+  {
+   "division": "10",
+   "description": "Urinal privacy screens, supply and install",
+   "qty": 2,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Screens beside urinals in photos 6 and 19. Confirm"
+  },
+  {
+   "division": "22",
+   "description": "Shower stall, replace",
+   "qty": 1,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Fibreglass shower in washroom 102 (photos 23, 24, video)"
+  },
+  {
+   "division": "12",
+   "description": "Washroom vanity countertop with two lavatories",
+   "qty": 12,
+   "unit": "lf",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Washroom 1 about 6'-6\", Washroom 2 about 5'-6\", traced at 1:40"
+  },
+  {
+   "division": "10",
+   "description": "Washroom accessories (mirrors, dispensers, grab bar), remove and reinstall",
+   "qty": 2,
+   "unit": "lot",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Existing accessories in photos. New supply not assumed (RFI)"
+  },
+  {
+   "division": "09",
+   "description": "Tile base, washrooms",
+   "qty": 123,
+   "unit": "lf",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Washroom perimeters 79 + 44 lf"
+  },
+  {
+   "division": "09",
+   "description": "Floor levelling and prep under new flooring",
+   "qty": 1009,
+   "unit": "sf",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Priority 1 floor area. Allowance for old VCT adhesive; confirm on site"
+  },
+  {
+   "division": "02",
+   "description": "Remove existing floor tile, Priority 2 areas",
+   "qty": 1115,
+   "unit": "sf",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": "Priority 2: tile",
+   "basis": "Sum of Priority 2 room areas. Low: from photo of plan"
+  },
+  {
+   "division": "09",
+   "description": "Stair treads and risers, rubber, supply and install",
+   "qty": 28,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": "Priority 2: tile",
+   "basis": "Floor-to-floor 5.32 m (EL 101.000 to 106.320 on the plan) gives about 30 risers, 28 treads in a U-stair. Existing steel treads (photos 8 to 12)"
+  },
+  {
+   "division": "09",
+   "description": "Stair landing flooring",
+   "qty": 34,
+   "unit": "sf",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": "Priority 2: tile",
+   "basis": "Mid landing about 1.2 m x 2.6 m from photos. Low"
+  },
+  {
+   "division": "02",
+   "description": "Remove existing flooring, Priority 3 areas",
+   "qty": 2006,
+   "unit": "sf",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": "Priority 3: floors and paint",
+   "basis": "Sum of Priority 3 room areas. Low: from photo of plan"
+  },
+  {
+   "division": "01",
+   "description": "Disposal bin (20 yd)",
+   "qty": 3,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "E",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Two for washroom and kitchen demolition, one at finish. Priorities 2 and 3 may need more"
+  },
+  {
+   "division": "01",
+   "description": "Floor and site protection",
+   "qty": 1009,
+   "unit": "sf",
+   "unitCost": null,
+   "type": "M",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Priority 1 floor area plus routes; occupied building"
+  },
+  {
+   "division": "01",
+   "description": "Final clean",
+   "qty": 1009,
+   "unit": "sf",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Priority 1 floor area"
+  },
+  {
+   "division": "01",
+   "description": "Building permit",
+   "qty": 1,
+   "unit": "ea",
+   "unitCost": null,
+   "type": "S",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Strathcona County. Confirm whether needed and who pulls it (RFI)"
+  },
+  {
+   "division": "01",
+   "description": "Site safety orientation and contractor prequalification",
+   "qty": 1,
+   "unit": "lot",
+   "unitCost": null,
+   "type": "L",
+   "allowance": false,
+   "alternate": null,
+   "basis": "Industrial site (Air Liquide Scotford). Orientation hours for every worker"
+  }
+ ],
+ "bids": [
+  {
+   "trade": "Plumbing",
+   "division": "22",
+   "scopeItems": [
+    {
+     "text": "Disconnect and remove 2 urinals, 2 to 3 toilets, 4 lavatories, 1 shower",
+     "plug": 0
+    },
+    {
+     "text": "Supply and install new fixtures per final selection",
+     "plug": 0
+    },
+    {
+     "text": "Replace shower stall in washroom 102",
+     "plug": 0
+    },
+    {
+     "text": "Reset two kitchen sinks in new countertops",
+     "plug": 0
+    },
+    {
+     "text": "Cap and protect during tile work",
+     "plug": 0
+    }
+   ],
+   "bidders": []
+  },
+  {
+   "trade": "Tile",
+   "division": "09",
+   "scopeItems": [
+    {
+     "text": "Remove floor and wall tile in men's washrooms 102 and 203",
+     "plug": 0
+    },
+    {
+     "text": "New floor tile 384 sf and 4 ft wall tile wainscot about 492 sf",
+     "plug": 0
+    },
+    {
+     "text": "Tile base 123 lf",
+     "plug": 0
+    },
+    {
+     "text": "Priority 2: floor tile in ground floor entrance, corridors and control room (site measure)",
+     "plug": 0
+    }
+   ],
+   "bidders": []
+  },
+  {
+   "trade": "Painting",
+   "division": "09",
+   "scopeItems": [
+    {
+     "text": "Washrooms above tile",
+     "plug": 0
+    },
+    {
+     "text": "Kitchens 108 and 201",
+     "plug": 0
+    },
+    {
+     "text": "Priority 3: second floor corridors, conference room 205, offices 206 to 211",
+     "plug": 0
+    }
+   ],
+   "bidders": []
+  },
+  {
+   "trade": "Toilet partitions",
+   "division": "10",
+   "scopeItems": [
+    {
+     "text": "Remove and replace 3 compartments and 2 urinal screens, material to be confirmed",
+     "plug": 0
+    }
+   ],
+   "bidders": []
+  },
+  {
+   "trade": "Cabinets and countertops",
+   "division": "12",
+   "scopeItems": [
+    {
+     "text": "Kitchen 108: about 42 lf base and upper, with countertop",
+     "plug": 0
+    },
+    {
+     "text": "Kitchen 201: about 20 lf base and upper, with countertop",
+     "plug": 0
+    },
+    {
+     "text": "Washroom vanity tops, about 12 lf with two lavatories each",
+     "plug": 0
+    }
+   ],
+   "bidders": []
+  },
+  {
+   "trade": "Flooring",
+   "division": "09",
+   "scopeItems": [
+    {
+     "text": "Kitchens 108 and 201, about 625 sf, product to be confirmed",
+     "plug": 0
+    },
+    {
+     "text": "Priority 3: second floor corridors and offices, about 2,010 sf",
+     "plug": 0
+    }
+   ],
+   "bidders": []
+  }
+ ],
+ "rfis": [
+  {
+   "question": "Please confirm the scope by priority as marked on the plan: green (kitchens 108 and 201, men's washrooms 102 and 203), orange (tile in entrance, corridors, control room 105, stair), blue (second floor corridors, conference 205, offices 206 to 211).",
+   "reference": "Marked-up plan photo"
+  },
+  {
+   "question": "The women's washroom 202 is not marked. Is it in scope?",
+   "reference": "Marked-up plan, second floor"
+  },
+  {
+   "question": "Floor finishes: what product for the kitchens and the Priority 3 offices and corridors (sheet vinyl, VCT, LVP or carpet tile)? Floor and wall tile selection and size?",
+   "reference": "All priorities"
+  },
+  {
+   "question": "Is the 4 ft wall tile wainscot replaced with new tile at the same height, or removed and the walls finished and painted?",
+   "reference": "Washrooms, video"
+  },
+  {
+   "question": "Toilet partitions: replace, and in what material (powder-coated steel, plastic laminate, solid plastic)?",
+   "reference": "Video: \"yet to be decided\""
+  },
+  {
+   "question": "Washroom 2 drawing shows two toilets; the photo shows one urinal and one toilet. Which is right, and what fixtures are wanted?",
+   "reference": "Washroom 2"
+  },
+  {
+   "question": "Plumbing fixtures and washroom accessories: does Air Liquide supply them, or does Steadfast? Any models or standards to match?",
+   "reference": "Washrooms"
+  },
+  {
+   "question": "Kitchen 108: are the oak cabinets and tall pantry included, and do new cabinets need to match the white plastic laminate? Countertop material, backsplash, sink and faucet?",
+   "reference": "Kitchen 1, photos 13 to 17"
+  },
+  {
+   "question": "Ceiling heights in each room, and do the T-bar ceilings and lights stay as they are?",
+   "reference": "All rooms"
+  },
+  {
+   "question": "Stairs: what does \"tile\" mean on the steel stair, new rubber treads and risers, or the landings only?",
+   "reference": "Marked-up plan, orange on stair"
+  },
+  {
+   "question": "Is there a hazardous materials report for the building? One is needed before demolition.",
+   "reference": "General"
+  },
+  {
+   "question": "Site rules: safety orientation, contractor prequalification, working hours, and can one men's washroom stay open while the other is done?",
+   "reference": "General"
+  },
+  {
+   "question": "Bid due date, bid form, contract form, insurance and any bonding?",
+   "reference": "General"
+  },
+  {
+   "question": "Are any electrical or ventilation changes wanted (washroom lights, exhaust fans, kitchen outlets)? Currently excluded.",
+   "reference": "General"
+  },
+  {
+   "question": "Who pulls the building permit, and is one needed?",
+   "reference": "General"
+  }
+ ],
+ "risks": [
+  {
+   "risk": "Damaged wall board or old pipes behind washroom tile once it comes off",
+   "likelyCost": 0,
+   "inPrice": 0
+  },
+  {
+   "risk": "Hazardous materials found during demolition (no report seen yet)",
+   "likelyCost": 0,
+   "inPrice": 0
+  },
+  {
+   "risk": "Industrial site access: orientation, permits to work and escorts slow the crew",
+   "likelyCost": 0,
+   "inPrice": 0
+  },
+  {
+   "risk": "Priority 2 and 3 quantities scaled from a phone photo; could be 15% off either way",
+   "likelyCost": 0,
+   "inPrice": 0
+  }
+ ],
+ "exclusions": [
+  "Hazardous materials testing and abatement",
+  "Electrical, lighting and ventilation work unless listed",
+  "Ceiling replacement",
+  "Appliances and furniture moving",
+  "Work outside normal weekday hours"
+ ],
+ "assumptions": [
+  "Building stays occupied; one men's washroom kept open at a time",
+  "Wall tile wainscot 4 ft high, read from photos",
+  "Ceiling heights 9 ft (10 ft in kitchen 108) until confirmed",
+  "Upper kitchen cabinets the same length as the base cabinets",
+  "Priority 2 and 3 quantities are rough and will be measured on site before the final price"
+ ],
+ "clarifications": [
+  "Priority 2 and Priority 3 are priced as separate add-on prices so the client can choose"
+ ]
+}
