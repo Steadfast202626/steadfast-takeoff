@@ -30,7 +30,11 @@
   function select(options, value, onchange, attrs) {
     const s = el('select', attrs || {});
     for (const [v, t] of options) s.appendChild(option(v, t, String(v) === String(value === null || value === undefined ? '' : value)));
-    if (onchange) s.addEventListener('change', () => onchange(s.value));
+    // A narrow box can clip a long name, so show the chosen name on hover unless the box has its own tip.
+    const ownTitle = !!s.title;
+    const showChoice = () => { if (!ownTitle && s.selectedIndex >= 0) s.title = s.options[s.selectedIndex].text; };
+    showChoice();
+    s.addEventListener('change', () => { showChoice(); if (onchange) onchange(s.value); });
     return s;
   }
 

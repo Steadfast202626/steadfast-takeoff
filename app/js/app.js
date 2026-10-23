@@ -553,7 +553,7 @@
     if (!c) return;
     const hasMarks = app.est.measurements.some(m => m.conditionId === c.id);
 
-    form.appendChild(el('h2', { textContent: 'What you\'re measuring', title: 'Condition' }));
+    form.appendChild(el('h2', { textContent: 'Details', title: 'The chosen condition' }));
 
     const name = el('input', { name: 'name', value: c.name, required: true });
     name.addEventListener('change', () => { if (name.value.trim()) editCondition(c, x => { x.name = name.value.trim(); }); });

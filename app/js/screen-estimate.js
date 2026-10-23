@@ -58,7 +58,7 @@
     }
     const keys = [...groups.keys()].sort((a, b) => (a || 'zz').localeCompare(b || 'zz'));
     const table = el('table', { className: 'grid lines' },
-      el('thead', {}, el('tr', {}, ['Description', 'From', view.group === 'location' ? 'Division' : 'Location', 'Qty', 'Unit', 'Unit cost', 'Type', 'Total', ''].map(h => el('th', { textContent: h })))));
+      el('thead', {}, el('tr', {}, ['Description', 'From', view.group === 'location' ? 'Division' : 'Location', 'Qty', 'Unit', 'Unit cost', 'Type', 'Total', view.group === 'location' ? 'Bid' : 'Division and bid'].map(h => el('th', { textContent: h })))));
     const bidOptions = [['', 'Base bid']].concat(est.alternates.map(a => [a.id, a.name]));
     for (const k of keys) {
       const rows = groups.get(k);
