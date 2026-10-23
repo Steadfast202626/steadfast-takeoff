@@ -157,7 +157,7 @@
       if (cond) {
         const draft = v.draft;
         app.change(est => {
-          const id = window.SteadfastModel.nextId(est.measurements, 'm');
+          const id = calc.nextId(est.measurements, 'm');
           est.measurements.push({
             id, conditionId: draft.conditionId, sheetId: s.id,
             points: points.map(p => [calc.round(p[0], 6), calc.round(p[1], 6)]),

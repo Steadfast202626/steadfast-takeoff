@@ -1,13 +1,16 @@
 /*
- * Steadfast takeoff: the app. Holds the current estimate, undo, saving, and the side panels.
+ * Steadfast takeoff: the app. Holds the current estimate, undo, saving, the takeoff panels and the
+ * screen tabs. The other screens live in screen-*.js and the estimator exchange in exchange.js.
  */
 (function () {
   'use strict';
 
   const calc = window.SteadfastCalc;
-  const Model = window.SteadfastModel;
+  const Model = window.SteadfastCalc;
   const Storage = window.SteadfastStorage;
   const Drawings = window.SteadfastDrawings;
+  const Library = window.SteadfastLibrary;
+  const Screens = window.SteadfastScreens;
 
   const $ = id => document.getElementById(id);
   const MEASURE_NAMES = { area: 'Area', length: 'Length', wall: 'Wall', count: 'Count' };
@@ -17,7 +20,8 @@
   // ---------- State ----------
 
   const app = {
-    est: Model.normalize(Storage.loadJob() || Model.newEstimate()),
+    est: Model.normalize(Storage.loadJob() || Model.newEstimate(undefined, Library.get())),
+    screen: 'takeoff',
     sheetId: null,
     conditionId: null,
     selectedId: null,
@@ -146,23 +150,7 @@
 
   // ---------- Dialog helpers ----------
 
-  function ask(text, okLabel, withInput, value) {
-    const d = $('askDialog');
-    $('askText').textContent = text;
-    $('askOk').textContent = okLabel || 'OK';
-    const input = $('askInput');
-    input.hidden = !withInput;
-    input.value = value || '';
-    return new Promise(resolve => {
-      d.returnValue = '';
-      d.addEventListener('close', () => {
-        if (d.returnValue !== 'ok') return resolve(null);
-        resolve(withInput ? input.value.trim() : true);
-      }, { once: true });
-      d.showModal();
-      if (withInput) input.select();
-    });
-  }
+  const ask = window.SteadfastUI.ask;
 
   // ---------- Sheets ----------
 
@@ -291,6 +279,7 @@
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'small';
+      b.title = 'Open the same files again to re-attach them';
       b.dataset.action = 'drawings';
       b.textContent = 'Add drawings';
       box.append(p, ul, b);
@@ -651,7 +640,7 @@
     if (job.flagged) form.appendChild(el('p', { className: 'note warn', textContent: job.flagged + ' stated differs from traced by over 10%' }));
 
     const row = el('div', { className: 'row-buttons' });
-    const del = el('button', { type: 'button', className: 'danger small', textContent: 'Delete condition' });
+    const del = el('button', { type: 'button', className: 'danger small', textContent: 'Delete condition', title: 'Delete this condition and its markups' });
     del.addEventListener('click', async () => {
       const n = app.est.measurements.filter(m => m.conditionId === c.id).length;
       const ok = await ask('Delete ' + c.name + (n ? ' and its ' + n + (n === 1 ? ' markup' : ' markups') : '') + '?', 'Delete');
@@ -694,7 +683,23 @@
       box.appendChild(el('p', { className: 'note' + (q.flagged ? ' warn' : ''), textContent: 'Traced ' + calc.fmtQty(q.traced, q.mainUnit) + (q.flagged ? '. Differs by more than 10%.' : '') }));
     }
     if (m.status === 'check') {
-      box.appendChild(el('p', { className: 'note warn', textContent: 'Estimator item, waiting for check' + (m.basis ? '. ' + m.basis : '') }));
+      box.appendChild(el('p', { className: 'note warn', textContent: 'Estimator item, waiting for check' + (m.basis ? '. ' + m.basis : '') +
+        (m.confidence ? ' (' + m.confidence + ' confidence)' : '') }));
+      const onSheet = app.est.measurements.filter(x => x.sheetId === m.sheetId && x.status === 'check').length;
+      const acc = el('div', { className: 'row-buttons' });
+      const one = el('button', { type: 'button', className: 'primary small', textContent: 'Accept', title: 'Accept this estimator markup' });
+      one.addEventListener('click', () => {
+        app.change(() => { m.status = 'ok'; });
+        setStatus('Accepted', false, 3000);
+      });
+      const all = el('button', { type: 'button', className: 'small', textContent: 'Accept all on sheet (' + onSheet + ')', title: 'Accept every estimator markup on this sheet' });
+      all.addEventListener('click', async () => {
+        if (!await ask('Accept all ' + onSheet + ' estimator markups on ' + (s ? s.name : 'this sheet') + '? Check them on the drawing first.', 'Accept all')) return;
+        app.change(est => calc.acceptItems(est, (kind, item) => kind === 'measurements' && item.sheetId === m.sheetId));
+        setStatus(onSheet + ' markups accepted', false, 4000);
+      });
+      acc.append(one, all);
+      box.appendChild(acc);
     }
 
     const note = el('input', { value: m.note || '', placeholder: 'Room or detail' });
@@ -713,7 +718,23 @@
 
     const row = el('div', { className: 'row-buttons' });
     row.appendChild(el('span', { className: 'muted', textContent: s ? s.name : '' }));
-    const del = el('button', { type: 'button', className: 'danger small', textContent: 'Delete markup' });
+    if (c.measure === 'area') {
+      const linked = app.est.rooms.find(r => r.measurementId === m.id);
+      const mk = el('button', { type: 'button', className: 'small', textContent: linked ? 'Room: ' + linked.name : 'Make room',
+        title: linked ? 'Open the Rooms screen' : 'Make a room from this area' });
+      mk.addEventListener('click', () => {
+        if (linked) return app.goto('rooms');
+        app.change(est => {
+          est.rooms.push(window.SteadfastRooms.newRoom(est, {
+            name: m.note || 'Room ' + (est.rooms.length + 1), location: c.location || '', measurementId: m.id,
+            heightFt: null, alternateId: c.alternateId || null
+          }));
+        });
+        setStatus('Room added. Set its finishes on the Rooms screen.', false, 5000);
+      });
+      row.appendChild(mk);
+    }
+    const del = el('button', { type: 'button', className: 'danger small', textContent: 'Delete markup', title: 'Delete this markup (Undo brings it back)' });
     del.addEventListener('click', deleteSelected);
     row.appendChild(del);
     box.appendChild(row);
@@ -770,7 +791,7 @@
       const ok = await ask('Start a new job? The current job is only kept in this browser. Save the estimate file first if you need it.', 'Start new job');
       if (!ok) return;
     }
-    loadEstimate(Model.newEstimate());
+    loadEstimate(Model.newEstimate(undefined, Library.get()));
     openJobDialog();
   }
 
@@ -813,9 +834,94 @@
 
   // ---------- Rendering ----------
 
+  // ---------- Screens ----------
+
+  function renderTabs() {
+    document.querySelectorAll('#tabs [data-screen]').forEach(b => {
+      b.classList.toggle('active', b.dataset.screen === app.screen);
+      b.setAttribute('aria-selected', String(b.dataset.screen === app.screen));
+    });
+    $('takeoffView').hidden = app.screen !== 'takeoff';
+    $('screenView').hidden = app.screen === 'takeoff';
+    const checks = calc.releaseChecks(app.est);
+    const open = calc.openCheckCount(checks);
+    const badge = $('checksBadge');
+    badge.textContent = open ? open + ' checks open' : 'Ready to release';
+    badge.classList.toggle('warn', !!open);
+    badge.title = open ? 'Release checklist: ' + checks.filter(c => c.status === 'fail').map(c => c.label).join('; ') : 'Every release check passes';
+  }
+
+  let screenFrame = 0;
+  // Screens redraw on the next frame and keep the focused field, so Tab moves on as expected.
+  function renderScreen() {
+    if (app.screen === 'takeoff' || screenFrame) return;
+    screenFrame = requestAnimationFrame(() => {
+      screenFrame = 0;
+      const root = $('screenView');
+      const active = document.activeElement;
+      const key = active && active.dataset ? active.dataset.key : null;
+      const sel = key && typeof active.selectionStart === 'number' ? [active.selectionStart, active.selectionEnd] : null;
+      const scroll = root.scrollTop;
+      root.innerHTML = '';
+      const screen = Screens[app.screen];
+      if (screen) screen.render(root, app);
+      root.scrollTop = scroll;
+      if (key) {
+        const again = root.querySelector('[data-key="' + CSS.escape(key) + '"]');
+        if (again) {
+          again.focus();
+          if (sel && typeof again.setSelectionRange === 'function') try { again.setSelectionRange(sel[0], sel[1]); } catch (e) { /* not a text field */ }
+        }
+      }
+    });
+  }
+
+  function goto(screen) {
+    if (screen !== 'takeoff' && viewer.drafting()) viewer.cancel();
+    app.screen = screen;
+    $('screenView').scrollTop = 0;
+    renderAll();
+    if (screen === 'takeoff') viewer.fit();
+  }
+
+  function showCondition(conditionId) {
+    app.conditionId = conditionId;
+    const m = app.est.measurements.find(x => x.conditionId === conditionId && x.status === 'check') ||
+      app.est.measurements.find(x => x.conditionId === conditionId);
+    if (m && m.sheetId !== app.sheetId) { app.sheetId = m.sheetId; viewer.setSheet(m.sheetId); }
+    app.selectedId = m ? m.id : null;
+    viewer.setTool('select');
+    goto('takeoff');
+  }
+
+  function logoUrl() {
+    const img = document.querySelector('.topbar .logo');
+    try {
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth;
+      c.height = img.naturalHeight;
+      c.getContext('2d').drawImage(img, 0, 0);
+      return c.toDataURL('image/png');
+    } catch (e) {
+      return new URL('assets/steadfast-logo-dark-on-light.png', location.href).href;
+    }
+  }
+
+  function openOutput(kind) {
+    const Outputs = window.SteadfastOutputs;
+    const opts = { logoUrl: logoUrl(), showQty: !!app.showQuoteQty };
+    const html = kind === 'quote' ? Outputs.quoteHtml(app.est, opts) : Outputs.internalHtml(app.est, opts);
+    const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    const w = window.open(url, '_blank');
+    if (!w) setStatus('The browser blocked the new tab. Allow pop-ups for this site.', true, 8000);
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  }
+
   function renderAll(opts) {
     opts = opts || {};
     renderTop();
+    renderTabs();
+    if (app.screen !== 'takeoff') { renderScreen(); return; }
     renderSheets();
     renderSheetTitle();
     renderConditions();
@@ -839,6 +945,15 @@
     else if (action === 'save') saveEstimate();
     else if (action === 'new') newJob();
     else if (action === 'job') openJobDialog();
+    else if (action === 'quote') openOutput('quote');
+    else if (action === 'internal') openOutput('internal');
+    else if (window.SteadfastExchange && window.SteadfastExchange.actions[action]) window.SteadfastExchange.actions[action](app);
+  });
+
+  document.querySelectorAll('#tabs [data-screen]').forEach(b => b.addEventListener('click', () => goto(b.dataset.screen)));
+  $('checksBadge').addEventListener('click', () => {
+    goto('estimate');
+    requestAnimationFrame(() => requestAnimationFrame(() => { const c = $('checklist'); if (c) c.scrollIntoView({ block: 'start' }); }));
   });
 
   function closeMenu() {
@@ -912,6 +1027,8 @@
     if (typing(e)) return;
     if (mod && e.key.toLowerCase() === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
     if (mod && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); return; }
+    if (e.key === 'Escape') closeMenu();
+    if (app.screen !== 'takeoff') return;
     if (e.key === 'Enter') { viewer.finish(); return; }
     if (e.key === 'Escape') {
       closeMenu();
@@ -943,6 +1060,7 @@
   attachStoredDrawings();
   if (!window.pdfjsLib) setStatus('The PDF reader did not load. Photos still work.', true);
 
+  Object.assign(app, { setStatus, renderAll, renderScreen, goto, showCondition, openOutput, autosave, loadEstimate, currentSheet, showQuoteQty: true });
   app.viewer = viewer;
   window.SteadfastApp = app;   // for checking in the browser console
 })();

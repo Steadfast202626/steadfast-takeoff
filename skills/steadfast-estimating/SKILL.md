@@ -30,6 +30,24 @@ Steadfast's takeoff app saves estimates as JSON files (`"format": "steadfast-est
 - **In a chat:** produce the import file as a downloadable `.json` file (or a fenced json block if files are not available). Kamal opens it in the app with "Import from estimator".
 - **In Claude Code:** write the import file into the job's folder and run the helper (`node tools/estimate.js import ...`), then `checks`. If `scripts/` exists in this skill, the same helper is there.
 
+## The helper
+
+`scripts/estimate.js` (or `tools/estimate.js` in the Steadfast repository) reads and updates estimate files with the same maths as the app (`scripts/calc.js`). Node 20 or later, no packages. Every command takes the estimate file first and prints a short plain result.
+
+```
+node scripts/estimate.js summary  <file> [--json]       totals, margin, markup, checklist status
+node scripts/estimate.js checks   <file>                release checklist, one line per check
+node scripts/estimate.js import   <file> <import.json>  apply an import file (same rules as the app)
+node scripts/estimate.js lines    <file> [--csv]        estimate lines
+node scripts/estimate.js sheets   <file>                sheets, scales, markup counts
+node scripts/estimate.js validate <file|import.json>    check a file against the format
+```
+
+- Work by writing an import file and running `import`. Never edit the estimate file by hand, and never set a status to `"ok"`; the helper refuses an import that tries.
+- `import` writes `<file>.bak` before it changes anything, only adds, and lists what it added, what it skipped and why, and the price changes waiting for Kamal.
+- Run `validate` on your import file before `import`, and `checks` before you finish. Report every open check to Kamal.
+- `checks` exits with code 1 while any required check is open.
+
 ## What to do, by request
 
 **Takeoff from drawings.** Follow `references/takeoff-from-drawings.md`. Use the sheet image with the grid when Kamal provides one, because it makes your coordinates accurate. Produce one import file per batch of sheets, with a short summary of what you measured, what you could not find, and the RFIs.

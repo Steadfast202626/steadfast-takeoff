@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const calc = require('../app/js/calc.js');
-const model = require('../app/js/model.js');
+const model = calc;
 const plan = require('./fixtures/make-test-plan.js');
 
 const QUARTER_INCH = calc.presetFtPerUnit('architectural', 1 / 4);

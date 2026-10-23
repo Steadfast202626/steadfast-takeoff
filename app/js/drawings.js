@@ -125,5 +125,24 @@
     });
   }
 
-  window.SteadfastDrawings = { open, pages, isAttached, bitmap, request, isPdf };
+  // Render a sheet at a scale (pixels per point) into a new canvas, for the sheet image.
+  async function renderAt(sheet, scale) {
+    const f = files.get(sheet.file);
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(sheet.widthPt * scale);
+    canvas.height = Math.round(sheet.heightPt * scale);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (!f) return canvas;
+    if (f.kind === 'image') {
+      ctx.drawImage(f.img, 0, 0, canvas.width, canvas.height);
+      return canvas;
+    }
+    const page = await f.doc.getPage(sheet.page);
+    await page.render({ canvasContext: ctx, viewport: page.getViewport({ scale }) }).promise;
+    return canvas;
+  }
+
+  window.SteadfastDrawings = { open, pages, isAttached, bitmap, request, isPdf, renderAt };
 })();

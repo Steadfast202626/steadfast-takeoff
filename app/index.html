@@ -13,27 +13,45 @@
 <body>
   <header class="topbar">
     <img class="logo" src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
-    <button class="job-name" id="jobName" type="button" title="Job details"></button>
+    <button class="job-name" id="jobName" type="button" title="Job name, client, type and class"></button>
     <span class="save-state" id="saveState"></span>
+    <nav class="tabs" id="tabs" role="tablist">
+      <button type="button" role="tab" data-screen="takeoff" title="Drawings, scale and measuring">Takeoff</button>
+      <button type="button" role="tab" data-screen="rooms" title="Finish schedule: floors, walls, ceilings and base by room">Rooms</button>
+      <button type="button" role="tab" data-screen="estimate" title="Lines, price, margin and the release checklist">Estimate</button>
+      <button type="button" role="tab" data-screen="assemblies" title="Price book items per lf, sf or each, with waste">Assemblies</button>
+      <button type="button" role="tab" data-screen="pricebook" title="Costs from the Monday.com Price book board">Price book</button>
+    </nav>
     <div class="spacer"></div>
+    <button type="button" class="checks-badge" id="checksBadge" title="Release checklist"></button>
     <div class="menu" id="fileMenu">
-      <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false">File</button>
+      <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false" title="Open, save, import and print">File</button>
       <div class="menu-list" role="menu" hidden>
-        <button type="button" role="menuitem" data-action="new">New job</button>
-        <button type="button" role="menuitem" data-action="open">Open estimate</button>
-        <button type="button" role="menuitem" data-action="save">Save estimate</button>
+        <button type="button" role="menuitem" data-action="new" title="Start a new job from the company price book">New job</button>
+        <button type="button" role="menuitem" data-action="open" title="Open a saved estimate file">Open estimate</button>
+        <button type="button" role="menuitem" data-action="save" title="Save the estimate file to this computer (Ctrl+S)">Save estimate</button>
         <hr>
-        <button type="button" role="menuitem" data-action="drawings">Add drawings</button>
-        <button type="button" role="menuitem" data-action="job">Job details</button>
+        <button type="button" role="menuitem" data-action="drawings" title="Add PDF sets or photos of plans">Add drawings</button>
+        <button type="button" role="menuitem" data-action="job" title="Job name, client, type and class">Job details</button>
+        <button type="button" role="menuitem" data-action="pricebook-import" title="Load the Price book board export from Monday.com (Excel or CSV)">Import price book</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="import-estimator" title="Bring in the estimator's import file, with a preview first">Import from estimator</button>
+        <button type="button" role="menuitem" data-action="copy-estimator" title="Copy the whole estimate, without drawings, for the estimator">Copy for estimator</button>
+        <button type="button" role="menuitem" data-action="sheet-image" title="Save this sheet as a picture with a 0 to 1 grid for the estimator">Sheet image for estimator</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="quote" title="Open the customer quote, ready to print. No costs or margin.">Customer quote</button>
+        <button type="button" role="menuitem" data-action="internal" title="Open the full estimate for the owners, ready to print">Internal estimate</button>
+        <button type="button" role="menuitem" data-action="lines-csv" title="Save the estimate lines as a CSV for the Monday.com Estimates board">Lines for Monday.com</button>
       </div>
     </div>
   </header>
 
+  <div class="view" id="takeoffView">
   <main class="workspace">
     <aside class="panel sheets-panel">
       <div class="panel-head">
         <h2>Sheets</h2>
-        <button type="button" class="small" data-action="drawings">Add drawings</button>
+        <button type="button" class="small" data-action="drawings" title="Add PDF sets or photos of plans">Add drawings</button>
       </div>
       <div class="missing" id="missingFiles" hidden></div>
       <ul class="sheet-list" id="sheetList"></ul>
@@ -47,7 +65,7 @@
           <button type="button" data-tool="measure" title="Measure with the chosen condition">Measure</button>
           <button type="button" id="deductBtn" class="toggle" aria-pressed="false" title="New markups subtract">Deduct</button>
         </div>
-        <button type="button" id="scaleBtn">Scale</button>
+        <button type="button" id="scaleBtn" title="Set the scale for this sheet">Scale</button>
         <div class="tool-group" role="group" aria-label="Zoom">
           <button type="button" id="zoomOut" title="Zoom out">−</button>
           <button type="button" id="zoomFit" title="Fit sheet">Fit</button>
@@ -57,7 +75,7 @@
           <button type="button" id="undoBtn" title="Undo (Ctrl+Z)">Undo</button>
           <button type="button" id="redoBtn" title="Redo (Ctrl+Y)">Redo</button>
         </div>
-        <button type="button" id="labelsBtn" class="toggle" aria-pressed="true">Labels</button>
+        <button type="button" id="labelsBtn" class="toggle" aria-pressed="true" title="Show or hide quantities on the drawing">Labels</button>
         <div class="status" id="status" role="status"></div>
       </div>
       <div class="canvas-wrap">
@@ -65,7 +83,7 @@
         <div class="readout" id="readout" hidden></div>
         <div class="empty" id="emptyState" hidden>
           <p>No drawings yet</p>
-          <button type="button" class="primary" data-action="drawings">Add drawings</button>
+          <button type="button" class="primary" data-action="drawings" title="Add PDF sets or photos of plans">Add drawings</button>
           <span>PDF sets or photos of plans</span>
         </div>
       </div>
@@ -74,7 +92,7 @@
     <aside class="panel conditions-panel">
       <div class="panel-head">
         <h2>Conditions</h2>
-        <button type="button" class="small" id="newCondition">New</button>
+        <button type="button" class="small" id="newCondition" title="Add a condition to measure with">New</button>
       </div>
       <div class="cond-head" id="condHead" hidden><span></span><span>Sheet</span><span>Job</span><span></span></div>
       <ul class="cond-list" id="condList"></ul>
@@ -82,6 +100,8 @@
       <section class="selection" id="selection" hidden></section>
     </aside>
   </main>
+  </div>
+  <main class="view screen" id="screenView" hidden></main>
 
   <dialog id="scaleDialog">
     <form method="dialog">
@@ -92,10 +112,10 @@
       </label>
       <label class="check" id="scaleAllField"><input type="checkbox" id="scaleAll"> Every sheet this size</label>
       <div class="buttons">
-        <button type="button" id="scaleFromDim">From a dimension</button>
+        <button type="button" id="scaleFromDim" title="Click both ends of a dimension on the drawing and type its length">From a dimension</button>
         <span class="spacer"></span>
-        <button value="cancel">Cancel</button>
-        <button value="preset" class="primary" id="scaleUsePreset">Use preset</button>
+        <button value="cancel" title="Close without changing the scale">Cancel</button>
+        <button value="preset" class="primary" id="scaleUsePreset" title="Use the preset scale chosen above">Use preset</button>
       </div>
     </form>
   </dialog>
@@ -110,8 +130,8 @@
       <label class="check"><input type="checkbox" id="calibAll"> Every sheet this size</label>
       <div class="buttons">
         <span class="spacer"></span>
-        <button value="cancel" formnovalidate>Cancel</button>
-        <button value="ok" class="primary">Set scale</button>
+        <button value="cancel" formnovalidate title="Close without changing the scale">Cancel</button>
+        <button value="ok" class="primary" title="Work out the scale from this length">Set scale</button>
       </div>
     </form>
   </dialog>
@@ -139,8 +159,8 @@
       </div>
       <div class="buttons">
         <span class="spacer"></span>
-        <button value="cancel" formnovalidate>Cancel</button>
-        <button value="ok" class="primary">Save</button>
+        <button value="cancel" formnovalidate title="Close without saving">Cancel</button>
+        <button value="ok" class="primary" title="Save the job details">Save</button>
       </div>
     </form>
   </dialog>
@@ -151,10 +171,16 @@
       <input id="askInput" hidden>
       <div class="buttons">
         <span class="spacer"></span>
-        <button value="cancel" formnovalidate>Cancel</button>
-        <button value="ok" class="primary" id="askOk">OK</button>
+        <button value="cancel" formnovalidate title="Do nothing">Cancel</button>
+        <button value="ok" class="primary" id="askOk" title="Go ahead">OK</button>
       </div>
     </form>
+  </dialog>
+
+  <dialog id="infoDialog">
+    <h3 id="infoTitle"></h3>
+    <div id="infoBody"></div>
+    <div class="buttons" id="infoButtons"></div>
   </dialog>
 
   <input type="file" id="drawingInput" accept=".pdf,application/pdf,image/*" multiple hidden>
@@ -162,10 +188,18 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="js/calc.js"></script>
-  <script src="js/model.js"></script>
+  <script src="js/starter-library.js"></script>
+  <script src="js/xlsx.js"></script>
+  <script src="js/outputs.js"></script>
+  <script src="js/ui.js"></script>
   <script src="js/storage.js"></script>
+  <script src="js/library.js"></script>
   <script src="js/drawings.js"></script>
   <script src="js/viewer.js"></script>
+  <script src="js/screen-library.js"></script>
+  <script src="js/screen-rooms.js"></script>
+  <script src="js/screen-estimate.js"></script>
+  <script src="js/exchange.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
