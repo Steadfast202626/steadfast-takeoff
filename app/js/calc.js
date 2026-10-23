@@ -651,6 +651,75 @@
     return out;
   }
 
+  // ---------- Cash flow (commercial, format section 2) ----------
+
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  // Share of the work done in each month: even, or an s-curve (slow start, fast middle, slow finish).
+  function curveWeights(n, curve) {
+    if (curve !== 's-curve') return Array.from({ length: n }, () => 1 / n);
+    const F = t => t * t * (3 - 2 * t);
+    return Array.from({ length: n }, (x, i) => F((i + 1) / n) - F(i / n));
+  }
+
+  function monthLabel(startDate, k) {
+    const m = /^(\d{4})-(\d{2})/.exec(startDate || '');
+    if (!m) return 'Month ' + k;
+    const idx = (+m[2] - 1) + (k - 1);
+    return MONTHS[idx % 12] + ' ' + (+m[1] + Math.floor(idx / 12));
+  }
+
+  /*
+   * Monthly cash flow for the base bid. GST is left out.
+   * Invoice at the end of each month; the owner pays ceil(ownerPayDays / 30) months later, less holdback.
+   * Subcontractors (their share of direct cost) are paid when Steadfast is paid, less the same holdback.
+   * Other costs are paid in the month they happen. Both holdbacks come back in month
+   * months + ceil((lienDays + releaseDays) / 30).
+   * Returns { months: [{ month, label, work, invoiced, moneyIn, subsOut, otherOut, moneyOut, balance }],
+   *   lowest, lowestMonth, lowestLabel, payLag, releaseMonth, subShare, holdbackIn, holdbackOut }.
+   */
+  function cashFlow(est, m) {
+    m = m || money(est);
+    const c = est.settings.cash || {};
+    const b = m.base;
+    const n = Math.max(1, Math.round(isNum(c.months) ? c.months : 1));
+    const price = isNum(b.price) ? b.price : 0;
+    const cost = b.cost;
+    const hb = isNum(c.holdbackPct) ? c.holdbackPct / 100 : 0;
+    const payLag = Math.ceil((isNum(c.ownerPayDays) ? c.ownerPayDays : 0) / 30);
+    const subShare = b.direct > 0 ? b.subcontract / b.direct : 0;
+    const releaseMonth = n + Math.ceil(((isNum(c.lienDays) ? c.lienDays : 0) + (isNum(c.releaseDays) ? c.releaseDays : 0)) / 30);
+    const last = Math.max(releaseMonth, n + payLag);
+    const months = Array.from({ length: last }, (x, i) => ({
+      month: i + 1, label: monthLabel(c.startDate, i + 1), work: 0, invoiced: 0, moneyIn: 0, subsOut: 0, otherOut: 0, moneyOut: 0, balance: 0
+    }));
+    const w = curveWeights(n, c.curve);
+    for (let i = 0; i < n; i++) {
+      const invoiced = price * w[i];
+      const workCost = cost * w[i];
+      months[i].work = workCost;
+      months[i].invoiced = invoiced;
+      months[i].otherOut += workCost * (1 - subShare);
+      months[i + payLag].moneyIn += invoiced * (1 - hb);
+      months[i + payLag].subsOut += workCost * subShare * (1 - hb);
+    }
+    const holdbackIn = price * hb, holdbackOut = cost * subShare * hb;
+    months[releaseMonth - 1].moneyIn += holdbackIn;
+    months[releaseMonth - 1].subsOut += holdbackOut;
+    let bal = isNum(c.startBalance) ? c.startBalance : 0;
+    let lowest = bal, lowestMonth = 0;
+    for (const mo of months) {
+      mo.moneyOut = mo.subsOut + mo.otherOut;
+      bal += mo.moneyIn - mo.moneyOut;
+      mo.balance = bal;
+      if (bal < lowest - 1e-9) { lowest = bal; lowestMonth = mo.month; }
+    }
+    return {
+      months, lowest, lowestMonth, lowestLabel: lowestMonth ? months[lowestMonth - 1].label : 'Start',
+      payLag, releaseMonth, subShare, holdbackIn, holdbackOut, startBalance: isNum(c.startBalance) ? c.startBalance : 0
+    };
+  }
+
   // ---------- Release checklist (format section 3) ----------
 
   function checkItems(est) {
@@ -1292,7 +1361,7 @@
     today, clone, newEstimate, normalize, openProblems, openImportProblems, nextId, safeName,
     documentName, estimateFileName, divisionName, sameText,
     roomQty, roomBasis, levelledPrice, estimateLines, combineLines, priceLines, money, marginFloor,
-    stageInvoices, stagesTotalPct, assemblyUnitCost, checkItems, releaseChecks, openCheckCount, acceptItems,
+    stageInvoices, stagesTotalPct, assemblyUnitCost, cashFlow, curveWeights, checkItems, releaseChecks, openCheckCount, acceptItems,
     parseCsv, toCsv, parseType, parseMoney, parseDate, priceBookFromRows, assembliesFromRows,
     applyImport, validate,
     parseFeet, fmtQty, fmtFeetInches, fmtMoney, fmtPct, round, round2

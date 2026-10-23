@@ -45,7 +45,7 @@ function pdfText(s) {
   return '(' + String(s).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)') + ')';
 }
 
-function pageContent(sheetNo, title) {
+function pageContent(sheetNo, title, lines) {
   const ops = [];
   const X = ft => ORIGIN[0] + ft * PT_PER_FT;
   const Y = ft => PAGE_H - (ORIGIN[1] + ft * PT_PER_FT); // PDF y runs up from the bottom
@@ -80,8 +80,8 @@ function pageContent(sheetNo, title) {
 
   // Title block, bottom right
   ops.push('1.5 w', `1296 36 396 216 re S`, `1296 108 m 1692 108 l S`);
-  text(1310, 222, 12, 'STEADFAST CONSTRUCTIONS LTD');
-  text(1310, 200, 10, 'TEST PLAN FOR THE TAKEOFF APP');
+  text(1310, 222, 12, lines[0]);
+  text(1310, 200, 10, lines[1]);
   text(1310, 170, 14, title);
   text(1310, 148, 10, 'SCALE: 1/4" = 1\'-0"');
   text(1310, 126, 9, 'NOT FOR CONSTRUCTION');
@@ -90,7 +90,9 @@ function pageContent(sheetNo, title) {
   return ops.join('\n');
 }
 
-function makeTestPlan() {
+// opts.lines: the two lines at the top of the title block.
+function makeTestPlan(opts) {
+  const lines = (opts && opts.lines) || ['STEADFAST CONSTRUCTIONS LTD', 'TEST PLAN FOR THE TAKEOFF APP'];
   const pages = [['A-101', 'FLOOR PLAN'], ['A-102', 'FINISH PLAN']];
   const objects = [];
   objects[1] = '<< /Type /Catalog /Pages 2 0 R >>';
@@ -99,7 +101,7 @@ function makeTestPlan() {
   pages.forEach(([no, title], i) => {
     const pageObj = 4 + i * 2, contentObj = pageObj + 1;
     kids.push(`${pageObj} 0 R`);
-    const content = pageContent(no, title);
+    const content = pageContent(no, title, lines);
     objects[pageObj] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PAGE_W} ${PAGE_H}] ` +
       `/Resources << /Font << /F1 3 0 R >> >> /Contents ${contentObj} 0 R >>`;
     objects[contentObj] = `<< /Length ${Buffer.byteLength(content, 'latin1')} >>\nstream\n${content}\nendstream`;

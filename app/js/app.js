@@ -846,9 +846,14 @@
     const checks = calc.releaseChecks(app.est);
     const open = calc.openCheckCount(checks);
     const badge = $('checksBadge');
-    badge.textContent = open ? open + ' checks open' : 'Ready to release';
+    badge.textContent = open ? open + (open === 1 ? ' check open' : ' checks open') : 'Ready to release';
     badge.classList.toggle('warn', !!open);
     badge.title = open ? 'Release checklist: ' + checks.filter(c => c.status === 'fail').map(c => c.label).join('; ') : 'Every release check passes';
+    const tab = document.querySelector('#tabs [data-screen="checks"]');
+    tab.textContent = open ? 'Checks (' + open + ')' : 'Checks';
+    tab.classList.toggle('has-open', !!open);
+    document.querySelector('#tabs [data-screen="cash"]').hidden = app.est.job.type !== 'commercial' && app.screen !== 'cash';
+    $('sampleBand').hidden = !window.SteadfastOutputs.isSample(app.est);
   }
 
   let screenFrame = 0;
@@ -907,10 +912,12 @@
     }
   }
 
-  function openOutput(kind) {
+  function openOutput(kind, id) {
     const Outputs = window.SteadfastOutputs;
     const opts = { logoUrl: logoUrl(), showQty: !!app.showQuoteQty };
-    const html = kind === 'quote' ? Outputs.quoteHtml(app.est, opts) : Outputs.internalHtml(app.est, opts);
+    const html = kind === 'quote' ? Outputs.quoteHtml(app.est, opts)
+      : kind === 'scope' ? Outputs.scopeLetterHtml(app.est, id, opts)
+        : Outputs.internalHtml(app.est, opts);
     const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
     const w = window.open(url, '_blank');
     if (!w) setStatus('The browser blocked the new tab. Allow pop-ups for this site.', true, 8000);
@@ -951,10 +958,7 @@
   });
 
   document.querySelectorAll('#tabs [data-screen]').forEach(b => b.addEventListener('click', () => goto(b.dataset.screen)));
-  $('checksBadge').addEventListener('click', () => {
-    goto('estimate');
-    requestAnimationFrame(() => requestAnimationFrame(() => { const c = $('checklist'); if (c) c.scrollIntoView({ block: 'start' }); }));
-  });
+  $('checksBadge').addEventListener('click', () => goto('checks'));
 
   function closeMenu() {
     const list = document.querySelector('#fileMenu .menu-list');
@@ -1060,7 +1064,7 @@
   attachStoredDrawings();
   if (!window.pdfjsLib) setStatus('The PDF reader did not load. Photos still work.', true);
 
-  Object.assign(app, { setStatus, renderAll, renderScreen, goto, showCondition, openOutput, autosave, loadEstimate, currentSheet, showQuoteQty: true });
+  Object.assign(app, { setStatus, renderAll, renderScreen, goto, showCondition, openOutput, openJobDialog, autosave, loadEstimate, currentSheet, hasWork, showQuoteQty: true });
   app.viewer = viewer;
   window.SteadfastApp = app;   // for checking in the browser console
 })();

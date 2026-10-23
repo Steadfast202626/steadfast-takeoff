@@ -18,7 +18,10 @@
     <nav class="tabs" id="tabs" role="tablist">
       <button type="button" role="tab" data-screen="takeoff" title="Drawings, scale and measuring">Takeoff</button>
       <button type="button" role="tab" data-screen="rooms" title="Finish schedule: floors, walls, ceilings and base by room">Rooms</button>
-      <button type="button" role="tab" data-screen="estimate" title="Lines, price, margin and the release checklist">Estimate</button>
+      <button type="button" role="tab" data-screen="bids" title="Level trade quotes and choose a bidder">Bids</button>
+      <button type="button" role="tab" data-screen="estimate" title="Lines, price, margin and markup">Estimate</button>
+      <button type="button" role="tab" data-screen="cash" title="Monthly billing, holdback and the bank balance for commercial jobs">Cash flow</button>
+      <button type="button" role="tab" data-screen="checks" title="Release checklist">Checks</button>
       <button type="button" role="tab" data-screen="assemblies" title="Price book items per lf, sf or each, with waste">Assemblies</button>
       <button type="button" role="tab" data-screen="pricebook" title="Costs from the Monday.com Price book board">Price book</button>
     </nav>
@@ -42,9 +45,12 @@
         <button type="button" role="menuitem" data-action="quote" title="Open the customer quote, ready to print. No costs or margin.">Customer quote</button>
         <button type="button" role="menuitem" data-action="internal" title="Open the full estimate for the owners, ready to print">Internal estimate</button>
         <button type="button" role="menuitem" data-action="lines-csv" title="Save the estimate lines as a CSV for the Monday.com Estimates board">Lines for Monday.com</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="sample" title="Open a practice job with a made-up floor plan and made-up prices">Sample job</button>
       </div>
     </div>
   </header>
+  <div class="sample-band" id="sampleBand" hidden>Sample job with made-up prices. Not for quoting.</div>
 
   <div class="view" id="takeoffView">
   <main class="workspace">
@@ -199,6 +205,11 @@
   <script src="js/screen-library.js"></script>
   <script src="js/screen-rooms.js"></script>
   <script src="js/screen-estimate.js"></script>
+  <script src="js/screen-bids.js"></script>
+  <script src="js/screen-cash.js"></script>
+  <script src="js/screen-checks.js"></script>
+  <script src="js/sample-plan.js"></script>
+  <script src="js/sample.js"></script>
   <script src="js/exchange.js"></script>
   <script src="js/app.js"></script>
 </body>

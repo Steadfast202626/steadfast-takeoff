@@ -27,8 +27,9 @@ node tools/estimate.js validate <file|import.json>
 
 - `data/*.csv`: run `node tools/make-starter.js` (the app's fallback copy in `app/js/starter-library.js`).
 - `tools/estimate.js`, `app/js/calc.js` or `docs/estimate-file-format.md`: run `node tools/build-skill.js` (the skill's `scripts/` and `dist/steadfast-estimating.zip`).
+- `tools/make-sample.js`, `app/js/calc.js` or `data/*.csv`: run `node tools/make-sample.js` (the sample job in `app/js/sample-plan.js`).
 
-The tests fail if either is out of date.
+The tests fail if any of these are out of date.
 
 ## Tests
 

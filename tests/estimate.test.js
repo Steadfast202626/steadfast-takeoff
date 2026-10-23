@@ -294,3 +294,39 @@ test('CSV round trip', () => {
   const rows = [['a', 'b, c', 'd "e"'], ['1', '', 'x\ny']];
   assert.deepEqual(calc.parseCsv(calc.toCsv(rows)), rows);
 });
+
+test('cash flow: holdback timing matches the format file', () => {
+  const est = calc.newEstimate('2026-10-22');
+  est.job.type = 'commercial';
+  est.settings.contingencyPct = 0;
+  est.lines.push({ id: 'l1', description: 'Trades', qty: 1, unit: 'lot', unitCost: 6000, type: 'S' });
+  est.lines.push({ id: 'l2', description: 'Materials', qty: 1, unit: 'lot', unitCost: 4000, type: 'M' });
+  Object.assign(est.settings.cash, { months: 3, ownerPayDays: 28, holdbackPct: 10, lienDays: 60, releaseDays: 10, startBalance: 5000, startDate: '2026-11-01' });
+  const cf = calc.cashFlow(est);
+  assert.equal(cf.payLag, 1);                      // paid in 28 days: the month after the invoice
+  assert.equal(cf.releaseMonth, 6);                // 3 months + ceil(70 / 30)
+  assert.equal(cf.months.length, 6);
+  close(cf.subShare, 0.6);
+  assert.equal(cf.months[0].moneyIn, 0);           // nothing comes in during month 1
+  close(cf.months[1].moneyIn, 15390 / 3 * 0.9);
+  close(cf.months[3].moneyIn, 15390 / 3 * 0.9);    // last invoice paid in month 4
+  close(cf.months[0].otherOut, 4000 / 3);          // materials paid as they happen
+  assert.equal(cf.months[0].subsOut, 0);           // trades paid when Steadfast is paid
+  close(cf.months[1].subsOut, 2000 * 0.9);
+  close(cf.months[5].moneyIn, 1539);               // Steadfast's holdback back in month 6
+  close(cf.months[5].subsOut, 600);                // and the trades' holdback paid out
+  close(cf.months.reduce((a, x) => a + x.moneyIn, 0), 15390);
+  close(cf.months.reduce((a, x) => a + x.moneyOut, 0), 10000);
+  close(cf.months[5].balance, 5000 + 5390);
+  assert.equal(cf.lowestMonth, 1);
+  close(cf.lowest, 5000 - 4000 / 3);
+  assert.equal(cf.months[0].label, 'Nov 2026');
+  assert.equal(cf.months[2].label, 'Jan 2027');
+});
+
+test('cash flow: an s-curve spreads the same total', () => {
+  const w = calc.curveWeights(4, 's-curve');
+  close(w.reduce((a, x) => a + x, 0), 1);
+  assert.ok(w[1] > w[0] && w[2] > w[3]);
+  assert.deepEqual(calc.curveWeights(2, 'even'), [0.5, 0.5]);
+});

@@ -18,6 +18,14 @@
     email: 'team@steadfastconstructionsltd.com'
   };
 
+  // The sample job is recognised by its drawing, so the band follows it into saved files and printouts.
+  const SAMPLE_FILE = 'Steadfast sample plan.pdf';
+  const SAMPLE_BAND = 'Sample job with made-up prices. Not for quoting.';
+
+  function isSample(est) {
+    return !!est && Array.isArray(est.sheets) && est.sheets.some(s => s.file === SAMPLE_FILE);
+  }
+
   function esc(s) {
     return String(s === null || s === undefined ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -32,7 +40,8 @@
     return d.toISOString().slice(0, 10);
   }
 
-  function page(title, footer, body) {
+  function page(title, footer, body, est) {
+    if (isSample(est)) body = '<div class="sample">' + SAMPLE_BAND + '</div>' + body;
     return '<!doctype html>\n<html lang="en-CA"><head><meta charset="utf-8"><title>' + esc(title) + '</title>\n<style>\n' +
       '@page { size: letter; margin: 18mm 16mm 20mm;\n' +
       '  @bottom-left { content: "Page " counter(page) " of " counter(pages); font: 9pt Arial, sans-serif; color: #555; }\n' +
@@ -57,12 +66,13 @@
       '.meta td { border: none; padding: 2px 8px 2px 0; }\n' +
       '.meta td:first-child { color: #555; width: 110px; }\n' +
       '.total td { font-weight: bold; border-top: 2px solid #333; }\n' +
-      'ul { margin: 2px 0 6px; padding-left: 20px; }\n' +
+      'ul, ol { margin: 2px 0 6px; padding-left: 20px; }\n' +
       'li { margin: 1px 0; }\n' +
       '.qty { color: #555; white-space: nowrap; }\n' +
       '.sign { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 14px; page-break-inside: avoid; }\n' +
       '.sign p { margin: 20px 0 0; border-top: 1px solid #333; padding-top: 3px; font-size: 9pt; color: #555; }\n' +
       '.banner { background: #53412c; color: #fff; font-weight: bold; padding: 6px 10px; margin-bottom: 12px; }\n' +
+      '.sample { background: #c92a2a; color: #fff; font-weight: bold; text-align: center; padding: 8px 10px; margin-bottom: 12px; }\n' +
       '.warn { color: #b00020; }\n' +
       '.muted { color: #666; }\n' +
       'section { page-break-inside: auto; }\n' +
@@ -188,10 +198,16 @@
       html += '</section>';
     }
 
+    // Allowance amounts are shown at the amount entered on the line (Kamal's decision, 2026-10-23).
     const allowances = est.lines.filter(l => l.allowance && !l.alternateId);
     if (allowances.length) {
-      html += '<section><h2>Allowances</h2><p class="muted">Included in the price for items not yet selected. Final selections may change the price by change order.</p><ul>' +
-        allowances.map(l => '<li>' + esc(l.description) + (opts.showQty && l.qty !== null && l.unit && l.unit !== 'lot' ? ' <span class="qty">(' + esc(qtyText(l.qty, l.unit)) + ')</span>' : '') + '</li>').join('') + '</ul></section>';
+      html += '<section><h2>Allowances</h2><p class="muted">Included in the price for items not yet selected, before GST. ' +
+        'If the final selection comes in over or under the allowance, the difference is a change order.</p><table>' +
+        allowances.map(l => {
+          const amount = typeof l.qty === 'number' && typeof l.unitCost === 'number' ? l.qty * l.unitCost : null;
+          return '<tr><td>' + esc(l.description) + (opts.showQty && l.qty !== null && l.unit && l.unit !== 'lot' ? ' <span class="qty">(' + esc(qtyText(l.qty, l.unit)) + ')</span>' : '') +
+            '</td><td class="num">' + (amount === null ? 'To be set' : money(amount)) + '</td></tr>';
+        }).join('') + '</table></section>';
     }
 
     html += listSection('Exclusions', est.exclusions);
@@ -214,7 +230,7 @@
       '<div class="sign"><div><strong>Customer</strong><p>Name</p><p>Signature</p><p>Date</p></div>' +
       '<div><strong>' + esc(COMPANY.name) + '</strong><p>Name</p><p>Signature</p><p>Date</p></div></div></section>';
 
-    return page('Quote, ' + (j.name || ''), 'Customer quote', html);
+    return page('Quote, ' + (j.name || ''), 'Customer quote', html, est);
   }
 
   // ---------- Internal estimate ----------
@@ -296,7 +312,42 @@
       (c.detail ? ' <span class="muted">' + esc(c.detail) + '</span>' : '') + '</td><td class="' + (c.status === 'fail' ? 'warn' : '') + '">' +
       { pass: 'Done', fail: 'Open', warn: 'Check', na: 'n/a' }[c.status] + '</td></tr>').join('') + '</table></section>';
 
-    return page('Internal estimate, ' + (j.name || ''), 'Internal estimate. Owners only.', html);
+    return page('Internal estimate, ' + (j.name || ''), 'Internal estimate. Owners only.', html, est);
+  }
+
+  // ---------- Scope letter for a trade ----------
+
+  // What the trade's quote must include. Trade-facing: no plugs, costs or other bidders.
+  function scopeLetterHtml(est, bidId, opts) {
+    opts = opts || {};
+    const b = est.bids.find(x => x.id === bidId);
+    if (!b) return page('Scope letter', 'Scope letter', '<p>Bid not found.</p>');
+    const j = est.job;
+    const alt = b.alternateId && est.alternates.find(a => a.id === b.alternateId);
+    let html = headerBlock(est, opts.logoUrl);
+    html += '<h1>Request for quote: ' + esc(b.trade) + '</h1>';
+    html += metaTable([
+      ['Date', calc.today()], ['Project', j.name], ['Address', j.address],
+      ['Division', b.division ? b.division + ' ' + calc.divisionName(b.division) : ''],
+      ['Part of', alt ? alt.name + (alt.description ? ': ' + alt.description : '') : 'Base bid'],
+      ['Quote due', j.bidDue]
+    ]);
+    html += '<p>Please quote the scope below. Price each item, or say clearly that it is excluded. Quantities are from our takeoff and are for guidance; check them against the drawings.</p>';
+    const items = (b.scopeItems || []).filter(s => String(s.text || '').trim());
+    html += '<section><h2>Scope to include</h2>' + (items.length ? '<ol>' + items.map(s => '<li>' + esc(s.text) + '</li>').join('') + '</ol>' : '<p class="muted">To follow.</p>') + '</section>';
+    if (est.sheets.length) {
+      html += '<section><h2>Drawings</h2><ul>' + est.sheets.map(s => '<li>' + esc(s.name) + (s.scaleLabel ? ' (' + esc(s.scaleLabel) + ')' : '') + '</li>').join('') + '</ul></section>';
+    }
+    html += '<section><h2>With your quote, please send</h2><ul>' +
+      '<li>Your price before GST, with GST shown separately.</li>' +
+      '<li>What is included and excluded, item by item against the list above.</li>' +
+      '<li>A current WCB Alberta clearance letter.</li>' +
+      '<li>A certificate of commercial general liability insurance.</li>' +
+      '<li>How long your price is valid and your earliest start.</li></ul>' +
+      '<p>No work is scheduled until a subcontract agreement is signed and your WCB clearance is current.</p></section>';
+    html += '<section><h2>Questions and quotes</h2><p>Send to ' + esc(COMPANY.email) + ' or call ' + esc(COMPANY.phone) +
+      '. Please put "' + esc(j.name) + ', ' + esc(b.trade) + '" in the subject line.</p></section>';
+    return page('Request for quote, ' + b.trade, 'Scope letter, ' + b.trade, html, est);
   }
 
   // ---------- CSV for the Monday.com Estimates board ----------
@@ -317,5 +368,5 @@
     return calc.toCsv(rows);
   }
 
-  return { quoteHtml, internalHtml, linesCsv, scopeItems, COMPANY };
+  return { quoteHtml, internalHtml, scopeLetterHtml, linesCsv, scopeItems, isSample, COMPANY, SAMPLE_FILE, SAMPLE_BAND };
 });

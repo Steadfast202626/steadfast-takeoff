@@ -256,7 +256,8 @@
       'copy-estimator': copyForEstimator,
       'sheet-image': sheetImage,
       'lines-csv': linesCsv,
-      'pricebook-import': app => window.SteadfastPriceBook.importMonday(app)
+      'pricebook-import': app => window.SteadfastPriceBook.importMonday(app),
+      sample: app => window.SteadfastSampleJob.open(app)
     }
   };
 })();

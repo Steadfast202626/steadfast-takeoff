@@ -40,7 +40,7 @@ test('the customer quote contains no cost, markup or margin figures', () => {
     assert.doesNotMatch(text, /\bmargin/i, type);
     assert.doesNotMatch(text, /contingency|travel|risk|subcontract|labour/i, type);
     const secret = [m.base.direct, m.base.cost, m.base.contingency, m.base.travel, m.base.calculated - m.base.cost,
-      487.13, 612.41, 2750.33, 391.77, 3.17, 4321, 1234, m.alternates[0].cost];
+      487.13, 612.41, 391.77, 3.17, 4321, 1234, m.alternates[0].cost];
     for (const v of secret) {
       for (const shown of [calc.fmtMoney(v), String(calc.round(v, 2))].concat(Math.abs(v) >= 1000 ? [calc.fmtMoney(v, 0)] : [])) {
         assert.ok(!text.includes(shown), type + ': quote shows ' + shown);
@@ -51,6 +51,7 @@ test('the customer quote contains no cost, markup or margin figures', () => {
     assert.ok(text.includes(calc.fmtMoney(m.base.total)), 'total shown');
     assert.ok(text.includes(calc.fmtMoney(m.alternates[0].price)), 'alternate price shown');
     assert.ok(text.includes('Plumbing fixtures allowance'));
+    assert.ok(text.includes('$2,750.33'), 'allowance amount shown');
     assert.ok(text.includes('Asbestos testing and abatement'));
     assert.match(text, /Customer[\s\S]*Signature[\s\S]*Steadfast Constructions Ltd[\s\S]*Signature/);
     assert.match(html, /@bottom-left \{ content: "Page " counter\(page\)/);
@@ -94,4 +95,21 @@ test('lines CSV for Monday.com leaves costs out unless asked', () => {
   const withCosts = calc.parseCsv(outputs.linesCsv(est, true));
   assert.deepEqual(withCosts[0].slice(-2), ['Unit cost', 'Total']);
   assert.ok(outputs.linesCsv(est, true).includes('612.41'));
+});
+
+test('the scope letter lists the scope and asks for WCB and insurance, with no plugs or other prices', () => {
+  const est = pricedEstimate('commercial');
+  est.bids.push({ id: 'b1', trade: 'Flooring', division: '09', alternateId: null,
+    scopeItems: [{ text: 'LVP flooring, offices: 280 sf', plug: 1987.65 }, { text: 'Floor prep', plug: 543.21 }],
+    bidders: [{ id: 'bd1', name: 'Acme Floors', amount: 11111.11, includes: ['y', 'n'], wcbClearance: true, insurance: true, notes: 'Secret note' },
+      { id: 'bd2', name: 'Other Floors', amount: 9999.99, includes: ['y', 'y'], wcbClearance: false, insurance: false, notes: '' }],
+    selectedBidderId: 'bd1', source: 'owner', status: 'ok' });
+  const html = outputs.scopeLetterHtml(est, 'b1', {});
+  const text = html.replace(/<style>[\s\S]*?<\/style>/, '').replace(/<[^>]+>/g, ' ');
+  assert.match(text, /LVP flooring, offices: 280 sf/);
+  assert.match(text, /WCB Alberta clearance letter/);
+  assert.match(text, /liability insurance/);
+  for (const secret of ['1,987.65', '543.21', '11,111.11', '9,999.99', 'Acme', 'Other Floors', 'Secret note']) assert.ok(!text.includes(secret), secret);
+  assert.doesNotMatch(text, /\$\d/);
+  assert.match(html, /@bottom-right \{ content: "Scope letter, Flooring"/);
 });
