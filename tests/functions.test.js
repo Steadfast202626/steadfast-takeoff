@@ -184,9 +184,18 @@ test('QuickBooks status needs sign-in and never returns a token', async () => {
 
 test('every function file has an /api path, and terms and privacy pages are published', () => {
   const dir = path.join(root, 'netlify/functions');
-  const want = ['/api/login', '/api/logout', '/api/qbo/connect', '/api/qbo/callback', '/api/qbo/disconnect', '/api/qbo/status'];
-  const paths = fs.readdirSync(dir).map(f => fs.readFileSync(path.join(dir, f), 'utf8').match(/path: '([^']+)'/)[1]);
+  const want = ['/api/login', '/api/logout', '/api/qbo/connect', '/api/qbo/callback', '/api/qbo/disconnect', '/api/qbo/status',
+    '/api/session', '/api/jobs', '/api/jobs/:id', '/api/jobs/:id/drawings/:asset', '/api/uploads/:upload', '/api/uploads/:upload/:part'];
+  const paths = [];
+  for (const f of fs.readdirSync(dir)) {
+    const text = fs.readFileSync(path.join(dir, f), 'utf8');
+    if (f.endsWith('-background.mjs')) { assert.doesNotMatch(text, /path:/, f + ' is called by other functions only'); continue; }
+    const m = text.match(/path: (\[[^\]]+\]|'[^']+')/);
+    assert.ok(m, f + ' has an /api path');
+    paths.push(...m[1].match(/'[^']+'/g).map(x => x.slice(1, -1)));
+  }
   assert.deepEqual(paths.sort(), want.sort());
+  assert.ok(paths.every(p => p.startsWith('/api/')));
   for (const f of ['terms.html', 'privacy.html']) assert.ok(fs.existsSync(path.join(root, 'app', f)), f);
   const toml = fs.readFileSync(path.join(root, 'netlify.toml'), 'utf8');
   assert.match(toml, /publish = "app"/);

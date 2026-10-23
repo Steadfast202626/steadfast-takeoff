@@ -36,10 +36,16 @@ The tests fail if any of these are out of date.
 `netlify/functions` answer under `/api` on Netlify. The app and the helper need no packages; `npm install` is only for these functions.
 
 - `/api/login`, `/api/logout`: the team passcode.
+- `/api/session`: signed in or not.
+- `/api/jobs`, `/api/jobs/:id`: list, open and save jobs on the Monday.com Estimates board. Price, margin and open checks are worked out with `app/js/calc.js`, the same as the app.
+- `/api/jobs/:id/drawings/:asset`: brings a drawing down from Monday.com.
+- `/api/uploads/...` and the `upload-finish-background` function: drawings go up in 4 MB parts and are joined on the server, because a Netlify Function takes about 6 MB per request.
 - `/api/qbo/connect`, `/api/qbo/callback`, `/api/qbo/disconnect`, `/api/qbo/status`: QuickBooks Online sign-in. Read only.
 - Pages `/terms` and `/privacy`.
 
-Netlify environment variables: `APP_PASSCODE`, `SESSION_SECRET` (32 characters or more), `QBO_CLIENT_ID`, `QBO_CLIENT_SECRET`, `QBO_ENVIRONMENT` (`sandbox` or `production`), and later `MONDAY_API_TOKEN`.
+Board and column ids are in `netlify/lib/monday.mjs` (Sandbox workspace for now). Going live means changing `BOARDS` there only.
+
+Netlify environment variables: `APP_PASSCODE`, `SESSION_SECRET` (32 characters or more), `MONDAY_API_TOKEN`, `QBO_CLIENT_ID`, `QBO_CLIENT_SECRET`, `QBO_ENVIRONMENT` (`sandbox` or `production`).
 
 ## Tests
 

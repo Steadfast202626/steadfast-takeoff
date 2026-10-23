@@ -318,6 +318,10 @@ dialog .buttons { display: flex; gap: 8px; margin-top: 4px; }
 .tabs button:hover { color: var(--ink); background: var(--bg); }
 .tabs button.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; background: none; }
 .checks-badge { font-size: 13px; }
+.cloud-state { font-size: 13px; color: var(--ink-soft); flex: none; }
+.has-cloud .save-state:not(.warn) { display: none; }
+.cloud-state.warn { color: var(--warn); border-color: #f1c0c0; background: var(--warn-weak); }
+table.job-list td:first-child { font-weight: 600; }
 .checks-badge.warn { color: var(--warn); border-color: #f1c0c0; background: var(--warn-weak); }
 .view { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .screen { overflow: auto; padding: 16px 20px 40px; display: block; }
