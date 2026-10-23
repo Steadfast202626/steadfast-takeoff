@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steadfast takeoff</title>
+  <link rel="icon" type="image/png" href="assets/steadfast-logo-dark-on-light.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <img class="logo" src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
+    <button class="job-name" id="jobName" type="button" title="Job name, client, type and class"></button>
+    <span class="save-state" id="saveState"></span>
+    <nav class="tabs" id="tabs" role="tablist">
+      <button type="button" role="tab" data-screen="takeoff" title="Takeoff: drawings, scale and measuring">Measure</button>
+      <button type="button" role="tab" data-screen="rooms" title="Finish schedule: floors, walls, ceilings and base by room">Rooms</button>
+      <button type="button" role="tab" data-screen="bids" title="Bids: level trade quotes and choose a bidder">Trade quotes</button>
+      <button type="button" role="tab" data-screen="estimate" title="Lines, price, margin and markup">Estimate</button>
+      <button type="button" role="tab" data-screen="cash" title="Monthly billing, holdback and the bank balance for commercial jobs">Cash flow</button>
+      <button type="button" role="tab" data-screen="checks" title="Checks: the release checklist">Before you send</button>
+      <button type="button" role="tab" data-screen="assemblies" title="Assemblies: price book items per lf, sf or each, with waste">Build-ups</button>
+      <button type="button" role="tab" data-screen="pricebook" title="Costs from the Monday.com Price book board">Price book</button>
+    </nav>
+    <div class="spacer"></div>
+    <button type="button" class="checks-badge" id="checksBadge" title="Checks: the release checklist"></button>
+    <div class="menu" id="helpMenu">
+      <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false" title="Tour, sample job and welcome">Help</button>
+      <div class="menu-list" role="menu" hidden>
+        <button type="button" role="menuitem" data-action="tour" title="Open the sample job and walk through it step by step">Replay tour</button>
+        <button type="button" role="menuitem" data-action="sample" title="Open a practice job with a made-up floor plan and made-up prices">Sample job</button>
+        <button type="button" role="menuitem" data-action="welcome" title="Show the first screen again">Welcome screen</button>
+      </div>
+    </div>
+    <div class="menu" id="fileMenu">
+      <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false" title="Open, save, import and print">File</button>
+      <div class="menu-list" role="menu" hidden>
+        <button type="button" role="menuitem" data-action="new" title="Start a new job from the company price book">New job</button>
+        <button type="button" role="menuitem" data-action="open" title="Open a saved estimate file">Open estimate</button>
+        <button type="button" role="menuitem" data-action="save" title="Save the estimate file to this computer (Ctrl+S)">Save estimate</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="drawings" title="Add PDF sets or photos of plans">Add drawings</button>
+        <button type="button" role="menuitem" data-action="job" title="Job name, client, type and class">Job details</button>
+        <button type="button" role="menuitem" data-action="pricebook-import" title="Load the Price book board export from Monday.com (Excel or CSV)">Import price book</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="import-estimator" title="Bring in the estimator's import file, with a preview first">Import from estimator</button>
+        <button type="button" role="menuitem" data-action="copy-estimator" title="Copy the whole estimate, without drawings, for the estimator">Copy for estimator</button>
+        <button type="button" role="menuitem" data-action="sheet-image" title="Save this sheet as a picture with a 0 to 1 grid for the estimator">Sheet image for estimator</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="quote" title="Open the customer quote, ready to print. No costs or margin.">Customer quote</button>
+        <button type="button" role="menuitem" data-action="internal" title="Open the full estimate for the owners, ready to print">Internal estimate</button>
+        <button type="button" role="menuitem" data-action="lines-csv" title="Save the estimate lines as a CSV for the Monday.com Estimates board">Lines for Monday.com</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="sample" title="Open a practice job with a made-up floor plan and made-up prices">Sample job</button>
+      </div>
+    </div>
+  </header>
+  <div class="sample-band" id="sampleBand" hidden>Sample job with made-up prices. Not for quoting.</div>
+  <button type="button" class="next-bar" id="nextBar" hidden title="Click to go there"><span class="next-label">Next step</span><span class="next-text" id="nextText"></span><span class="next-go" aria-hidden="true">Go</span></button>
+
+  <div class="view" id="takeoffView">
+  <main class="workspace">
+    <aside class="panel sheets-panel">
+      <div class="panel-head">
+        <h2>Sheets</h2>
+        <button type="button" class="small" data-action="drawings" title="Add PDF sets or photos of plans">Add drawings</button>
+      </div>
+      <div class="missing" id="missingFiles" hidden></div>
+      <ul class="sheet-list" id="sheetList"></ul>
+    </aside>
+
+    <section class="viewer">
+      <div class="toolbar">
+        <div class="sheet-title" id="sheetTitle"></div>
+        <div class="tool-group" role="group" aria-label="Tools">
+          <button type="button" data-tool="select" title="Select and edit (Esc)">Select</button>
+          <button type="button" data-tool="measure" title="Measure with the chosen condition">Measure</button>
+          <button type="button" id="deductBtn" class="toggle" aria-pressed="false" title="Deduct: new markups subtract, for openings and areas left out">Cut out</button>
+        </div>
+        <button type="button" id="scaleBtn" title="Set the scale for this sheet">Scale</button>
+        <div class="tool-group" role="group" aria-label="Zoom">
+          <button type="button" id="zoomOut" title="Zoom out">−</button>
+          <button type="button" id="zoomFit" title="Fit sheet">Fit</button>
+          <button type="button" id="zoomIn" title="Zoom in">+</button>
+        </div>
+        <div class="tool-group" role="group" aria-label="History">
+          <button type="button" id="undoBtn" title="Undo (Ctrl+Z)">Undo</button>
+          <button type="button" id="redoBtn" title="Redo (Ctrl+Y)">Redo</button>
+        </div>
+        <button type="button" id="labelsBtn" class="toggle" aria-pressed="true" title="Show or hide quantities on the drawing">Labels</button>
+        <div class="status" id="status" role="status"></div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="canvas" data-tool="select"></canvas>
+        <div class="readout" id="readout" hidden></div>
+        <div class="empty" id="emptyState" hidden>
+          <p>No drawings yet</p>
+          <button type="button" class="primary" data-action="drawings" title="Add PDF sets or photos of plans">Add drawings</button>
+          <span>PDF sets or photos of plans</span>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel conditions-panel">
+      <div class="panel-head">
+        <h2 title="Conditions">What you're measuring</h2>
+        <button type="button" class="small" id="newCondition" title="Add a condition: a thing to measure, like flooring or doors">New</button>
+      </div>
+      <div class="cond-head" id="condHead" hidden><span></span><span>Sheet</span><span>Job</span><span></span></div>
+      <ul class="cond-list" id="condList"></ul>
+      <form class="editor" id="condEditor" hidden autocomplete="off"></form>
+      <section class="selection" id="selection" hidden></section>
+    </aside>
+  </main>
+  </div>
+  <main class="view screen" id="screenView" hidden></main>
+
+  <dialog id="scaleDialog">
+    <form method="dialog">
+      <h3 id="scaleTitle">Scale</h3>
+      <p class="muted" id="scaleCurrent"></p>
+      <label class="field" id="presetField">Preset
+        <select id="scalePreset"></select>
+      </label>
+      <label class="check" id="scaleAllField"><input type="checkbox" id="scaleAll"> Every sheet this size</label>
+      <div class="buttons">
+        <button type="button" id="scaleFromDim" title="Click both ends of a dimension on the drawing and type its length">From a dimension</button>
+        <span class="spacer"></span>
+        <button value="cancel" title="Close without changing the scale">Cancel</button>
+        <button value="preset" class="primary" id="scaleUsePreset" title="Use the preset scale chosen above">Use preset</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="calibrateDialog">
+    <form method="dialog">
+      <h3>Known dimension</h3>
+      <label class="field">Real length
+        <input id="calibLength" placeholder="20'-0&quot;" required>
+      </label>
+      <p class="muted" id="calibNote"></p>
+      <label class="check"><input type="checkbox" id="calibAll"> Every sheet this size</label>
+      <div class="buttons">
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate title="Close without changing the scale">Cancel</button>
+        <button value="ok" class="primary" title="Work out the scale from this length">Set scale</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="jobDialog">
+    <form method="dialog" id="jobForm" autocomplete="off">
+      <h3>Job details</h3>
+      <div class="grid2">
+        <label class="field wide">Job name <input name="name" required></label>
+        <label class="field">Client <input name="client"></label>
+        <label class="field">Contact <input name="contact"></label>
+        <label class="field wide">Address <input name="address"></label>
+        <label class="field">Job type
+          <select name="type"><option value="residential">Residential</option><option value="commercial">Commercial</option></select>
+        </label>
+        <label class="field">Estimate class
+          <select name="class"><option value="">Not set</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+        </label>
+        <label class="field">Bid due <input name="bidDue" type="date"></label>
+        <label class="field">Estimate date <input name="date" type="date"></label>
+        <label class="field">Prepared by <input name="preparedBy"></label>
+        <label class="field">Quote number <input name="quoteNo"></label>
+        <label class="field">Valid days <input name="validDays" type="number" min="0" step="1"></label>
+        <label class="field wide">Notes <textarea name="notes" rows="3"></textarea></label>
+      </div>
+      <div class="buttons">
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate title="Close without saving">Cancel</button>
+        <button value="ok" class="primary" title="Save the job details">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="askDialog">
+    <form method="dialog">
+      <p id="askText"></p>
+      <input id="askInput" hidden>
+      <div class="buttons">
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate title="Do nothing">Cancel</button>
+        <button value="ok" class="primary" id="askOk" title="Go ahead">OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="infoDialog">
+    <h3 id="infoTitle"></h3>
+    <div id="infoBody"></div>
+    <div class="buttons" id="infoButtons"></div>
+  </dialog>
+
+  <div class="welcome" id="welcome" hidden>
+    <div class="welcome-card" role="dialog" aria-labelledby="welcomeTitle">
+      <img src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
+      <h1 id="welcomeTitle">Measure plans and build a price.</h1>
+      <div class="welcome-buttons">
+        <button type="button" class="primary big" id="welcomePractice" title="Open the sample job and walk through it step by step">Practice on a sample</button>
+        <button type="button" class="big" id="welcomeReal" title="Start your own job">Start a real job</button>
+      </div>
+      <button type="button" class="link" data-action="sample" id="welcomeSample" title="Open the sample job without the tour">Sample job, no tour</button>
+    </div>
+  </div>
+  <div class="tour-ring" id="tourRing" hidden></div>
+  <div class="tour-card" id="tourCard" hidden role="dialog" aria-live="polite">
+    <div class="tour-count" id="tourCount"></div>
+    <div class="tour-text" id="tourText"></div>
+    <div class="tour-hint" id="tourHint"></div>
+    <div class="tour-buttons">
+      <button type="button" class="small" id="tourSkip" title="Stop the tour. Replay it from Help.">Skip tour</button>
+      <button type="button" class="small primary" id="tourDone" hidden title="Close the tour">Close</button>
+    </div>
+  </div>
+
+  <input type="file" id="drawingInput" accept=".pdf,application/pdf,image/*" multiple hidden>
+  <input type="file" id="estimateInput" accept=".json,application/json" hidden>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/starter-library.js"></script>
+  <script src="js/xlsx.js"></script>
+  <script src="js/outputs.js"></script>
+  <script src="js/guide.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/library.js"></script>
+  <script src="js/drawings.js"></script>
+  <script src="js/viewer.js"></script>
+  <script src="js/screen-library.js"></script>
+  <script src="js/screen-rooms.js"></script>
+  <script src="js/screen-estimate.js"></script>
+  <script src="js/screen-bids.js"></script>
+  <script src="js/screen-cash.js"></script>
+  <script src="js/screen-checks.js"></script>
+  <script src="js/sample-plan.js"></script>
+  <script src="js/sample.js"></script>
+  <script src="js/exchange.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/tour.js"></script>
+</body>
+</html>

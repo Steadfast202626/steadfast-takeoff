@@ -1,0 +1,11 @@
+# Netlify publishes the app folder only. jobs/, data/, docs/ and tests/ are never published.
+[build]
+  publish = "app"
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
