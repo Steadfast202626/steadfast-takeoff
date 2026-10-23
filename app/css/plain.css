@@ -1,0 +1,49 @@
+/* Plain pages: terms, privacy, sign in and QuickBooks results. Steadfast walnut and charcoal. */
+:root {
+  --ink: #2b2b2b;
+  --ink-soft: #5c5c58;
+  --line: #d6d6d2;
+  --bg: #f4f4f2;
+  --accent: #53412c;
+  --accent-hover: #3f3121;
+  --warn: #c92a2a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 16px/1.55 Barlow, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  border-top: 4px solid var(--accent);
+}
+.plain {
+  max-width: 760px;
+  margin: 32px auto;
+  padding: 32px 36px 40px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.plain.narrow { max-width: 460px; }
+.plain-logo { height: 72px; display: block; margin-bottom: 18px; }
+h1 { font-size: 26px; margin: 0 0 6px; }
+h2 { font-size: 18px; margin: 26px 0 6px; color: var(--accent); }
+p, li { margin: 0 0 10px; }
+ul { padding-left: 22px; }
+a { color: var(--accent); }
+.muted { color: var(--ink-soft); font-size: 14px; }
+.warn { color: var(--warn); font-weight: 600; }
+form { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+label { display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: var(--ink-soft); }
+input { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 4px; }
+input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+button, .button {
+  font: inherit; font-weight: 600; display: inline-block; text-decoration: none; cursor: pointer;
+  padding: 8px 18px; border-radius: 4px; border: 1px solid var(--accent); background: #fff; color: var(--accent);
+}
+button.primary { background: var(--accent); color: #fff; align-self: flex-start; }
+button.primary:hover { background: var(--accent-hover); }
+footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-soft); }
+@media (max-width: 600px) {
+  .plain { margin: 0; border: none; border-radius: 0; padding: 24px 16px 32px; }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "steadfast-takeoff",
+  "private": true,
+  "description": "Steadfast takeoff and estimating. The app and tools/estimate.js need no packages; these are for the Netlify server functions only.",
+  "engines": { "node": ">=20" },
+  "scripts": { "test": "node --test" },
+  "dependencies": {
+    "@netlify/blobs": "^8.2.0"
+  }
+}
