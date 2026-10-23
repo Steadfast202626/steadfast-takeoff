@@ -207,7 +207,7 @@
           checkbox(a.confirmed, v => edit(x => { x.confirmed = v; }), { dataset: { key: k + 'ok' } }), 'Confirmed by Kamal')));
 
       const codeOptions = est.priceBook.map(p => [p.code, p.code + ' ' + p.item]);
-      const table = el('table', { className: 'grid' },
+      const table = el('table', { className: 'grid build-up' },
         el('thead', {}, el('tr', {}, ['Item', 'Per', 'Qty per unit', 'Waste %', 'Unit cost', 'Cost per unit', ''].map(h => el('th', { textContent: h })))));
       const tbody = el('tbody');
       a.items.forEach((it, i) => {
