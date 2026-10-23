@@ -31,6 +31,16 @@ node tools/estimate.js validate <file|import.json>
 
 The tests fail if any of these are out of date.
 
+## Server functions
+
+`netlify/functions` answer under `/api` on Netlify. The app and the helper need no packages; `npm install` is only for these functions.
+
+- `/api/login`, `/api/logout`: the team passcode.
+- `/api/qbo/connect`, `/api/qbo/callback`, `/api/qbo/disconnect`, `/api/qbo/status`: QuickBooks Online sign-in. Read only.
+- Pages `/terms` and `/privacy`.
+
+Netlify environment variables: `APP_PASSCODE`, `SESSION_SECRET` (32 characters or more), `QBO_CLIENT_ID`, `QBO_CLIENT_SECRET`, `QBO_ENVIRONMENT` (`sandbox` or `production`), and later `MONDAY_API_TOKEN`.
+
 ## Tests
 
 ```
