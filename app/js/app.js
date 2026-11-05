@@ -75,6 +75,13 @@
     },
 
     onCalibrated(sheet, p, q) {
+      // The wizard's scale check borrows the two clicks; it does not change the scale.
+      if (app.scaleCheckHandler) {
+        const handler = app.scaleCheckHandler;
+        app.scaleCheckHandler = null;
+        viewer.setTool('select');
+        return handler(sheet, p, q);
+      }
       openCalibrateDialog(sheet, p, q);
     }
   };
@@ -979,7 +986,7 @@
     if (action === 'drawings') $('drawingInput').click();
     else if (action === 'open') $('estimateInput').click();
     else if (action === 'save') saveEstimate();
-    else if (action === 'new') newJob();
+    else if (action === 'new') { if (window.SteadfastWizard) window.SteadfastWizard.start(); else newJob(); }
     else if (action === 'job') openJobDialog();
     else if (action === 'quote') openOutput('quote');
     else if (action === 'internal') openOutput('internal');

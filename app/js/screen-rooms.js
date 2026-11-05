@@ -5,7 +5,8 @@
   'use strict';
 
   const calc = window.SteadfastCalc;
-  const { el, button, select, numInput, textInput, ask } = window.SteadfastUI;
+  const { el, button, select, numInput, textInput, ask, field, showDialog } = window.SteadfastUI;
+  const Templates = window.SteadfastTemplates;
   const screens = window.SteadfastScreens = window.SteadfastScreens || {};
 
   // Which assemblies make sense for each finish.
@@ -21,12 +22,61 @@
     }, extra || {});
   }
 
+  // Add a room from a template: its finishes, plus lines for what goes in it. Kamal confirms the counts.
+  async function addFromTemplate(app) {
+    const est = app.est;
+    const list = Templates.TEMPLATES.slice().sort((a, b) => (a.type === est.job.type ? 0 : 1) - (b.type === est.job.type ? 0 : 1));
+    const v = { template: list[0].id, name: '', location: '', lengthFt: null, widthFt: null, heightFt: null, doors: null, windows: null, quantities: {} };
+    const box = el('div', { className: 'template-form' });
+    const draw = () => {
+      const t = Templates.TEMPLATES.find(x => x.id === v.template);
+      box.innerHTML = '';
+      const typeName = x => x.name + (x.type === 'commercial' ? ' (commercial)' : '');
+      box.append(el('div', { className: 'grid2' },
+        field('Template', select(list.map(x => [x.id, typeName(x)]), v.template, val => { v.template = val; v.quantities = {}; v.heightFt = v.doors = v.windows = null; draw(); }, { dataset: { key: 'tpl-template' } }), true),
+        field('Room name', textInput(v.name, val => { v.name = val; }, { placeholder: t.name, dataset: { key: 'tpl-name' } })),
+        field('Location', textInput(v.location, val => { v.location = val; }, { placeholder: 'Level 1' })),
+        field('Length ft', numInput(v.lengthFt, val => { v.lengthFt = val; }, { min: 0, placeholder: 'Measure later' })),
+        field('Width ft', numInput(v.widthFt, val => { v.widthFt = val; }, { min: 0, placeholder: 'Measure later' })),
+        field('Height ft', numInput(v.heightFt ?? t.heightFt, val => { v.heightFt = val; }, { min: 0 })),
+        field('Doors', numInput(v.doors ?? t.doors, val => { v.doors = val; }, { min: 0, step: 1 })),
+        field('Windows', numInput(v.windows ?? t.windows, val => { v.windows = val; }, { min: 0, step: 1 }))));
+      const fin = t.finishes;
+      box.append(el('p', { className: 'note', textContent: ['Floor: ' + (fin.floor || 'none'), 'walls: ' + (fin.walls || 'none'),
+        'ceiling: ' + (fin.ceiling || 'none'), 'base: ' + (fin.base || 'none')].join('; ') + '.' }));
+      const items = el('table', { className: 'grid compact' }, el('thead', {}, el('tr', {}, ['Also adds', 'Qty', ''].map(h => el('th', { textContent: h })))));
+      const tb = el('tbody');
+      t.items.forEach((it, i) => {
+        const a = Templates.findAssembly(est, it.assembly);
+        const unit = a ? ({ count: 'ea', length: 'lf', area: 'sf', wall: 'lf' }[a.measure] || 'ea') : '';
+        tb.append(el('tr', {}, el('td', { textContent: it.label, title: it.assembly + (a ? '' : ': not in this job') }),
+          el('td', { className: 'cell-input' }, numInput(v.quantities[i] ?? it.qty, val => { v.quantities[i] = val === null ? 0 : val; }, { className: 'num', min: 0 })),
+          el('td', { textContent: a ? unit : 'Not in this job', className: a ? 'muted' : 'warn-text' })));
+      });
+      items.append(tb);
+      box.append(items);
+    };
+    draw();
+    const ok = await showDialog('Add a room from a template', box, [['Cancel', 'Close without adding', null], ['Add room', 'Add the room and its items', true, true]], true);
+    if (!ok) return null;
+    const t = Templates.TEMPLATES.find(x => x.id === v.template);
+    let out = null;
+    app.change(e => {
+      out = Templates.addRoom(e, t, { name: v.name || t.name, location: v.location, lengthFt: v.lengthFt, widthFt: v.widthFt,
+        heightFt: v.heightFt ?? t.heightFt, doors: v.doors ?? t.doors, windows: v.windows ?? t.windows, quantities: v.quantities });
+    });
+    app.setStatus('Added ' + (v.name || t.name) + ' with ' + out.lines.length + (out.lines.length === 1 ? ' item' : ' items') +
+      (out.skipped.length ? '. ' + out.skipped[0] : ''), !!out.skipped.length, 8000);
+    return out;
+  }
+
   function renderRooms(root, app) {
     const est = app.est;
     root.append(el('div', { className: 'screen-head' },
       el('h1', { textContent: 'Rooms' }),
       el('div', { className: 'spacer' }),
-      button('Add room', 'Add a room to the finish schedule', () => app.change(e => { e.rooms.push(newRoom(e)); }))));
+      button('Add from template', 'Washroom, staff kitchen, basement, bathroom or kitchen, with its finishes and items', () => addFromTemplate(app), 'primary'),
+      button('Add room', 'Add an empty room to the finish schedule', () => app.change(e => { e.rooms.push(newRoom(e)); }))));
     root.append(el('p', { className: 'note', textContent: 'Floors, walls, ceilings and base by room.',
       title: 'Doors take ' + est.settings.doorAreaSf + ' sf off walls and ' + est.settings.doorWidthFt + ' ft off base; windows take ' +
         est.settings.windowAreaSf + ' sf off walls. Blank height uses ' + est.settings.defaultHeightFt +
@@ -93,5 +143,5 @@
   }
 
   screens.rooms = { label: 'Rooms', title: 'Finish schedule: floors, walls, ceilings and base by room', render: renderRooms };
-  window.SteadfastRooms = { newRoom };
+  window.SteadfastRooms = { newRoom, addFromTemplate };
 })();

@@ -74,7 +74,7 @@
     current = Guide.nextStep(app.est, { sheetId: app.sheetId });
     $('nextText').textContent = current.text;
     bar.classList.toggle('done', current.key === 'quote');
-    bar.hidden = !$('welcome').hidden;
+    bar.hidden = !$('welcome').hidden || !!(window.SteadfastWizard && window.SteadfastWizard.active());
   }
 
   $('nextBar').addEventListener('click', () => {
@@ -103,8 +103,7 @@
   $('welcomePractice').addEventListener('click', () => { hideWelcome(); startTour(); });
   $('welcomeReal').addEventListener('click', () => {
     hideWelcome();
-    if (Outputs.isSample(app.est) || app.hasWork()) app.newJob();
-    else app.openJobDialog();
+    window.SteadfastWizard.start();
   });
   $('welcomeSample').addEventListener('click', hideWelcome);
 
