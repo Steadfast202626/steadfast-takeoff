@@ -2,10 +2,12 @@
 
 Paste-ready prompts for scheduled tasks in Steadfast's Claude. Each runs on its own with the Monday.com, QuickBooks Online, Gmail and Google Drive connectors. Each one only reports and drafts: nothing is sent, changed in QuickBooks or marked "ok" without an owner.
 
-## Weekly price check (Monday 8:00 am)
+## Weekly price book review (Monday 8:00 am)
+
+The takeoff app runs the QuickBooks price check itself (Price book screen, "Check now"). It never changes a cost: it marks items "check" with the bill as the reason, and Kamal approves. This routine only reports. It never changes a cost and never runs a second price check.
 
 ```
-Use the steadfast-estimating skill. Read last week's bills in QuickBooks Online. For each bill line that matches an item on the Monday.com Price book board, compare the unit cost. If it moved more than 5%, or the price book item has no cost, update the item's cost, source ("QBO bill: vendor, date") and date, and set Price status to check. Flag any item whose date is older than 90 days as stale. Then send Kamal and Tej one short summary on the Price book board: items updated, items to approve, stale items. Never write to QuickBooks.
+Use the steadfast-estimating skill. On the Monday.com Price book board, list the items marked check, the items with no cost, and the items whose date is more than 90 days old. Post one short summary for Kamal and Tej on the board: what's waiting for approval, what's missing, what's stale. Do not change any cost or status, and do not write to QuickBooks.
 ```
 
 ## Estimates follow-up (Monday and Thursday 8:30 am)
@@ -14,10 +16,12 @@ Use the steadfast-estimating skill. Read last week's bills in QuickBooks Online.
 Use the steadfast-estimating skill. On the Monday.com Estimates board, list every estimate that was sent more than 5 days ago with no reply from the client in Gmail, and every bid due in the next 7 days. For each, draft a short follow-up email from Kamal in Gmail (do not send). Post one update on the board for Kamal: what's due, what needs a follow-up, and links to the drafts.
 ```
 
-## Post-mortem when a job closes (Friday 9:00 am)
+## Post-mortem reminder (Friday 9:00 am)
+
+The post-mortem itself is done in the takeoff app (Post-mortems), which saves it to the Post-mortems board and sends any price book changes to Kamal marked "check". This routine only reminds.
 
 ```
-Use the steadfast-estimating skill. Find jobs marked Complete on Monday.com this week that have no post-mortem yet. For each, pull the actual costs for that project from QuickBooks Online and compare them with the estimate, section by section. Create the item on the Post-mortems board: estimated and actual cost, margin achieved against target, change orders, hours, and the three biggest differences. For any line off by more than 10%, propose a price book change with status check. Post a short summary for Kamal and Tej. Never write to QuickBooks.
+Use the steadfast-estimating skill. Find jobs marked Complete on Monday.com in the last two weeks that have no item on the Post-mortems board. Post one update for Kamal and Tej listing them, with a link to open each in the takeoff app. Do not create post-mortems, change costs or write to QuickBooks.
 ```
 
 ## Note for setting these up

@@ -74,7 +74,7 @@
     current = Guide.nextStep(app.est, { sheetId: app.sheetId });
     $('nextText').textContent = current.text;
     bar.classList.toggle('done', current.key === 'quote');
-    bar.hidden = !$('welcome').hidden;
+    bar.hidden = !$('welcome').hidden || !!(window.SteadfastWizard && window.SteadfastWizard.active());
   }
 
   $('nextBar').addEventListener('click', () => {
@@ -83,13 +83,15 @@
     if (go) go(current);
   });
 
-  // ---------- Welcome ----------
+  // ---------- Start page (shown on every visit) ----------
 
   function showWelcome() {
     tour.stop();
     $('welcome').hidden = false;
     $('nextBar').hidden = true;
-    $('welcomePractice').focus();
+    if (window.SteadfastStart) window.SteadfastStart.refresh();
+    const first = $('startContinue').disabled ? $('welcomeReal') : $('startContinue');
+    first.focus();
   }
 
   function hideWelcome() {
@@ -101,8 +103,7 @@
   $('welcomePractice').addEventListener('click', () => { hideWelcome(); startTour(); });
   $('welcomeReal').addEventListener('click', () => {
     hideWelcome();
-    if (Outputs.isSample(app.est) || app.hasWork()) app.newJob();
-    else app.openJobDialog();
+    window.SteadfastWizard.start();
   });
   $('welcomeSample').addEventListener('click', hideWelcome);
 
@@ -290,9 +291,10 @@
   app.onRender(renderNextBar);
   renderNextBar();
 
+  // A tour that was running before a reload carries on; otherwise every visit opens on the start page.
   const saved = read(TOUR_KEY);
-  if (!read(WELCOMED_KEY)) showWelcome();
-  else if (saved && Outputs.isSample(app.est) && STEPS[saved.step]) tour.begin(saved.step);
+  if (saved && Outputs.isSample(app.est) && STEPS[saved.step]) tour.begin(saved.step);
+  else showWelcome();
 
   window.SteadfastTour = { start: startTour, stop: () => tour.stop(), showWelcome, state: () => ({ step: tour.step }) };
 })();

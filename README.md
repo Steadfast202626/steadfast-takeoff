@@ -31,6 +31,27 @@ node tools/estimate.js validate <file|import.json>
 
 The tests fail if any of these are out of date.
 
+## Server functions
+
+`netlify/functions` answer under `/api` on Netlify. The app and the helper need no packages; `npm install` is only for these functions.
+
+- `/api/login`, `/api/logout`: the team passcode.
+- `/api/session`: signed in or not.
+- `/api/jobs`, `/api/jobs/:id`: list, open and save jobs on the Monday.com Estimates board. Price, margin and open checks are worked out with `app/js/calc.js`, the same as the app.
+- `/api/jobs/:id/drawings/:asset`: brings a drawing down from Monday.com.
+- `/api/uploads/...` and the `upload-finish-background` function: drawings go up in 4 MB parts and are joined on the server, because a Netlify Function takes about 6 MB per request.
+- `/api/postmortems/:id`: the post-mortem for an estimate on the Monday.com Post-mortems board. Numbers are worked out on the server from the estimate file with `app/js/postmortem.js`.
+- `/api/pricebook/flag`: marks a Monday.com price book item "check" with the reason, for Kamal. Never changes a cost.
+- `/api/qbo/connect`, `/api/qbo/callback`, `/api/qbo/disconnect`, `/api/qbo/status`: QuickBooks Online sign-in. Read only.
+- `/api/pricecheck`: the last weekly price check, or run one now. `pricecheck-weekly` runs it every Monday at 14:00 UTC on the published site.
+- `/api/qbo/projects`, `/api/qbo/projects/:id/costs`: QuickBooks projects and their bill and expense costs by CSI division, for the post-mortem.
+- QuickBooks lines match a price book code by the item's SKU (09-LVP), a code in the item name or line description, or the price book item's exact name.
+- Pages `/terms` and `/privacy`.
+
+Board and column ids are in `netlify/lib/monday.mjs`. Estimates, Price book, Post-mortems and Activity log are in Steadfast's Main workspace on Monday.com; the Jobs board the post-mortems link to is still in the Sandbox.
+
+Netlify environment variables: `APP_PASSCODE`, `SESSION_SECRET` (32 characters or more), `MONDAY_API_TOKEN`, `QBO_CLIENT_ID`, `QBO_CLIENT_SECRET`, `QBO_ENVIRONMENT` (`sandbox` or `production`).
+
 ## Tests
 
 ```

@@ -12,9 +12,10 @@
 </head>
 <body>
   <header class="topbar">
-    <img class="logo" src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
+    <button type="button" class="logo-button" data-action="welcome" title="Start page"><img class="logo" src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd"></button>
     <button class="job-name" id="jobName" type="button" title="Job name, client, type and class"></button>
     <span class="save-state" id="saveState"></span>
+    <button type="button" class="cloud-state" id="cloudState" hidden></button>
     <nav class="tabs" id="tabs" role="tablist">
       <button type="button" role="tab" data-screen="takeoff" title="Takeoff: drawings, scale and measuring">Measure</button>
       <button type="button" role="tab" data-screen="rooms" title="Finish schedule: floors, walls, ceilings and base by room">Rooms</button>
@@ -32,15 +33,19 @@
       <div class="menu-list" role="menu" hidden>
         <button type="button" role="menuitem" data-action="tour" title="Open the sample job and walk through it step by step">Replay tour</button>
         <button type="button" role="menuitem" data-action="sample" title="Open a practice job with a made-up floor plan and made-up prices">Sample job</button>
-        <button type="button" role="menuitem" data-action="welcome" title="Show the first screen again">Welcome screen</button>
+        <button type="button" role="menuitem" data-action="welcome" title="Continue a job, start one, practice or open the price book">Start page</button>
+        <button type="button" role="menuitem" data-action="wizard-resume" title="Show the new job steps again for this job">Resume steps</button>
       </div>
     </div>
     <div class="menu" id="fileMenu">
       <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false" title="Open, save, import and print">File</button>
       <div class="menu-list" role="menu" hidden>
-        <button type="button" role="menuitem" data-action="new" title="Start a new job from the company price book">New job</button>
-        <button type="button" role="menuitem" data-action="open" title="Open a saved estimate file">Open estimate</button>
-        <button type="button" role="menuitem" data-action="save" title="Save the estimate file to this computer (Ctrl+S)">Save estimate</button>
+        <button type="button" role="menuitem" data-action="new" title="Start a new job, step by step">New job</button>
+        <button type="button" role="menuitem" data-action="monday-open" title="Open a job from the Monday.com Estimates board">Open from Monday.com</button>
+        <button type="button" role="menuitem" data-action="monday-save" title="Save this job, its estimate file and drawings to Monday.com (Ctrl+S)">Save to Monday.com</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="open" title="Open an estimate file from this computer">Open from computer</button>
+        <button type="button" role="menuitem" data-action="save" title="Save a copy of the estimate file to this computer">Save copy to computer</button>
         <hr>
         <button type="button" role="menuitem" data-action="drawings" title="Add PDF sets or photos of plans">Add drawings</button>
         <button type="button" role="menuitem" data-action="job" title="Job name, client, type and class">Job details</button>
@@ -49,6 +54,8 @@
         <button type="button" role="menuitem" data-action="import-estimator" title="Bring in the estimator's import file, with a preview first">Import from estimator</button>
         <button type="button" role="menuitem" data-action="copy-estimator" title="Copy the whole estimate, without drawings, for the estimator">Copy for estimator</button>
         <button type="button" role="menuitem" data-action="sheet-image" title="Save this sheet as a picture with a 0 to 1 grid for the estimator">Sheet image for estimator</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="postmortem" title="Estimate against actual for a finished job. Owners only.">Post-mortem</button>
         <hr>
         <button type="button" role="menuitem" data-action="quote" title="Open the customer quote, ready to print. No costs or margin.">Customer quote</button>
         <button type="button" role="menuitem" data-action="internal" title="Open the full estimate for the owners, ready to print">Internal estimate</button>
@@ -60,6 +67,23 @@
   </header>
   <div class="sample-band" id="sampleBand" hidden>Sample job with made-up prices. Not for quoting.</div>
   <button type="button" class="next-bar" id="nextBar" hidden title="Click to go there"><span class="next-label">Next step</span><span class="next-text" id="nextText"></span><span class="next-go" aria-hidden="true">Go</span></button>
+
+  <section class="wizard" id="wizard" hidden aria-label="New job steps">
+    <ol class="wiz-steps" id="wizSteps"></ol>
+    <div class="wiz-body">
+      <div class="wiz-text">
+        <div class="wiz-title" id="wizTitle"></div>
+        <ul class="wiz-missing" id="wizMissing"></ul>
+      </div>
+      <div class="wiz-actions" id="wizActions"></div>
+      <div class="wiz-nav">
+        <label class="check" title="For Bruce: every step open, nothing locked"><input type="checkbox" id="wizExpert"> Expert mode</label>
+        <button type="button" id="wizBack" title="The step before">Back</button>
+        <button type="button" class="primary" id="wizNext">Next</button>
+        <button type="button" class="link" id="wizLeave" title="Hide the steps. The job stays as it is.">Leave steps</button>
+      </div>
+    </div>
+  </section>
 
   <div class="view" id="takeoffView">
   <main class="workspace">
@@ -198,14 +222,38 @@
     <div class="buttons" id="infoButtons"></div>
   </dialog>
 
-  <div class="welcome" id="welcome" hidden>
-    <div class="welcome-card" role="dialog" aria-labelledby="welcomeTitle">
-      <img src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
-      <h1 id="welcomeTitle">Measure plans and build a price.</h1>
-      <div class="welcome-buttons">
-        <button type="button" class="primary big" id="welcomePractice" title="Open the sample job and walk through it step by step">Practice on a sample</button>
-        <button type="button" class="big" id="welcomeReal" title="Start your own job">Start a real job</button>
+  <div class="welcome start" id="welcome" hidden>
+    <div class="start-card" role="dialog" aria-labelledby="welcomeTitle">
+      <div class="start-head">
+        <img src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
+        <div>
+          <h1 id="welcomeTitle">Steadfast takeoff</h1>
+          <p class="start-date" id="startDate"></p>
+        </div>
+        <span class="spacer"></span>
+        <a class="start-signin" id="startSignIn" href="/api/login?next=%2F" hidden title="Sign in with the team passcode to use Monday.com">Sign in</a>
       </div>
+      <div class="start-tiles">
+        <button type="button" class="tile main" id="startContinue" title="Go back to the job in this browser"><strong>Continue a job</strong><span id="startContinueSub"></span></button>
+        <button type="button" class="tile" id="welcomeReal" title="Start your own job, step by step"><strong>Start a new job</strong><span>Step by step</span></button>
+        <button type="button" class="tile" id="welcomePractice" title="Open the sample job and walk through it step by step"><strong>Practice</strong><span>Sample job and tour</span></button>
+        <button type="button" class="tile" id="startPostmortems" hidden title="Compare a finished job's estimate with what it cost"><strong>Post-mortems</strong><span>Estimate against actual</span></button>
+        <button type="button" class="tile" id="startPricebook" title="Costs from the Monday.com Price book board"><strong>Price book</strong><span id="startPricebookSub"></span></button>
+      </div>
+      <div class="start-glance">
+        <section>
+          <h2>Open checks</h2>
+          <ul class="glance-list" id="startChecks"></ul>
+        </section>
+        <section>
+          <h2>Stale prices</h2>
+          <ul class="glance-list" id="startPrices"></ul>
+        </section>
+      </div>
+      <section class="start-jobs" id="startJobsSection" hidden>
+        <h2>Jobs on Monday.com</h2>
+        <div id="startJobs"></div>
+      </section>
       <button type="button" class="link" data-action="sample" id="welcomeSample" title="Open the sample job without the tour">Sample job, no tour</button>
     </div>
   </div>
@@ -225,6 +273,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="js/calc.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/wizard-rules.js"></script>
   <script src="js/starter-library.js"></script>
   <script src="js/xlsx.js"></script>
   <script src="js/outputs.js"></script>
@@ -240,10 +290,16 @@
   <script src="js/screen-bids.js"></script>
   <script src="js/screen-cash.js"></script>
   <script src="js/screen-checks.js"></script>
+  <script src="js/postmortem.js"></script>
+  <script src="js/screen-postmortem.js"></script>
   <script src="js/sample-plan.js"></script>
   <script src="js/sample.js"></script>
   <script src="js/exchange.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/cloud.js"></script>
+  <script src="js/quickbooks.js"></script>
+  <script src="js/wizard.js"></script>
+  <script src="js/start.js"></script>
   <script src="js/tour.js"></script>
 </body>
 </html>

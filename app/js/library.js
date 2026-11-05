@@ -8,7 +8,7 @@
 
   const calc = window.SteadfastCalc;
   const KEY = 'steadfast-takeoff.library';
-  const STALE_DAYS = 30;
+  const STALE_DAYS = 90; // matches the weekly price check (owners, 2026-11-05)
 
   function starter() {
     const s = window.SteadfastStarter;
