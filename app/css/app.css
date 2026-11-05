@@ -490,6 +490,30 @@ label.check.big { font-size: 15px; margin: 14px 0; }
 .checklist.big .label { font-weight: 500; }
 .checklist.big button { margin-left: auto; }
 
+/* New job wizard */
+.wizard { flex: none; background: #fff; border-bottom: 1px solid var(--line); box-shadow: inset 0 3px 0 var(--accent); padding: 8px 16px 10px; }
+.wiz-steps { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.wiz-steps button { border: none; border-radius: 12px; padding: 3px 10px; font-size: 12.5px; background: var(--line-soft); color: var(--ink-soft); }
+.wiz-steps li.done button { background: #e6f4ea; color: #1e6b34; }
+.wiz-steps li.current button { background: var(--accent); color: #fff; font-weight: 600; }
+.wiz-steps li.locked button { background: none; color: var(--muted); border: 1px dashed var(--line); }
+.wiz-body { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 16px; align-items: start; }
+.wiz-title { font-size: 16px; font-weight: 700; color: var(--accent); }
+.wiz-missing { list-style: none; margin: 2px 0 0; padding: 0; font-size: 13.5px; display: flex; flex-wrap: wrap; gap: 2px 14px; }
+.wiz-missing .lead { font-weight: 600; color: var(--warn); }
+.wiz-missing .miss { color: var(--ink); }
+.wiz-missing .miss::before { content: "\2022  "; color: var(--warn); }
+.wiz-missing .ok { color: #1e6b34; font-weight: 600; }
+.wiz-missing .note { width: 100%; color: var(--ink-soft); }
+.wiz-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: flex-end; max-width: 460px; }
+.wiz-actions label.check { font-size: 13px; }
+.wiz-nav { display: flex; gap: 8px; align-items: center; }
+.wiz-nav label.check { font-size: 12.5px; color: var(--ink-soft); margin-right: 4px; }
+.wiz-nav #wizNext:disabled { opacity: 0.4; }
+.template-form .grid2 { margin-bottom: 8px; }
+.template-form table { margin-top: 6px; }
+@media (max-width: 1100px) { .wiz-body { grid-template-columns: 1fr; } .wiz-actions { justify-content: flex-start; max-width: none; } }
+
 /* Help for someone new: next step bar, welcome, tour */
 .next-bar {
   flex: none;
