@@ -48,7 +48,7 @@ The tests fail if any of these are out of date.
 - QuickBooks lines match a price book code by the item's SKU (09-LVP), a code in the item name or line description, or the price book item's exact name.
 - Pages `/terms` and `/privacy`.
 
-Board and column ids are in `netlify/lib/monday.mjs` (Sandbox workspace for now). Going live means changing `BOARDS` there only.
+Board and column ids are in `netlify/lib/monday.mjs`. Estimates, Price book, Post-mortems and Activity log are in Steadfast's Main workspace on Monday.com; the Jobs board the post-mortems link to is still in the Sandbox.
 
 Netlify environment variables: `APP_PASSCODE`, `SESSION_SECRET` (32 characters or more), `MONDAY_API_TOKEN`, `QBO_CLIENT_ID`, `QBO_CLIENT_SECRET`, `QBO_ENVIRONMENT` (`sandbox` or `production`).
 

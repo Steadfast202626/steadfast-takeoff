@@ -2,7 +2,8 @@
  * Steadfast takeoff: Monday.com is the database. Every call to Monday goes through here, on the server,
  * with MONDAY_API_TOKEN. The browser never sees the token.
  *
- * Board and column ids are for the Sandbox workspace. To go live, change BOARDS only.
+ * Estimates, Price book, Post-mortems and Activity log are in Steadfast's Main workspace (moved from
+ * the Sandbox on 2026-11-05; a moved board keeps its id). The Jobs board is still in the Sandbox.
  */
 export const API_URL = 'https://api.monday.com/v2';
 export const FILE_URL = 'https://api.monday.com/v2/file';
@@ -45,7 +46,7 @@ export const BOARDS = {
     },
     sub: { est: 'est', act: 'act', note: 'note' }
   },
-  jobs: { id: 18432911964, col: { estimate: 'estimate' } }
+  jobs: { id: 18432911964, col: { estimate: 'estimate' } } // Sandbox Jobs board: post-mortems link to it when a job was won
 };
 
 export class MondayError extends Error {}
