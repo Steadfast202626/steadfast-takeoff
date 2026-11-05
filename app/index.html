@@ -12,7 +12,7 @@
 </head>
 <body>
   <header class="topbar">
-    <img class="logo" src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
+    <button type="button" class="logo-button" data-action="welcome" title="Start page"><img class="logo" src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd"></button>
     <button class="job-name" id="jobName" type="button" title="Job name, client, type and class"></button>
     <span class="save-state" id="saveState"></span>
     <button type="button" class="cloud-state" id="cloudState" hidden></button>
@@ -33,7 +33,7 @@
       <div class="menu-list" role="menu" hidden>
         <button type="button" role="menuitem" data-action="tour" title="Open the sample job and walk through it step by step">Replay tour</button>
         <button type="button" role="menuitem" data-action="sample" title="Open a practice job with a made-up floor plan and made-up prices">Sample job</button>
-        <button type="button" role="menuitem" data-action="welcome" title="Show the first screen again">Welcome screen</button>
+        <button type="button" role="menuitem" data-action="welcome" title="Continue a job, start one, practice or open the price book">Start page</button>
       </div>
     </div>
     <div class="menu" id="fileMenu">
@@ -202,14 +202,38 @@
     <div class="buttons" id="infoButtons"></div>
   </dialog>
 
-  <div class="welcome" id="welcome" hidden>
-    <div class="welcome-card" role="dialog" aria-labelledby="welcomeTitle">
-      <img src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
-      <h1 id="welcomeTitle">Measure plans and build a price.</h1>
-      <div class="welcome-buttons">
-        <button type="button" class="primary big" id="welcomePractice" title="Open the sample job and walk through it step by step">Practice on a sample</button>
-        <button type="button" class="big" id="welcomeReal" title="Start your own job">Start a real job</button>
+  <div class="welcome start" id="welcome" hidden>
+    <div class="start-card" role="dialog" aria-labelledby="welcomeTitle">
+      <div class="start-head">
+        <img src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
+        <div>
+          <h1 id="welcomeTitle">Steadfast takeoff</h1>
+          <p class="start-date" id="startDate"></p>
+        </div>
+        <span class="spacer"></span>
+        <a class="start-signin" id="startSignIn" href="/api/login?next=%2F" hidden title="Sign in with the team passcode to use Monday.com">Sign in</a>
       </div>
+      <div class="start-tiles">
+        <button type="button" class="tile main" id="startContinue" title="Go back to the job in this browser"><strong>Continue a job</strong><span id="startContinueSub"></span></button>
+        <button type="button" class="tile" id="welcomeReal" title="Start your own job, step by step"><strong>Start a new job</strong><span>Step by step</span></button>
+        <button type="button" class="tile" id="welcomePractice" title="Open the sample job and walk through it step by step"><strong>Practice</strong><span>Sample job and tour</span></button>
+        <button type="button" class="tile" id="startPostmortems" hidden title="Compare a finished job's estimate with what it cost"><strong>Post-mortems</strong><span>Estimate against actual</span></button>
+        <button type="button" class="tile" id="startPricebook" title="Costs from the Monday.com Price book board"><strong>Price book</strong><span id="startPricebookSub"></span></button>
+      </div>
+      <div class="start-glance">
+        <section>
+          <h2>Open checks</h2>
+          <ul class="glance-list" id="startChecks"></ul>
+        </section>
+        <section>
+          <h2>Stale prices</h2>
+          <ul class="glance-list" id="startPrices"></ul>
+        </section>
+      </div>
+      <section class="start-jobs" id="startJobsSection" hidden>
+        <h2>Jobs on Monday.com</h2>
+        <div id="startJobs"></div>
+      </section>
       <button type="button" class="link" data-action="sample" id="welcomeSample" title="Open the sample job without the tour">Sample job, no tour</button>
     </div>
   </div>
@@ -249,6 +273,7 @@
   <script src="js/exchange.js"></script>
   <script src="js/app.js"></script>
   <script src="js/cloud.js"></script>
+  <script src="js/start.js"></script>
   <script src="js/tour.js"></script>
 </body>
 </html>

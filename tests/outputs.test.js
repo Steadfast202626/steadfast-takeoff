@@ -113,3 +113,22 @@ test('the scope letter lists the scope and asks for WCB and insurance, with no p
   assert.doesNotMatch(text, /\$\d/);
   assert.match(html, /@bottom-right \{ content: "Scope letter, Flooring"/);
 });
+
+test('the quote opens with a cover page: logo, kind, job, who it is for and from, and the date', () => {
+  const est = pricedEstimate('commercial');
+  Object.assign(est.job, { name: 'Kitchen and washroom renovation', address: 'Administration building', preparedBy: 'Kamal Brar', date: '2026-10-27', class: 'C' });
+  const html = outputs.quoteHtml(est, { logoUrl: 'logo.png' });
+  const cover = html.slice(html.indexOf('<div class="cover">'), html.indexOf('<header>'));
+  assert.ok(cover.length > 0, 'cover comes before the quote header');
+  assert.match(cover, /<img src="logo.png"/);
+  assert.match(cover, /Budget estimate/, 'class C is a budget estimate');
+  assert.match(cover, /<h1>Kitchen and washroom renovation<\/h1>/);
+  assert.match(cover, /Prepared for<\/p><p class="who">Test Client/);
+  assert.match(cover, /Kamal Brar, Steadfast Constructions Ltd\./);
+  assert.match(cover, /27 October 2026/);
+  assert.match(html, /\.cover \{[^}]*page-break-after: always/);
+  est.job.class = 'B';
+  assert.match(outputs.quoteHtml(est, {}), /<p class="kind">Quote/, 'class A or B is a quote');
+  assert.equal(outputs.longDate('2026-01-05'), '5 January 2026');
+  assert.equal(outputs.longDate(''), '');
+});
