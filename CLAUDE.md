@@ -50,7 +50,10 @@ You are Steadfast's senior estimator. Use the `steadfast-estimating` skill if it
 
 ## Owners' numbers
 
-- Residential gross margin floor 30%, target 35%. Commercial floor is set by the owners per job. Margin is not markup: 30% margin needs a 42.9% markup on cost, 35% needs 53.8%.
+- Residential gross margin floor 30%, target 35%. Commercial floor 25%, target 30%, unless the owners set others for a job. Margin is not markup: 25% margin needs a 33.3% markup on cost, 30% needs 42.9%, 35% needs 53.8%.
+- Contingency 10% residential, 7.5% commercial, 10% when the drawings are incomplete.
+- Travel premium 10% outside Edmonton, St. Albert, Sherwood Park, Spruce Grove, Leduc and Beaumont.
+- These are the defaults the app's new job wizard fills in (`app/js/wizard-rules.js`). Kamal can change them per job.
 - GST 5%, shown separately.
 - Residential billing: 25% at signed contract, 35% when the supplier confirms the materials order, 30% when installation starts, 10% after the deficiency list is signed off.
 - No subcontractor is scheduled or paid without a signed agreement and a current WCB clearance letter.

@@ -42,7 +42,7 @@
       if (!ok) return;
     }
     app.loadEstimate(calc.newEstimate(undefined, window.SteadfastLibrary.get()), 'wizard');
-    state = { active: true, step: 0, noDrawings: false, noRooms: false, scaleChecks: {} };
+    state = { active: true, step: 0, noDrawings: false, drawingsIncomplete: false, noRooms: false, scaleChecks: {}, auto: {} };
     save();
     go(0);
   }
@@ -116,6 +116,7 @@
     if (key === 'drawings') {
       out.push(act('Add drawings', 'PDF sets or photos of plans', () => $('drawingInput').click(), true));
       if (!est.sheets.length) out.push(tick('No drawings for this job', 'noDrawings'));
+      out.push(tick('Drawings are incomplete', 'drawingsIncomplete'));
     }
     if (key === 'scale') {
       const s = est.sheets.find(x => !calc.hasScale(x)) ||
@@ -153,12 +154,30 @@
     return out;
   }
 
-  // Steadfast's rules, already filled in on every new job, shown at the profit step.
+  // Steadfast's rules, filled in on every new job and kept up to date as the job details change.
+  // A setting Kamal changed himself is his: the rules never fill it again.
+  let applying = false;
+  function applyRules() {
+    if (applying || !state.active) return;
+    const changes = Rules.ruleChanges(app.est, state, state.auto);
+    if (!Object.keys(changes).length) return;
+    applying = true;
+    setTimeout(() => {
+      app.change(e => { Object.assign(e.settings, changes); });
+      state.auto = Object.assign({}, state.auto, changes);
+      save();
+      applying = false;
+    }, 0);
+  }
+
+  // What the rules filled in, and anything Kamal changed, shown at the profit step.
   function prefilledNote() {
     const s = app.est.settings;
-    const parts = ['Target margin ' + s.marginTarget + '%', 'GST ' + s.gstPct + '%'];
-    if (app.est.job.type === 'residential') parts.splice(1, 0, 'floor ' + s.marginFloor + '%', 'stages ' + (s.stages || []).map(x => x.pct).join('/'));
-    return 'Filled in: ' + parts.join(', ') + '.';
+    const { values, reasons } = Rules.steadfastRules(app.est, state);
+    const parts = Object.keys(reasons).map(k => s[k] === values[k] ? reasons[k] : reasons[k].split(',')[0].replace(/[\d.]+%/, s[k] + '%') + ' (changed for this job)');
+    if (app.est.job.type === 'residential') parts.push('stages ' + (s.stages || []).map(x => x.pct).join('/'));
+    parts.push('GST ' + s.gstPct + '%');
+    return 'Steadfast\'s rules: ' + parts.join('; ') + '. Change any of them under Settings on the Estimate screen.';
   }
 
   // ---------- Bar ----------
@@ -166,6 +185,7 @@
   function render() {
     const bar = $('wizard');
     const show = !!state.active && $('welcome').hidden;
+    if (state.active) applyRules();
     bar.hidden = !show;
     document.body.classList.toggle('has-wizard', show);
     if (!show) return;

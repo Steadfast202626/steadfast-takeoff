@@ -12,6 +12,69 @@
 
   const SCALE_TOLERANCE = 0.02; // a second dimension within 2% of what the scale measures passes
 
+  // ---------- Steadfast's rules (owners, 2026-11-05) ----------
+  // Filled in by the wizard on every new job. Kamal can change any of them per job; a value he
+  // changed is never filled in again.
+  const RULES = {
+    contingency: { residential: 10, commercial: 7.5, incompleteDrawings: 10 },
+    margin: { residential: { target: 35, floor: 30 }, commercial: { target: 30, floor: 25 } },
+    travelPct: 10,
+    localArea: ['Edmonton', 'St. Albert', 'Sherwood Park', 'Spruce Grove', 'Leduc', 'Beaumont']
+  };
+
+  const plainPlace = t => String(t || '').toLowerCase().replace(/\bsaint\b/g, 'st').replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
+
+  // The town the address names from the local list, or null when it names none of them.
+  // Only the town part counts: a street line with a number ("12 Leduc Ave") is skipped.
+  function localTown(address) {
+    const parts = String(address || '').split(/[,\n]/).map(x => x.trim()).filter(Boolean);
+    const places = parts.filter((x, i) => i > 0 || parts.length === 1 && !/\d/.test(x) || i === 0 && !/\d/.test(x));
+    for (const part of places) {
+      const a = ' ' + plainPlace(part) + ' ';
+      const town = RULES.localArea.find(t => a.includes(' ' + plainPlace(t) + ' '));
+      if (town) return town;
+    }
+    return null;
+  }
+
+  // What the rules give for this job, with the reason for each, in plain words.
+  // state.drawingsIncomplete or state.noDrawings: the drawings are incomplete.
+  function steadfastRules(est, state) {
+    state = state || {};
+    const commercial = est.job.type === 'commercial';
+    const incomplete = !!(state.drawingsIncomplete || state.noDrawings);
+    const values = {}, reasons = {};
+    values.contingencyPct = incomplete ? RULES.contingency.incompleteDrawings : commercial ? RULES.contingency.commercial : RULES.contingency.residential;
+    reasons.contingencyPct = 'Contingency ' + values.contingencyPct + '%' + (incomplete ? ', drawings incomplete' : commercial ? ', commercial' : ', residential');
+    const m = commercial ? RULES.margin.commercial : RULES.margin.residential;
+    values.marginTarget = m.target;
+    reasons.marginTarget = 'Target margin ' + m.target + '%';
+    if (commercial) { values.commercialFloor = m.floor; reasons.commercialFloor = 'Commercial floor ' + m.floor + '%'; }
+    else { values.marginFloor = m.floor; reasons.marginFloor = 'Floor ' + m.floor + '%'; }
+    if (est.job.address) {
+      const town = localTown(est.job.address);
+      values.travelPct = town ? 0 : RULES.travelPct;
+      reasons.travelPct = town ? 'No travel premium, ' + town : 'Travel ' + RULES.travelPct + '%, the address names no town in Edmonton and area';
+    }
+    return { values, reasons };
+  }
+
+  // The settings to change so the job follows the rules, leaving alone anything Kamal set himself.
+  // auto: what the wizard filled in last time ({ key: value }). A setting still at that value, or at
+  // the new-job default, or empty, is the wizard's to fill; anything else is Kamal's.
+  function ruleChanges(est, state, auto) {
+    auto = auto || {};
+    const fresh = calc.newEstimate().settings;
+    const { values } = steadfastRules(est, state);
+    const out = {};
+    for (const [k, v] of Object.entries(values)) {
+      const cur = est.settings[k];
+      const ours = cur === null || cur === undefined || (k in auto ? cur === auto[k] : cur === fresh[k]);
+      if (ours && cur !== v) out[k] = v;
+    }
+    return out;
+  }
+
   const isNum = v => typeof v === 'number' && isFinite(v);
 
   function roomHasSize(est, r) {
@@ -88,8 +151,8 @@
       key: 'profit', title: 'Profit and extras',
       missing(est) {
         const s = est.settings, out = [];
-        if (!isNum(s.contingencyPct)) out.push('Contingency %, set for this job');
-        if (est.job.type === 'commercial' && !isNum(s.commercialFloor)) out.push('Commercial margin floor %, set by the owners for this job');
+        if (!isNum(s.contingencyPct)) out.push('Contingency %');
+        if (est.job.type === 'commercial' && !isNum(s.commercialFloor)) out.push('Commercial margin floor %');
         if (!est.exclusions.length) out.push('Exclusions: what is not included');
         if (!est.risks.length) out.push('At least one risk');
         const m = calc.money(est);
@@ -123,5 +186,5 @@
     return { ok: Math.abs(off) <= SCALE_TOLERANCE, off, measuredFt, typedFt, ftPerUnit: sheet.ftPerUnit };
   }
 
-  return { STEPS, firstOpen, scaleCheck, SCALE_TOLERANCE };
+  return { STEPS, firstOpen, scaleCheck, SCALE_TOLERANCE, RULES, localTown, steadfastRules, ruleChanges };
 });
