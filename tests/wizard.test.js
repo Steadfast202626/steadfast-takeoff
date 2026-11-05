@@ -81,10 +81,13 @@ test('wizard: each step names what is missing, and is done when it is supplied',
   assert.deepEqual(step('prices').missing(est, state), []);
 
   const profit = step('profit').missing(est, state);
-  assert.ok(profit.includes('Contingency %, set for this job'), 'contingency has no company default, so it is asked for');
-  assert.ok(profit.includes('Commercial margin floor %, set by the owners for this job') === false, 'residential job');
+  assert.ok(profit.includes('Contingency %'), 'empty until the rules fill it');
+  assert.ok(!profit.includes('Commercial margin floor %'), 'residential job');
   est.job.type = 'commercial';
-  assert.ok(step('profit').missing(est, state).includes('Commercial margin floor %, set by the owners for this job'));
+  assert.ok(step('profit').missing(est, state).includes('Commercial margin floor %'));
+  Object.assign(est.settings, W.ruleChanges(est, state, {}));
+  const filled = step('profit').missing(est, state);
+  assert.ok(!filled.includes('Contingency %') && !filled.includes('Commercial margin floor %'), 'the rules fill both');
 });
 
 test('wizard: the scale step needs a second dimension that agrees within 2%', () => {
@@ -119,4 +122,51 @@ test('wizard rules change no number', () => {
   const before = JSON.stringify(calc.money(est).base);
   for (const s of W.STEPS) s.missing(est, { scaleChecks: {} });
   assert.equal(JSON.stringify(calc.money(est).base), before);
+});
+
+test('Steadfast rules: contingency, margins and travel by job type, drawings and town', () => {
+  const est = calc.newEstimate(undefined, starterLibrary());
+  const rule = (state) => W.steadfastRules(est, state || {}).values;
+
+  est.job.type = 'residential';
+  assert.deepEqual(rule(), { contingencyPct: 10, marginTarget: 35, marginFloor: 30 }, 'no address yet, so no travel rule');
+  est.job.type = 'commercial';
+  assert.deepEqual(rule(), { contingencyPct: 7.5, marginTarget: 30, commercialFloor: 25 });
+  assert.equal(rule({ drawingsIncomplete: true }).contingencyPct, 10, 'incomplete drawings');
+  assert.equal(rule({ noDrawings: true }).contingencyPct, 10, 'no drawings counts as incomplete');
+
+  for (const [address, travel] of [
+    ['10060 Jasper Avenue NW, Edmonton', 0], ['45 Perron St, Saint Albert', 0], ['St. Albert', 0],
+    ['Sherwood Park, Strathcona County', 0], ['Spruce Grove AB', 0], ['5 Main St, Leduc', 0], ['Beaumont', 0],
+    ['Box 9, Red Deer', 10], ['12 Leduc Ave, Calgary', 10], ['Fort Saskatchewan', 10]
+  ]) {
+    est.job.address = address;
+    assert.equal(rule().travelPct, travel, address);
+  }
+});
+
+test('Steadfast rules: filled in on a new job, kept up to date, and never over a value Kamal changed', () => {
+  const est = calc.newEstimate(undefined, starterLibrary());
+  const state = {};
+  let auto = {};
+  const apply = () => { const ch = W.ruleChanges(est, state, auto); Object.assign(est.settings, ch); auto = Object.assign({}, auto, ch); return ch; };
+
+  Object.assign(est.job, { type: 'commercial', address: 'Box 9, Red Deer' });
+  assert.deepEqual(apply(), { contingencyPct: 7.5, marginTarget: 30, commercialFloor: 25, travelPct: 10 });
+  assert.deepEqual(apply(), {}, 'nothing more to do');
+
+  est.settings.contingencyPct = 8;          // Kamal's own number
+  state.drawingsIncomplete = true;
+  assert.deepEqual(apply(), {}, 'his contingency stays even when the rule would now give 10%');
+  assert.equal(est.settings.contingencyPct, 8);
+
+  est.job.address = '5 Main St, Leduc';      // the wizard's own travel value follows the address
+  assert.deepEqual(apply(), { travelPct: 0 });
+  est.job.type = 'residential';
+  assert.deepEqual(apply(), { marginTarget: 35 }, 'floor 30 is already the residential default');
+
+  // The rules only fill settings: the price follows from calc.js as usual.
+  est.lines.push({ id: 'l1', division: '01', description: 'Cost', qty: 1, unit: 'lot', unitCost: 10000, type: 'S', allowance: false, alternateId: null, status: 'ok' });
+  est.settings.contingencyPct = 0;
+  assert.equal(calc.money(est).base.price, 15390, 'format check figure still holds');
 });
