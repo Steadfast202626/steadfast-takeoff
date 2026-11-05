@@ -37,8 +37,15 @@ export const BOARDS = {
   },
   postMortems: {
     id: 18432914685,
-    col: { job: 'job', estHours: 'numeric_mm8dgzfy', actHours: 'numeric_mm8dwgnq', changeOrders: 'numeric_mm8d7pv7', qboProject: 'text_mm8d3x2x' }
-  }
+    col: {
+      job: 'job', estimate: 'board_relation_mm8tajhv', status: 'pm_status', reviewDate: 'review_date',
+      contract: 'contract_final', estCost: 'est_cost', actualCost: 'actual_cost',
+      estHours: 'numeric_mm8dgzfy', actHours: 'numeric_mm8dwgnq', changeOrders: 'numeric_mm8d7pv7', coList: 'long_text_mm8td9h3',
+      qboProject: 'text_mm8d3x2x', wentWell: 'went_well', toChange: 'to_change', overWhy: 'over_why'
+    },
+    sub: { est: 'est', act: 'act', note: 'note' }
+  },
+  jobs: { id: 18432911964, col: { estimate: 'estimate' } }
 };
 
 export class MondayError extends Error {}

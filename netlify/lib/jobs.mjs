@@ -201,3 +201,5 @@ export async function finishUpload(req, deps) {
   for (let n = 0; n < task.parts; n++) await store.delete(key + '/part/' + n);
   return new Response('', { status: 200 });
 }
+
+export { json, guard, failed };

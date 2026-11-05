@@ -490,6 +490,12 @@ label.check.big { font-size: 15px; margin: 14px 0; }
 .checklist.big .label { font-weight: 500; }
 .checklist.big button { margin-left: auto; }
 
+/* Post-mortem */
+table.pm-sections td.qbo-cell { color: var(--muted); font-size: 12px; background: repeating-linear-gradient(135deg, #fafaf8, #fafaf8 6px, #f2f2ef 6px, #f2f2ef 12px); }
+table.pm-sections tr.foot td { background: #fafaf8; }
+table.pm-sections td.strong { font-weight: 700; }
+.qbo-card { border-style: dashed; }
+
 /* New job wizard */
 .wizard { flex: none; background: #fff; border-bottom: 1px solid var(--line); box-shadow: inset 0 3px 0 var(--accent); padding: 8px 16px 10px; }
 .wiz-steps { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
