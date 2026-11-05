@@ -63,6 +63,11 @@
       if (days !== null && days > Library.STALE_DAYS) ul.append(item('Last import ' + days + ' days ago', 'warn', toBook, 'Import the Monday.com Price book board again'));
       else ul.append(item('Imported ' + (days === 0 ? 'today' : days === 1 ? 'yesterday' : days + ' days ago'), 'ok'));
     }
+    const qbo = window.SteadfastQuickBooks && window.SteadfastQuickBooks.state.last;
+    if (qbo && qbo.flags.length) {
+      ul.append(item(qbo.flags.length + (qbo.flags.length === 1 ? ' price' : ' prices') + ' moved on QuickBooks bills, checked ' + qbo.ranAt.slice(0, 10), 'warn', toBook,
+        'Marked "check" on the Monday.com Price book board for Kamal'));
+    }
     const noCost = lib.priceBook.filter(p => p.unitCost === null || p.unitCost === undefined).length;
     if (noCost) ul.append(item(noCost + (noCost === 1 ? ' item has no cost' : ' items have no cost'), 'warn', toBook));
     if (app.hasWork() && !Outputs.isSample(app.est)) {

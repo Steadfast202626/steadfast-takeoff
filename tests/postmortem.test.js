@@ -146,3 +146,11 @@ test('a price book flag marks the item "check" with the reason and never changes
   assert.equal(missing.found, false);
   assert.equal((await P.flagPrice(req(S, '/api/pricebook/flag', { method: 'POST', body: { code: 'bad code!' } }), deps)).status, 400);
 });
+
+test('post-mortem: QuickBooks costs that match no estimate section still count in the actual cost', () => {
+  const est = finishedJob();
+  const r = PM.compute(est, { qbo: { '01': 1300, '09': 1500, '26': 400 }, qboUnmatched: 250 });
+  assert.equal(r.qboOther, 650, 'division 26 is not in the estimate, plus 250 matched to no code');
+  assert.equal(r.actualCost, 1300 + 1500 + 650);
+  assert.equal(r.sections.find(s => s.division === '09').actualFrom, 'QuickBooks');
+});

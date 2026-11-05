@@ -20,7 +20,7 @@
   const sum = (list, f) => list.reduce((a, x) => a + (isNum(f(x)) ? f(x) : 0), 0);
 
   function emptyRecord() {
-    return { actuals: {}, qbo: null, changeOrders: [], actualHours: null, status: 'In progress', wentWell: '', toChange: '', overWhy: '', qboProject: '' };
+    return { actuals: {}, qbo: null, qboUnmatched: 0, changeOrders: [], actualHours: null, status: 'In progress', wentWell: '', toChange: '', overWhy: '', qboProject: '' };
   }
 
   // The actual for a section: what was typed, else what QuickBooks gave, else nothing yet.
@@ -53,8 +53,11 @@
     const coPrice = calc.round2(sum(cos, c => c.price));
     const coCost = calc.round2(sum(cos, c => c.cost));
     const contract = isNum(m.base.price) ? calc.round2(m.base.price + coPrice) : null;
+    // QuickBooks costs on the project that land in no estimate section are still real costs.
+    const known = new Set(divisions);
+    const qboOther = record.qbo ? calc.round2(sum(Object.keys(record.qbo).filter(d => !known.has(d)), d => record.qbo[d]) + (isNum(record.qboUnmatched) ? record.qboUnmatched : 0)) : 0;
     const entered = sections.filter(s => s.actual !== null);
-    const actualCost = entered.length ? calc.round2(sum(entered, s => s.actual) + coCost) : null;
+    const actualCost = entered.length ? calc.round2(sum(entered, s => s.actual) + coCost + qboOther) : null;
     const plannedCost = isNum(m.base.cost) ? calc.round2(m.base.cost + coCost) : null;
     const profit = contract !== null && actualCost !== null ? calc.round2(contract - actualCost) : null;
     const margin = profit !== null && contract ? profit / contract : null;
@@ -62,7 +65,7 @@
     const estimatedHours = calc.round2(sum(sections, s => s.hours));
 
     return {
-      sections, extras, changeOrders: cos, coPrice, coCost,
+      sections, extras, changeOrders: cos, coPrice, coCost, qboOther,
       contract, plannedCost, actualCost, profit, margin, plannedMargin,
       target: est.settings.marginTarget, floor: calc.marginFloor(est),
       estimatedHours, actualHours: isNum(record.actualHours) ? record.actualHours : null,

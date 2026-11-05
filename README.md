@@ -43,6 +43,9 @@ The tests fail if any of these are out of date.
 - `/api/postmortems/:id`: the post-mortem for an estimate on the Monday.com Post-mortems board. Numbers are worked out on the server from the estimate file with `app/js/postmortem.js`.
 - `/api/pricebook/flag`: marks a Monday.com price book item "check" with the reason, for Kamal. Never changes a cost.
 - `/api/qbo/connect`, `/api/qbo/callback`, `/api/qbo/disconnect`, `/api/qbo/status`: QuickBooks Online sign-in. Read only.
+- `/api/pricecheck`: the last weekly price check, or run one now. `pricecheck-weekly` runs it every Monday at 14:00 UTC on the published site.
+- `/api/qbo/projects`, `/api/qbo/projects/:id/costs`: QuickBooks projects and their bill and expense costs by CSI division, for the post-mortem.
+- QuickBooks lines match a price book code by the item's SKU (09-LVP), a code in the item name or line description, or the price book item's exact name.
 - Pages `/terms` and `/privacy`.
 
 Board and column ids are in `netlify/lib/monday.mjs` (Sandbox workspace for now). Going live means changing `BOARDS` there only.

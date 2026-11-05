@@ -102,6 +102,8 @@
       button('Use latest import', 'Replace this job\'s price book with the latest import', () => useLatestImport(app))
     ));
     root.append(importInfo());
+    const qbo = window.SteadfastQuickBooks && window.SteadfastQuickBooks.card();
+    if (qbo) root.append(qbo);
     root.append(el('p', { className: 'note' },
       est.priceBook.length + ' items in this job. ' + (missing ? missing + ' with no cost. ' : '') +
       (flagged ? flagged + ' changed here: update them in Monday.com.' : '')));

@@ -186,11 +186,12 @@ test('every function file has an /api path, and terms and privacy pages are publ
   const dir = path.join(root, 'netlify/functions');
   const want = ['/api/login', '/api/logout', '/api/qbo/connect', '/api/qbo/callback', '/api/qbo/disconnect', '/api/qbo/status',
     '/api/session', '/api/jobs', '/api/jobs/:id', '/api/jobs/:id/drawings/:asset', '/api/uploads/:upload', '/api/uploads/:upload/:part',
-    '/api/postmortems/:id', '/api/pricebook/flag'];
+    '/api/postmortems/:id', '/api/pricebook/flag', '/api/pricecheck', '/api/qbo/projects', '/api/qbo/projects/:id/costs'];
   const paths = [];
   for (const f of fs.readdirSync(dir)) {
     const text = fs.readFileSync(path.join(dir, f), 'utf8');
     if (f.endsWith('-background.mjs')) { assert.doesNotMatch(text, /path:/, f + ' is called by other functions only'); continue; }
+    if (/schedule: '/.test(text)) { assert.doesNotMatch(text, /path:/, f + ' runs on its schedule only'); continue; }
     const m = text.match(/path: (\[[^\]]+\]|'[^']+')/);
     assert.ok(m, f + ' has an /api path');
     paths.push(...m[1].match(/'[^']+'/g).map(x => x.slice(1, -1)));

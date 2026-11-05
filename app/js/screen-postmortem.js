@@ -184,10 +184,14 @@
         el('td', { className: 'num', textContent: money(s.estimated) }),
         el('td', { className: 'cell-input num' }, numInput(record.actuals[s.division] ?? null, v => edit(app, x => { if (v === null) delete x.actuals[s.division]; else x.actuals[s.division] = v; }),
           { className: 'num', min: 0, placeholder: qbo === null ? 'Type actual' : money(qbo), dataset: { key: 'pm-act-' + s.division } })),
-        el('td', { className: 'num qbo-cell', textContent: qbo === null ? 'Not connected' : money(qbo) }),
+        el('td', { className: 'num qbo-cell', textContent: qbo === null ? (record.qbo ? 'None' : 'Not filled') : money(qbo) }),
         el('td', { className: 'num' + (s.variance > 0 ? ' warn-text' : ''), textContent: s.variance === null ? '' : (s.variance > 0 ? '+' : '') + money(s.variance) }),
         el('td', { className: 'num' + (s.off ? ' warn-text' : ''), textContent: s.pct === null ? '' : (s.pct > 0 ? '+' : '') + pct(s.pct) }),
         el('td', { className: 'actions' }, s.off ? button('Update price book', 'More than 10% off: suggest new costs to Kamal', () => offerUpdate(app, s), 'small primary') : null)));
+    }
+    if (r.qboOther) {
+      tbody.append(el('tr', { className: 'check-row' }, el('td', { textContent: 'QuickBooks, no section', title: 'Project costs in QuickBooks that match no section of this estimate. Counted in the actual cost.' }),
+        el('td'), el('td', { className: 'num', textContent: money(r.qboOther) }), el('td', { className: 'num qbo-cell', textContent: money(r.qboOther) }), el('td'), el('td'), el('td')));
     }
     tbody.append(el('tr', {}, el('td', { textContent: 'Travel and contingency', title: 'In the estimated cost; not a cost of its own' }),
       el('td', { className: 'num', textContent: money(r.extras) }), el('td', { className: 'muted', textContent: 'Not spent as such' }), el('td'), el('td'), el('td'), el('td')));
@@ -197,13 +201,25 @@
     table.append(tbody);
     root.append(el('div', { className: 'table-wrap' }, table));
 
-    // QuickBooks (filled in later)
+    // QuickBooks actuals: every bill and expense on the job's QuickBooks project, by section.
+    const QB = window.SteadfastQuickBooks;
+    const connected = !!(QB && QB.connected());
+    if (QB && !QB.state.loaded && app.cloud && app.cloud.state.signedIn) QB.refresh();
+    const fill = () => QB.fillProject(app, record, out => edit(app, x => {
+      x.qboProject = out.project;
+      x.qbo = out.costs.byDivision;
+      x.qboUnmatched = out.costs.unmatchedTotal;
+      x.qboFilled = new Date().toISOString().slice(0, 10);
+    }));
     root.append(el('section', { className: 'card qbo-card' },
       el('h2', { textContent: 'QuickBooks actuals' }),
-      el('p', { className: 'note', textContent: 'Not connected yet. Once QuickBooks is connected, the costs on this job\'s QuickBooks project fill the QuickBooks column by section. Typed actuals stay as typed.' }),
+      el('p', { className: 'note', textContent: connected
+        ? (record.qbo ? 'Filled from ' + record.qboProject + (record.qboFilled ? ' on ' + record.qboFilled : '') + '. Typed actuals stay as typed; clear one to use QuickBooks.' : 'Fill the QuickBooks column from the job\'s QuickBooks project. Typed actuals stay as typed.')
+        : 'QuickBooks is not connected. Connect it on the Price book screen, then fill the QuickBooks column from the job\'s project.' }),
       el('div', { className: 'form-grid' },
         el('label', { className: 'field' }, 'QuickBooks project', textInput(record.qboProject, v => edit(app, x => { x.qboProject = v; }), { placeholder: 'Customer or project name in QuickBooks', dataset: { key: 'pm-qbo' } })),
-        el('div', {}, el('button', { type: 'button', textContent: 'Fill from QuickBooks', title: 'Available once QuickBooks is connected', disabled: true })))));
+        el('div', {}, el('button', { type: 'button', className: connected ? 'primary' : '', textContent: record.qbo ? 'Fill again' : 'Fill from QuickBooks',
+          title: connected ? 'Read this project\'s bills and expenses' : 'Connect QuickBooks first', disabled: !connected, onclick: fill })))));
 
     // Change orders
     root.append(el('div', { className: 'section-head' }, el('h2', { textContent: 'Change orders' }),
