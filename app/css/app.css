@@ -318,6 +318,10 @@ dialog .buttons { display: flex; gap: 8px; margin-top: 4px; }
 .tabs button:hover { color: var(--ink); background: var(--bg); }
 .tabs button.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; background: none; }
 .checks-badge { font-size: 13px; }
+.cloud-state { font-size: 13px; color: var(--ink-soft); flex: none; }
+.has-cloud .save-state:not(.warn) { display: none; }
+.cloud-state.warn { color: var(--warn); border-color: #f1c0c0; background: var(--warn-weak); }
+table.job-list td:first-child { font-weight: 600; }
 .checks-badge.warn { color: var(--warn); border-color: #f1c0c0; background: var(--warn-weak); }
 .view { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .screen { overflow: auto; padding: 16px 20px 40px; display: block; }
@@ -377,9 +381,13 @@ table.grid tr.check-row { background: #fffaf3; }
 table.rooms td.cell-input input.num { width: 58px; min-width: 58px; }
 table.rooms td.cell-input input:not(.num) { min-width: 110px; }
 table.rooms td.cell-input select { max-width: 165px; }
-table.rooms th:first-child, table.rooms td:first-child { position: sticky; left: 0; z-index: 1; background: #fff; box-shadow: inset -1px 0 0 var(--line-soft); }
-table.rooms th:first-child { z-index: 2; background: #fafaf8; }
-table.rooms tr.check-row td:first-child { background: #fffaf3; box-shadow: inset 3px 0 0 var(--warn), inset -1px 0 0 var(--line-soft); }
+/* Wide tables scroll sideways with the first column pinned */
+table.rooms th:first-child, table.rooms td:first-child,
+table.lines th:first-child, table.lines td:first-child { position: sticky; left: 0; z-index: 1; background: #fff; box-shadow: inset -1px 0 0 var(--line-soft); }
+table.rooms th:first-child, table.lines th:first-child { z-index: 2; background: #fafaf8; }
+table.lines tr.group-row td:first-child { background: var(--accent-weak); box-shadow: none; }
+table.rooms tr.check-row td:first-child, table.lines tr.check-row td:first-child { background: #fffaf3; box-shadow: inset 3px 0 0 var(--warn), inset -1px 0 0 var(--line-soft); }
+table.lines td:first-child:not(.cell-input) { min-width: 160px; }
 input.missing { border-color: #e8a3a3; background: var(--warn-weak); }
 .tag {
   display: inline-block;
@@ -576,12 +584,6 @@ button.link { border: none; background: none; color: var(--accent); text-decorat
   100% { box-shadow: 0 0 0 4px rgba(232, 89, 12, 0); }
 }
 
-/* Laptops: the price summary sits above the lines so the table has the full width */
-@media (max-width: 1600px) {
-  .estimate { grid-template-columns: minmax(0, 1fr); }
-  .est-side { position: static; order: -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items: start; }
-}
-
 @media (max-width: 1400px) {
   .save-state:not(.warn) { display: none; }
 }
@@ -595,6 +597,8 @@ button.link { border: none; background: none; color: var(--accent); text-decorat
 /* Tablets */
 @media (max-width: 1100px) {
   .workspace { grid-template-columns: 170px 1fr 290px; }
+  .estimate { grid-template-columns: 1fr; }
+  .est-side { position: static; }
 }
 @media (max-width: 820px) {
   body { overflow: auto; }

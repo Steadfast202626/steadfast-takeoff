@@ -15,6 +15,7 @@
     <img class="logo" src="assets/steadfast-logo-dark-on-light.png" alt="Steadfast Constructions Ltd">
     <button class="job-name" id="jobName" type="button" title="Job name, client, type and class"></button>
     <span class="save-state" id="saveState"></span>
+    <button type="button" class="cloud-state" id="cloudState" hidden></button>
     <nav class="tabs" id="tabs" role="tablist">
       <button type="button" role="tab" data-screen="takeoff" title="Takeoff: drawings, scale and measuring">Measure</button>
       <button type="button" role="tab" data-screen="rooms" title="Finish schedule: floors, walls, ceilings and base by room">Rooms</button>
@@ -39,8 +40,11 @@
       <button type="button" class="menu-button" aria-haspopup="true" aria-expanded="false" title="Open, save, import and print">File</button>
       <div class="menu-list" role="menu" hidden>
         <button type="button" role="menuitem" data-action="new" title="Start a new job from the company price book">New job</button>
-        <button type="button" role="menuitem" data-action="open" title="Open a saved estimate file">Open estimate</button>
-        <button type="button" role="menuitem" data-action="save" title="Save the estimate file to this computer (Ctrl+S)">Save estimate</button>
+        <button type="button" role="menuitem" data-action="monday-open" title="Open a job from the Monday.com Estimates board">Open from Monday.com</button>
+        <button type="button" role="menuitem" data-action="monday-save" title="Save this job, its estimate file and drawings to Monday.com (Ctrl+S)">Save to Monday.com</button>
+        <hr>
+        <button type="button" role="menuitem" data-action="open" title="Open an estimate file from this computer">Open from computer</button>
+        <button type="button" role="menuitem" data-action="save" title="Save a copy of the estimate file to this computer">Save copy to computer</button>
         <hr>
         <button type="button" role="menuitem" data-action="drawings" title="Add PDF sets or photos of plans">Add drawings</button>
         <button type="button" role="menuitem" data-action="job" title="Job name, client, type and class">Job details</button>
@@ -244,6 +248,7 @@
   <script src="js/sample.js"></script>
   <script src="js/exchange.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/cloud.js"></script>
   <script src="js/tour.js"></script>
 </body>
 </html>

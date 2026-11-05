@@ -789,15 +789,20 @@
 
   async function newJob() {
     if (hasWork()) {
-      const ok = await ask('Start a new job? The current job is only kept in this browser. Save the estimate file first if you need it.', 'Start new job');
+      const ok = await ask(app.cloud && app.cloud.unsaved()
+        ? 'Start a new job? The current job has changes not saved to Monday.com.'
+        : 'Start a new job? Save the current one first if you need it.', 'Start new job');
       if (!ok) return;
     }
     loadEstimate(Model.newEstimate(undefined, Library.get()));
     openJobDialog();
   }
 
-  function loadEstimate(est) {
+  // source: 'monday' when it came from the Estimates board, else undefined. Hooks use it to keep or drop the Monday link.
+  const loadHooks = [];
+  function loadEstimate(est, source) {
     app.est = Model.normalize(est);
+    for (const fn of loadHooks) fn(app.est, source);
     app.undo = [];
     app.redo = [];
     app.selectedId = null;
@@ -1054,7 +1059,7 @@
     if (e.key === 'Shift') viewer.setShift(true);
     if (document.querySelector('dialog[open]')) return;
     const mod = e.ctrlKey || e.metaKey;
-    if (mod && e.key.toLowerCase() === 's') { e.preventDefault(); saveEstimate(); return; }
+    if (mod && e.key.toLowerCase() === 's') { e.preventDefault(); if (app.cloud && app.cloud.ready()) app.cloud.save(); else saveEstimate(); return; }
     if (typing(e)) return;
     if (mod && e.key.toLowerCase() === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
     if (mod && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); return; }
@@ -1093,6 +1098,7 @@
 
   Object.assign(app, {
     setStatus, renderAll, renderScreen, goto, showCondition, openOutput, openJobDialog, autosave, loadEstimate, currentSheet, hasWork,
+    attachStoredDrawings, saveEstimate, onLoad: fn => loadHooks.push(fn),
     openScaleDialog, newCondition, showSheet, newJob, focusKey, closeMenu, showQuoteQty: true,
     onRender: fn => renderHooks.push(fn), onOutput: fn => outputHooks.push(fn)
   });

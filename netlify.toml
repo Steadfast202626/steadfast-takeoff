@@ -1,7 +1,22 @@
 # Netlify publishes the app folder only. jobs/, data/, docs/ and tests/ are never published.
+# Server functions (netlify/functions) answer under /api. Keys stay on the server.
 [build]
   publish = "app"
   command = ""
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/terms"
+  to = "/terms.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
 
 [[headers]]
   for = "/*"
