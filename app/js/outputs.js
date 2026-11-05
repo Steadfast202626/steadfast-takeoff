@@ -74,12 +74,50 @@
       '.banner { background: #53412c; color: #fff; font-weight: bold; padding: 6px 10px; margin-bottom: 12px; }\n' +
       '.sample { background: #c92a2a; color: #fff; font-weight: bold; text-align: center; padding: 8px 10px; margin-bottom: 12px; }\n' +
       '.warn { color: #b00020; }\n' +
+      '.cover { display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 0.9in; page-break-after: always; break-after: page; }\n' +
+      '.cover img { height: 2.1in; margin-bottom: 0.45in; }\n' +
+      '.cover .kind { font-size: 10pt; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase; color: #53412c; margin: 0 0 10px; }\n' +
+      '.cover h1 { font-size: 26pt; color: #2b2b2b; margin: 0 0 8px; }\n' +
+      '.cover .where { font-size: 12pt; color: #5c5c58; margin: 0 0 0.6in; }\n' +
+      '.cover .label { font-size: 9pt; font-weight: bold; color: #53412c; margin: 22px 0 3px; }\n' +
+      '.cover .who { font-size: 11.5pt; margin: 0; }\n' +
+      '.cover .small { font-size: 9.5pt; color: #5c5c58; margin: 2px 0 0; }\n' +
+      '.cover .date { font-size: 11.5pt; margin-top: 0.45in; }\n' +
+      '.cover .rule { width: 1.2in; border-top: 3px solid #53412c; margin: 0 auto 0.4in; }\n' +
       '.muted { color: #666; }\n' +
       'section { page-break-inside: auto; }\n' +
       'h2, h3 { page-break-after: avoid; }\n' +
       '</style></head><body><div class="sheet">\n' +
       '<div class="no-print"><button type="button" onclick="window.print()" title="Print or save as PDF">Print</button></div>\n' +
       body + '\n</div></body></html>\n';
+  }
+
+  // "27 October 2026", as on the Air Liquide budget estimate.
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function longDate(date) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date || '');
+    return m ? Number(m[3]) + ' ' + MONTHS[Number(m[2]) - 1] + ' ' + m[1] : '';
+  }
+
+  // Class C and D are budget numbers, not quotes (format file, release check 6).
+  function quoteKind(est) {
+    return est.job.class === 'C' || est.job.class === 'D' ? 'Budget estimate' : 'Quote';
+  }
+
+  // The cover page of the customer quote: logo, what it is, the job, who it is for and from, the date.
+  function coverBlock(est, logoUrl) {
+    const j = est.job;
+    const by = (j.preparedBy ? j.preparedBy + ', ' : '') + COMPANY.name + '.';
+    return '<div class="cover">' +
+      (logoUrl ? '<img src="' + esc(logoUrl) + '" alt="' + esc(COMPANY.name) + '">' : '') +
+      '<p class="kind">' + esc(quoteKind(est)) + (j.quoteNo ? ' ' + esc(j.quoteNo) : '') + '</p>' +
+      '<h1>' + esc(j.name || 'Renovation') + '</h1>' +
+      (j.address ? '<p class="where">' + esc(j.address) + '</p>' : '<p class="where"></p>') +
+      '<div class="rule"></div>' +
+      (j.client ? '<p class="label">Prepared for</p><p class="who">' + esc(j.client) + '</p>' + (j.contact ? '<p class="small">' + esc(j.contact) + '</p>' : '') : '') +
+      '<p class="label">Prepared by</p><p class="who">' + esc(by) + '</p><p class="small">' + esc(COMPANY.email) + ' · ' + esc(COMPANY.phone) + '</p>' +
+      (j.date ? '<p class="date">' + esc(longDate(j.date)) + '</p>' : '') +
+      '</div>';
   }
 
   function headerBlock(est, logoUrl) {
@@ -170,8 +208,8 @@
     const j = est.job;
     const scope = scopeItems(est);
     const validUntil = addDays(j.date, j.validDays);
-    let html = headerBlock(est, opts.logoUrl);
-    html += '<h1>Quote' + (j.quoteNo ? ' ' + esc(j.quoteNo) : '') + '</h1>';
+    let html = coverBlock(est, opts.logoUrl) + headerBlock(est, opts.logoUrl);
+    html += '<h1>' + esc(quoteKind(est)) + (j.quoteNo ? ' ' + esc(j.quoteNo) : '') + (j.name ? ': ' + esc(j.name) : '') + '</h1>';
     html += metaTable([
       ['Date', j.date], ['Valid until', validUntil], ['Prepared by', j.preparedBy],
       ['Customer', j.client], ['Contact', j.contact], ['Project', j.name], ['Address', j.address]
@@ -368,5 +406,5 @@
     return calc.toCsv(rows);
   }
 
-  return { quoteHtml, internalHtml, scopeLetterHtml, linesCsv, scopeItems, isSample, COMPANY, SAMPLE_FILE, SAMPLE_BAND };
+  return { quoteHtml, internalHtml, scopeLetterHtml, linesCsv, scopeItems, isSample, longDate, quoteKind, COMPANY, SAMPLE_FILE, SAMPLE_BAND };
 });

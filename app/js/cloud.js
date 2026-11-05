@@ -257,10 +257,14 @@
     if (unsaved()) { e.preventDefault(); e.returnValue = ''; }
   });
 
-  app.cloud = { ready: () => state.available && state.signedIn && state.monday, unsaved, save, openList, state };
+  // The jobs on the Estimates board, for the start page. Null when Monday.com is not in reach.
+  async function listJobs() {
+    if (!(state.available && state.signedIn && state.monday)) return null;
+    try { return (await api('/api/jobs')).jobs; } catch (e) { return null; }
+  }
 
-  checkSession().then(() => {
-    // Opening the app lists the jobs on Monday when there is nothing open yet.
-    if (app.cloud.ready() && !app.hasWork() && $('welcome').hidden) openList();
-  });
+  app.cloud = { ready: () => state.available && state.signedIn && state.monday, unsaved, save, openList, openJob, listJobs, link: readLink, state };
+
+  // The start page lists the jobs on Monday once we know whether the server and sign-in are there.
+  checkSession().then(() => { if (window.SteadfastStart) window.SteadfastStart.refresh(); });
 })();
