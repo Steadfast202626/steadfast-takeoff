@@ -185,7 +185,8 @@ test('QuickBooks status needs sign-in and never returns a token', async () => {
 test('every function file has an /api path, and terms and privacy pages are published', () => {
   const dir = path.join(root, 'netlify/functions');
   const want = ['/api/login', '/api/logout', '/api/qbo/connect', '/api/qbo/callback', '/api/qbo/disconnect', '/api/qbo/status',
-    '/api/session', '/api/jobs', '/api/jobs/:id', '/api/jobs/:id/drawings/:asset', '/api/uploads/:upload', '/api/uploads/:upload/:part'];
+    '/api/session', '/api/jobs', '/api/jobs/:id', '/api/jobs/:id/drawings/:asset', '/api/uploads/:upload', '/api/uploads/:upload/:part',
+    '/api/postmortems/:id', '/api/pricebook/flag'];
   const paths = [];
   for (const f of fs.readdirSync(dir)) {
     const text = fs.readFileSync(path.join(dir, f), 'utf8');

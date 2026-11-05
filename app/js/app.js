@@ -988,6 +988,7 @@
     else if (action === 'save') saveEstimate();
     else if (action === 'new') { if (window.SteadfastWizard) window.SteadfastWizard.start(); else newJob(); }
     else if (action === 'job') openJobDialog();
+    else if (action === 'postmortem') goto('postmortems');
     else if (action === 'quote') openOutput('quote');
     else if (action === 'internal') openOutput('internal');
     else if (window.SteadfastExchange && window.SteadfastExchange.actions[action]) window.SteadfastExchange.actions[action](app);

@@ -40,6 +40,8 @@ The tests fail if any of these are out of date.
 - `/api/jobs`, `/api/jobs/:id`: list, open and save jobs on the Monday.com Estimates board. Price, margin and open checks are worked out with `app/js/calc.js`, the same as the app.
 - `/api/jobs/:id/drawings/:asset`: brings a drawing down from Monday.com.
 - `/api/uploads/...` and the `upload-finish-background` function: drawings go up in 4 MB parts and are joined on the server, because a Netlify Function takes about 6 MB per request.
+- `/api/postmortems/:id`: the post-mortem for an estimate on the Monday.com Post-mortems board. Numbers are worked out on the server from the estimate file with `app/js/postmortem.js`.
+- `/api/pricebook/flag`: marks a Monday.com price book item "check" with the reason, for Kamal. Never changes a cost.
 - `/api/qbo/connect`, `/api/qbo/callback`, `/api/qbo/disconnect`, `/api/qbo/status`: QuickBooks Online sign-in. Read only.
 - Pages `/terms` and `/privacy`.
 

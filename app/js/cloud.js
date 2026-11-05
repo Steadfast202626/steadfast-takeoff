@@ -263,7 +263,7 @@
     try { return (await api('/api/jobs')).jobs; } catch (e) { return null; }
   }
 
-  app.cloud = { ready: () => state.available && state.signedIn && state.monday, unsaved, save, openList, openJob, listJobs, link: readLink, state };
+  app.cloud = { ready: () => state.available && state.signedIn && state.monday, unsaved, save, openList, openJob, listJobs, link: readLink, api, state };
 
   // The start page lists the jobs on Monday once we know whether the server and sign-in are there.
   checkSession().then(() => { if (window.SteadfastStart) window.SteadfastStart.refresh(); });

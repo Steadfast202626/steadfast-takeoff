@@ -71,4 +71,54 @@ function fakeMonday(M) {
 }
 
 
-module.exports = { fakeMonday };
+// The fake Monday.com from the job tests, plus the Post-mortems, Jobs and Price book boards.
+function withBoards(M, fake) {
+  const pms = [];
+  const flags = [];
+  let nextId = 7000;
+  const P = M.BOARDS.postMortems;
+  const ok = data => new Response(JSON.stringify({ data }));
+  const fetchFn = async (url, opts = {}) => {
+    if (url !== M.API_URL) return fake.fetch(url, opts);
+    const { query, variables } = JSON.parse(opts.body);
+    if (query.includes(`boards (ids: [${P.id}])`)) {
+      return ok({ boards: [{ items_page: { items: pms.map(p => ({ id: p.id, name: p.name,
+        column_values: Object.entries(p.vals).map(([id, v]) => ({ id, text: typeof v === 'object' && v ? (v.text ?? v.label ?? v.date ?? '') : String(v), linked_item_ids: v && v.item_ids ? v.item_ids.map(String) : undefined })),
+        subitems: p.subs.map(s => ({ id: s.id, name: s.name, board: { id: '999' }, column_values: Object.entries(s.vals).map(([id, v]) => ({ id, text: String(v) })) })) })) } }] });
+    }
+    if (query.includes(`boards (ids: [${M.BOARDS.jobs.id}])`)) return ok({ boards: [{ items_page: { items: [] } }] });
+    if (query.includes(`create_item (board_id: ${P.id}`)) {
+      const p = { id: String(nextId++), name: variables.name, vals: JSON.parse(variables.vals), subs: [] };
+      pms.push(p);
+      return ok({ create_item: { id: p.id } });
+    }
+    if (query.includes(`change_multiple_column_values (board_id: ${P.id}`)) {
+      const p = pms.find(x => x.id === variables.id);
+      const vals = JSON.parse(variables.vals);
+      p.name = vals.name; delete vals.name;
+      Object.assign(p.vals, vals);
+      return ok({ change_multiple_column_values: { id: p.id } });
+    }
+    if (query.includes('change_multiple_column_values (board_id: $board')) {
+      for (const p of pms) for (const s of p.subs) if (s.id === variables.id) Object.assign(s.vals, JSON.parse(variables.vals));
+      return ok({ change_multiple_column_values: { id: variables.id } });
+    }
+    if (query.includes('create_subitem')) {
+      const p = pms.find(x => x.id === variables.parent);
+      const s = { id: String(nextId++), name: variables.name, vals: JSON.parse(variables.vals) };
+      p.subs.push(s);
+      return ok({ create_subitem: { id: s.id } });
+    }
+    if (query.includes(`items_page_by_column_values (board_id: ${M.BOARDS.priceBook.id}`)) {
+      return ok({ items_page_by_column_values: { items: variables.v[0] === '09-PNT' ? [{ id: '555', name: 'Paint walls' }] : [] } });
+    }
+    if (query.includes(`change_multiple_column_values (board_id: ${M.BOARDS.priceBook.id}`)) {
+      flags.push({ id: variables.id, vals: JSON.parse(variables.vals) });
+      return ok({ change_multiple_column_values: { id: variables.id } });
+    }
+    return fake.fetch(url, opts);
+  };
+  return { pms, flags, fetch: fetchFn, activity: fake.activity };
+}
+
+module.exports = { fakeMonday, withBoards };
