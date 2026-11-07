@@ -54,8 +54,9 @@ export async function login(req, deps) {
   return page('Sign in', loginForm(next, 'That passcode is not right.'), 401);
 }
 
+// Signing out goes straight back to the sign-in page.
 export async function logout() {
-  return redirect('/', { 'set-cookie': S.clearCookie(S.COOKIE) });
+  return redirect('/api/login', { 'set-cookie': S.clearCookie(S.COOKIE) });
 }
 
 // ---------- QuickBooks ----------

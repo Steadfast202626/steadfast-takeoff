@@ -62,6 +62,8 @@
         <button type="button" role="menuitem" data-action="lines-csv" title="Save the estimate lines as a CSV for the Monday.com Estimates board">Lines for Monday.com</button>
         <hr>
         <button type="button" role="menuitem" data-action="sample" title="Open a practice job with a made-up floor plan and made-up prices">Sample job</button>
+        <hr>
+        <a role="menuitem" class="menu-link" href="/api/logout" title="Sign out and go back to the sign-in page">Sign out</a>
       </div>
     </div>
   </header>
@@ -231,7 +233,7 @@
           <p class="start-date" id="startDate"></p>
         </div>
         <span class="spacer"></span>
-        <a class="start-signin" id="startSignIn" href="/api/login?next=%2F" hidden title="Sign in with the team passcode to use Monday.com">Sign in</a>
+        <a class="start-signin" id="startSignOut" href="/api/logout" title="Sign out and go back to the sign-in page">Sign out</a>
       </div>
       <div class="start-tiles">
         <button type="button" class="tile main" id="startContinue" title="Go back to the job in this browser"><strong>Continue a job</strong><span id="startContinueSub"></span></button>
