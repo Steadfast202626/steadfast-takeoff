@@ -119,8 +119,6 @@
     $('startContinue').disabled = !work;
     $('startContinueSub').textContent = work ? (app.est.job.name || 'Job in this browser') : 'Nothing open in this browser';
     $('startPostmortems').hidden = !(window.SteadfastScreens && window.SteadfastScreens.postmortems);
-    const signIn = app.cloud && app.cloud.state.available && !app.cloud.state.signedIn;
-    $('startSignIn').hidden = !signIn;
     $('startDate').textContent = Outputs.longDate(calc.today());
   }
 
