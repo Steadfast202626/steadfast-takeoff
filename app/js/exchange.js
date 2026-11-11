@@ -176,7 +176,7 @@
         ctx.beginPath(); ctx.moveTo(ox, y); ctx.lineTo(ox + w, y); ctx.stroke();
       }
       // Ticks on all four edges every 0.05, labels every 0.1
-      ctx.strokeStyle = '#53412c';
+      ctx.strokeStyle = '#1f3a68';
       ctx.lineWidth = 2;
       const len = major ? 14 : 8;
       ctx.beginPath();
@@ -187,7 +187,7 @@
       ctx.stroke();
       if (major) {
         const label = t.toFixed(1);
-        ctx.fillStyle = '#53412c';
+        ctx.fillStyle = '#1f3a68';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         ctx.fillText(label, x, oy - 16);
@@ -200,7 +200,7 @@
         ctx.fillText(label, ox + w + 17, y);
       }
     }
-    ctx.strokeStyle = '#53412c';
+    ctx.strokeStyle = '#1f3a68';
     ctx.lineWidth = 2;
     ctx.strokeRect(ox, oy, w, h);
     ctx.restore();

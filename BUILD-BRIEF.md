@@ -15,7 +15,7 @@ The first real use is a large commercial bid: several kitchens, two bathrooms, h
 - Netlify publishes `app/` only (set `publish = "app"` in `netlify.toml`). Nothing in `jobs/`, `data/` or `docs/` is ever published.
 - The helper is `tools/estimate.js` (Node 20, no dependencies beyond what Node ships with). It shares one calculation module with the app (`app/js/calc.js`, written so both the browser and Node can load it). The app and the helper must never compute a number differently.
 - The app saves the current job in the browser automatically and saves the estimate file on demand: `YYYY-MM-DD — Estimate — Job name.json`. Drawings are re-attached by file name and kept in the browser's IndexedDB between sessions.
-- Branding: logo files in `assets/`, charcoal ink, walnut brown accent `#53412c`, plain neutral greys. Screen font Barlow with Arial fallback. Printed documents in Arial.
+- Branding: logo files in `assets/`, dark ink, navy blue accent `#1f3a68`, silver greys on white. Screen font Barlow with Arial fallback. Printed documents in Arial.
 - Screen text: labels of two to four words, no instructions the screen already makes obvious, Canadian spelling.
 
 ## Version 1 features

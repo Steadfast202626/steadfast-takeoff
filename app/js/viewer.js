@@ -12,7 +12,7 @@
   const DRAG_PX = 4;       // movement before a press becomes a drag
   const HANDLE_PX = 8;
   const MIN_POINTS = { area: 3, length: 2, wall: 2, count: 1 };
-  const ACCENT = '#53412c';
+  const ACCENT = '#1f3a68';
 
   function createViewer(canvas, readout, app) {
     const ctx = canvas.getContext('2d');

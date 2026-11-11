@@ -50,12 +50,12 @@
       '.sheet { max-width: 8in; margin: 0 auto; padding: 24px; }\n' +
       '@media print { .sheet { padding: 0; max-width: none; } .no-print { display: none; } }\n' +
       '.no-print { text-align: right; margin-bottom: 12px; }\n' +
-      '.no-print button { font: 10pt Arial, sans-serif; padding: 6px 14px; border: 1px solid #53412c; background: #53412c; color: #fff; border-radius: 4px; cursor: pointer; }\n' +
-      'header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #53412c; padding-bottom: 10px; margin-bottom: 14px; }\n' +
+      '.no-print button { font: 10pt Arial, sans-serif; padding: 6px 14px; border: 1px solid #1f3a68; background: #1f3a68; color: #fff; border-radius: 4px; cursor: pointer; }\n' +
+      'header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #1f3a68; padding-bottom: 10px; margin-bottom: 14px; }\n' +
       'header img { height: 78px; }\n' +
       '.company { text-align: right; font-size: 9pt; line-height: 1.45; }\n' +
       '.company strong { font-size: 11pt; }\n' +
-      'h1 { font-size: 18pt; margin: 0 0 10px; color: #53412c; }\n' +
+      'h1 { font-size: 18pt; margin: 0 0 10px; color: #1f3a68; }\n' +
       'h2 { font-size: 12pt; margin: 18px 0 6px; border-bottom: 1px solid #ccc; padding-bottom: 3px; }\n' +
       'h3 { font-size: 10.5pt; margin: 10px 0 4px; }\n' +
       'table { border-collapse: collapse; width: 100%; }\n' +
@@ -71,19 +71,19 @@
       '.qty { color: #555; white-space: nowrap; }\n' +
       '.sign { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 14px; page-break-inside: avoid; }\n' +
       '.sign p { margin: 20px 0 0; border-top: 1px solid #333; padding-top: 3px; font-size: 9pt; color: #555; }\n' +
-      '.banner { background: #53412c; color: #fff; font-weight: bold; padding: 6px 10px; margin-bottom: 12px; }\n' +
+      '.banner { background: #1f3a68; color: #fff; font-weight: bold; padding: 6px 10px; margin-bottom: 12px; }\n' +
       '.sample { background: #c92a2a; color: #fff; font-weight: bold; text-align: center; padding: 8px 10px; margin-bottom: 12px; }\n' +
       '.warn { color: #b00020; }\n' +
       '.cover { display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 0.9in; page-break-after: always; break-after: page; }\n' +
       '.cover img { height: 2.1in; margin-bottom: 0.45in; }\n' +
-      '.cover .kind { font-size: 10pt; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase; color: #53412c; margin: 0 0 10px; }\n' +
+      '.cover .kind { font-size: 10pt; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase; color: #1f3a68; margin: 0 0 10px; }\n' +
       '.cover h1 { font-size: 26pt; color: #2b2b2b; margin: 0 0 8px; }\n' +
       '.cover .where { font-size: 12pt; color: #5c5c58; margin: 0 0 0.6in; }\n' +
-      '.cover .label { font-size: 9pt; font-weight: bold; color: #53412c; margin: 22px 0 3px; }\n' +
+      '.cover .label { font-size: 9pt; font-weight: bold; color: #1f3a68; margin: 22px 0 3px; }\n' +
       '.cover .who { font-size: 11.5pt; margin: 0; }\n' +
       '.cover .small { font-size: 9.5pt; color: #5c5c58; margin: 2px 0 0; }\n' +
       '.cover .date { font-size: 11.5pt; margin-top: 0.45in; }\n' +
-      '.cover .rule { width: 1.2in; border-top: 3px solid #53412c; margin: 0 auto 0.4in; }\n' +
+      '.cover .rule { width: 1.2in; border-top: 3px solid #1f3a68; margin: 0 auto 0.4in; }\n' +
       '.muted { color: #666; }\n' +
       'section { page-break-inside: auto; }\n' +
       'h2, h3 { page-break-after: avoid; }\n' +
